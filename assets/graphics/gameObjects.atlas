@@ -88,7 +88,7 @@ FlyingEye/death
   orig: 150, 150
   offset: 0, 0
   index: 3
-FlyingEye/run
+FlyingEye/idle
   rotate: false
   xy: 1650, 0
   size: 150, 150
@@ -97,53 +97,109 @@ FlyingEye/run
   index: 0
 FlyingEye/run
   rotate: false
-  xy: 1800, 0
+  xy: 1650, 0
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
-  index: 1
-FlyingEye/run
+  index: 0
+FlyingEye/idle
   rotate: false
-  xy: 1950, 0
+  xy: 1800, 0
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: 2
 FlyingEye/run
   rotate: false
-  xy: 2100, 0
+  xy: 1800, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+FlyingEye/idle
+  rotate: false
+  xy: 1950, 0
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: 3
 FlyingEye/run
   rotate: false
-  xy: 2250, 0
+  xy: 1950, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+FlyingEye/idle
+  rotate: false
+  xy: 2100, 0
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: 4
 FlyingEye/run
   rotate: false
-  xy: 2400, 0
+  xy: 2100, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+FlyingEye/idle
+  rotate: false
+  xy: 2250, 0
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: 5
 FlyingEye/run
   rotate: false
-  xy: 2550, 0
+  xy: 2250, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+FlyingEye/idle
+  rotate: false
+  xy: 2400, 0
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: 6
 FlyingEye/run
   rotate: false
-  xy: 2700, 0
+  xy: 2400, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+FlyingEye/idle
+  rotate: false
+  xy: 2550, 0
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: 7
+FlyingEye/run
+  rotate: false
+  xy: 2550, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+FlyingEye/run
+  rotate: false
+  xy: 2700, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+FlyingEye/idle
+  rotate: false
+  xy: 2700, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
 FlyingEye/takehit
   rotate: false
   xy: 2850, 0
@@ -872,14 +928,14 @@ char_blue_1/death
   orig: 56, 56
   offset: 0, 0
   index: 11
-char_blue_1/idle
+char_blue_1/iddle
   rotate: false
   xy: 1350, 600
   size: 56, 56
   orig: 56, 56
   offset: 0, 0
   index: 4
-char_blue_1/idle
+char_blue_1/iddle
   rotate: false
   xy: 1500, 600
   size: 56, 56

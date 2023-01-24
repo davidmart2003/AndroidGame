@@ -2,11 +2,10 @@ package com.game.System
 
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
-import com.game.Component.AnimationComponent
-import com.game.Component.AnimationComponent.Companion.NO_ANIMATION
-import com.game.Component.ImageComponent
+import com.game.component.AnimationComponent
+import com.game.component.AnimationComponent.Companion.NO_ANIMATION
+import com.game.component.ImageComponent
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
@@ -46,12 +45,19 @@ class AnimationSystem(
             if(regions.isEmpty){
                 gdxError("No hay regiones para esa imagen")
             }
+            if(anyKeyPath=="char_blue_1/attack"){
+                Animation(`DEFAULT_FRAME-ATTACK_DURATION`,regions.map { TextureRegionDrawable(it) })
+
+            }else {
             Animation(DEFAULT_FRAME_DURATION,regions.map { TextureRegionDrawable(it) })
+
+            }
         }
 
     }
 
     companion object{
         private const val  DEFAULT_FRAME_DURATION=1/8f
+        private const val `DEFAULT_FRAME-ATTACK_DURATION` =1/15f
     }
 }

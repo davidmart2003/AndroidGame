@@ -1,8 +1,8 @@
 package com.game.System
 
-import com.game.Component.ImageComponent
-import com.game.Component.MoveComponent
-import com.game.Component.PhysicComponent
+import com.game.component.ImageComponent
+import com.game.component.MoveComponent
+import com.game.component.PhysicComponent
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
@@ -24,7 +24,7 @@ class MoveSystem(
         val masa = physicComponent.body.mass
         val (velX, velY) = physicComponent.body.linearVelocity
 
-        if (moveComponent.cos == 0f && moveComponent.sin == 0f) {
+        if (moveComponent.cos == 0f && moveComponent.sin == 0f || moveComponent.root) {
             physicComponent.impulse.set(
                 masa * (0f - velX),
                 masa * (0f - velY)

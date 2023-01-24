@@ -3,14 +3,10 @@ package com.game.System
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.game.Component.ImageComponent
-import com.game.Component.PhysicComponent
-import com.game.Component.PlayerComponent
+import com.game.component.ImageComponent
+import com.game.component.PlayerComponent
 import com.game.event.MapChangeEvent
-import com.github.quillraven.fleks.AllOf
-import com.github.quillraven.fleks.ComponentMapper
-import com.github.quillraven.fleks.Entity
-import com.github.quillraven.fleks.IteratingSystem
+import com.github.quillraven.fleks.*
 import ktx.tiled.height
 import ktx.tiled.width
 
@@ -23,7 +19,7 @@ import ktx.tiled.width
 @AllOf([PlayerComponent::class,ImageComponent::class])
 class CameraSystem(
     private val imageComponents : ComponentMapper<ImageComponent>,
-    stage: Stage
+    @Qualifier("gameStage") stage: Stage
 ) :EventListener, IteratingSystem() {
 
     private var maxWidth =0f

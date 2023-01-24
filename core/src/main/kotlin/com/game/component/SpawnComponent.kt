@@ -1,4 +1,4 @@
-package com.game.Component
+package com.game.component
 
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -14,7 +14,8 @@ data class SpawnConfiguration(
     val lifeScaling : Float = 1f,
     val physicScaling: Vector2 = vec2(1f, 1f),
     val physicOffset: Vector2 = vec2(1f, 1f),
-    val bodyType : BodyDef.BodyType = BodyDef.BodyType.DynamicBody
+    val bodyType : BodyDef.BodyType = BodyDef.BodyType.DynamicBody,
+    val aiTreePAth:String=""
 )
 
 const val DEFAULT_SPEED = 3f

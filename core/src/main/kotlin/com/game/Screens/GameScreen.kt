@@ -1,15 +1,17 @@
 package com.game.Screens
 
+import com.badlogic.gdx.ai.GdxAI
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.game.Component.ImageComponent
-import com.game.Component.ImageComponent.Companion.ImageComponentListener
-import com.game.Component.PhysicComponent
-import com.game.Component.PhysicComponent.Companion.PhysicComponentListener
+import com.game.component.AiComponent
+import com.game.component.FloatingTextComponent
+import com.game.component.ImageComponent.Companion.ImageComponentListener
+import com.game.component.PhysicComponent.Companion.PhysicComponentListener
+import com.game.component.StateComponent
 import com.game.System.*
 import com.game.event.MapChangeEvent
 import com.game.event.fire
@@ -23,7 +25,8 @@ import ktx.math.vec2
 class GameScreen : KtxScreen {
 
     private val textureAtlas: TextureAtlas = TextureAtlas("graphics/gameObjects.atlas")
-    private val stage: Stage = Stage(ExtendViewport(16f, 9f))
+    private val gameStage: Stage = Stage(ExtendViewport(16f, 9f))
+    private val uiStage : Stage= Stage(ExtendViewport(1280f,720f))
     private var currentMap: TiledMap? = null
     private val physicsWorld = createWorld(gravity = vec2()).apply {
         autoClearForces = false
@@ -31,14 +34,18 @@ class GameScreen : KtxScreen {
     }
     private val world = world {
         injectables {
-            add(stage)
+            add("gameStage",gameStage)
+            add("uiStage",uiStage)
             add(textureAtlas)
             add(physicsWorld)
         }
 
         components {
+            add<FloatingTextComponent.Companion.FloatingTextComponentListener>()
             add<ImageComponentListener>()
             add<PhysicComponentListener>()
+            add<StateComponent.Companion.StateComponentListener>()
+            add<AiComponent.Companion.AiComponentListener>()
         }
         systems {
 
@@ -49,8 +56,11 @@ class GameScreen : KtxScreen {
             add<LifeSystem>()
             add<DeadSystem>()
             add<AnimationSystem>()
+            add<StateSystem>()
+            add<AiSystem>()
             add<PhysicSystem>()
             add<CameraSystem>()
+            add<FloatingTextSystem>()
             add<RenderSystem>()
             add<DebugSystem>()
         }
@@ -61,12 +71,12 @@ class GameScreen : KtxScreen {
 
         world.systems.forEach { system ->
             if (system is EventListener) {
-                stage.addListener(system)
+                gameStage.addListener(system)
             }
         }
 
         currentMap = TmxMapLoader().load("map/map1.tmx")
-        stage.fire(MapChangeEvent(currentMap!!))
+        gameStage.fire(MapChangeEvent(currentMap!!))
 
         PlayerKeyboardInputProcessor(world)
 
@@ -74,17 +84,21 @@ class GameScreen : KtxScreen {
     }
 
     override fun render(delta: Float) {
+        val dt = delta.coerceAtMost(0.25f)
+        GdxAI.getTimepiece().update(dt)
         world.update(delta.coerceAtMost(0.25f))
 
     }
 
 
     override fun resize(width: Int, height: Int) {
-        stage.viewport.update(width, height, true)
+        gameStage.viewport.update(width, height, true)
+        uiStage.viewport.update(width,height,true   )
     }
 
     override fun dispose() {
-        stage.disposeSafely()
+        gameStage.disposeSafely()
+        uiStage.disposeSafely()
         world.dispose()
         textureAtlas.dispose()
         currentMap?.disposeSafely()

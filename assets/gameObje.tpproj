@@ -25,7 +25,7 @@ stripWhitespaceY=false
 wrapX=ClampToEdge
 wrapY=ClampToEdge
 premultiplyAlpha=false
-grid=false
+grid=true
 square=false
 bleed=true
 limitMemory=true
@@ -34,7 +34,7 @@ prettyPrint=false
 legacyOutput=true
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:.,type:Input,dirFilePrefix:null,recursive:false,flattenPaths:false}]
+inputFiles=[{path:Game,type:Input,dirFilePrefix:null,recursive:true,flattenPaths:false}]
 keepInputFileExtensions=false
 
 

@@ -6,12 +6,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
-import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.utils.Scaling
-import com.game.Component.*
-import com.game.Component.PhysicComponent.Companion.physicsComponentFromIMage
+import com.game.component.*
+import com.game.component.PhysicComponent.Companion.physicsComponentFromIMage
 import com.game.MyGame.Companion.UNIT_SCALE
 import com.game.actor.FlipImage
+import com.game.ai.DefaultGlobalState
 import com.game.event.MapChangeEvent
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
@@ -19,6 +19,7 @@ import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
 import ktx.app.gdxError
 import ktx.box2d.box
+import ktx.box2d.circle
 import ktx.math.vec2
 import ktx.tiled.layer
 import ktx.tiled.x
@@ -44,13 +45,15 @@ class EntitySpawnSystem(
                     physicOffset = vec2(-1f* UNIT_SCALE, -10f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
                     attackExtraRange = 0.6f,
-                    attackScaling = 1.25f
+                    attackScaling = 1.25f,
+
                 )
-                "FlyingEye" -> SpawnConfiguration(
+                "Flying Eye" -> SpawnConfiguration(
                     AnimationType.FlyingEye,
-                    physicScaling = vec2(0.3f, 0.3f),
-                    physicOffset = vec2(0f, -10f * UNIT_SCALE),
-                    bodyType = BodyDef.BodyType.DynamicBody
+                    physicScaling = vec2(0.1f, 0.08f),
+                    physicOffset = vec2(0.5f, -6f * UNIT_SCALE),
+                    bodyType = BodyDef.BodyType.DynamicBody,
+                    aiTreePAth = "ai/FlyingEye.tree"
                 )
                 "Goblin" -> SpawnConfiguration(
                     AnimationType.Goblin,
@@ -59,16 +62,16 @@ class EntitySpawnSystem(
                     physicOffset = vec2(0f* UNIT_SCALE, -6f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody
                 )
-                "Mushroom" -> SpawnConfiguration(
+                "MushRoom" -> SpawnConfiguration(
                     AnimationType.Mushroom,
-                    physicScaling = vec2(0.3f, 0.3f),
-                    physicOffset = vec2(0f, -2f * UNIT_SCALE),
+                    physicScaling = vec2(0.1f, 0.13f),
+                    physicOffset = vec2(0.4f, -8f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody
                 )
                 "Skeleton" -> SpawnConfiguration(
                     AnimationType.Skeleton,
-                    physicScaling = vec2(0.3f, 0.3f),
-                    physicOffset = vec2(0f, -2f * UNIT_SCALE),
+                    physicScaling = vec2(0.1f, 0.2f),
+                    physicOffset = vec2(0.5f, 2f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody
                 )
                 else -> gdxError("$type no tiene configuration")
@@ -108,7 +111,7 @@ class EntitySpawnSystem(
                 add<AnimationComponent> {
                     nextAnimation(configuration.model, AnimationState.IDLE)
                 }
-                physicsComponentFromIMage(
+               val physicComponent= physicsComponentFromIMage(
                     physicsWorld,
                     imageComponent.image,
                     BodyDef.BodyType.DynamicBody
@@ -155,6 +158,18 @@ class EntitySpawnSystem(
                 }
                 if (type == "Player") {
                     add<PlayerComponent>()
+                    add<StateComponent> {
+                        stateMachine.globalState = DefaultGlobalState.CHECK_ALIVE
+                    }
+                }
+                if(configuration.aiTreePAth.isNotBlank()){
+                    add<AiComponent>{
+                        treePath=configuration.aiTreePAth;
+                    }
+                    physicComponent.body.circle(4f) {
+                        isSensor=true
+                        userData=AI_SENSOR
+                    }
                 }
             }
 
@@ -163,7 +178,7 @@ class EntitySpawnSystem(
     }
 
     private fun size(model: AnimationType) = cachedSizes.getOrPut(model) {
-        val regions = atlas.findRegions("${model.name}/${AnimationState.IDLE.atlasKey}")
+        val regions = atlas.findRegions("${model.name}/${AnimationState.ATTACK.atlasKey}")
         if (regions.isEmpty) {
             gdxError("No hay regiones para ese tipo")
         }
@@ -174,5 +189,6 @@ class EntitySpawnSystem(
     }
     companion object {
         const val  HIT_BOX_SENSOR = "Hitbox"
+        const val  AI_SENSOR ="AiSensor"
     }
 }

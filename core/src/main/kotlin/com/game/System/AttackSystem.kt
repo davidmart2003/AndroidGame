@@ -3,7 +3,7 @@ package com.game.System
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.physics.box2d.World
-import com.game.Component.*
+import com.game.component.*
 import com.game.System.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
@@ -18,6 +18,7 @@ class AttackSystem(
     private val attackComponents: ComponentMapper<AttackComponent>,
     private val physicComponents: ComponentMapper<PhysicComponent>,
     private val ImageComponents: ComponentMapper<ImageComponent>,
+    private val animationComponents: ComponentMapper<AnimationComponent>,
     private val lifeComponent : ComponentMapper<LifeComponent>,
     private val myWorld : World
 ) : IteratingSystem(){
@@ -88,9 +89,11 @@ class AttackSystem(
 
                 return@query true
             }
-            attackComponent.state=AttackState.READY
         }
-
+        val isDone = animationComponents.getOrNull(entity)?.isAnimationDone ?:true
+        if(isDone){
+            attackComponent.state = AttackState.READY
+        }
 
     }
     companion object {

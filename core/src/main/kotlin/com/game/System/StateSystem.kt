@@ -1,0 +1,22 @@
+package com.game.System
+
+import com.game.component.StateComponent
+import com.github.quillraven.fleks.AllOf
+import com.github.quillraven.fleks.ComponentMapper
+import com.github.quillraven.fleks.Entity
+import com.github.quillraven.fleks.IteratingSystem
+
+@AllOf([StateComponent::class])
+class StateSystem (
+    private val stateComponents: ComponentMapper<StateComponent>,
+): IteratingSystem() {
+    override fun onTickEntity(entity: Entity) {
+        with(stateComponents[entity]){
+
+            if(nextState!=stateMachine.getCurrentState()){
+                stateMachine.changeState(nextState)
+            }
+                stateMachine.update()
+        }
+    }
+}

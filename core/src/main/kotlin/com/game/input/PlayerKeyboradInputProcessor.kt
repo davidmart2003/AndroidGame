@@ -2,14 +2,9 @@ package com.game.input
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys.*
-import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
-import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
-import com.game.Component.AttackComponent
-import com.game.Component.MoveComponent
-import com.game.Component.PlayerComponent
+import com.game.component.AttackComponent
+import com.game.component.MoveComponent
+import com.game.component.PlayerComponent
 import com.github.quillraven.fleks.ComponentMapper
 import ktx.app.KtxInputAdapter
 
@@ -58,7 +53,6 @@ class PlayerKeyboardInputProcessor(
                 playerEntities.forEach {
                     with(attackComponents[it]) {
                         doAttack = true
-                        startAttack()
                     }
                 }
                 return true

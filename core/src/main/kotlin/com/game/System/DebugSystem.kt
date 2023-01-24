@@ -7,12 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.game.System.AttackSystem.Companion.AABB_RECT
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IntervalSystem
+import com.github.quillraven.fleks.Qualifier
 import ktx.assets.disposeSafely
 import ktx.graphics.use
 
 class DebugSystem(
     private val myWorld: World,
-    private val stage : Stage
+    @Qualifier("gameStage") private val stage : Stage
 ) : IntervalSystem(enabled = true){
     private lateinit var physicRenderer : Box2DDebugRenderer
     private lateinit var shapeRenderer : ShapeRenderer

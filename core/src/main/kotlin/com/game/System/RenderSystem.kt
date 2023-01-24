@@ -7,20 +7,18 @@ import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.game.Component.ImageComponent
+import com.game.component.ImageComponent
 import com.game.MyGame.Companion.UNIT_SCALE
 import com.game.event.MapChangeEvent
-import com.github.quillraven.fleks.AllOf
-import com.github.quillraven.fleks.ComponentMapper
-import com.github.quillraven.fleks.Entity
-import com.github.quillraven.fleks.IteratingSystem
+import com.github.quillraven.fleks.*
 import com.github.quillraven.fleks.collection.compareEntity
 import ktx.graphics.use
 import ktx.tiled.forEachLayer
 
 @AllOf([ImageComponent::class])
 class RenderSystem(
-    private  val stage:Stage,
+    @Qualifier("gameStage") private  val gameStage:Stage,
+    @Qualifier("uiStage") private val uiStage:Stage,
     private val imageComponents : ComponentMapper<ImageComponent>
 ) : EventListener,IteratingSystem(
     comparator = compareEntity { e1, e2 -> imageComponents[e1].compareTo(imageComponents[e2])  }
@@ -28,19 +26,19 @@ class RenderSystem(
 
     private val backgroundLayers = mutableListOf<TiledMapTileLayer>()
     private val foregroundLayers= mutableListOf<TiledMapTileLayer>()
-    private val maprenderer = OrthogonalTiledMapRenderer(null,UNIT_SCALE,stage.batch)
-    private val OrthoCamera = stage.camera as OrthographicCamera
+    private val maprenderer = OrthogonalTiledMapRenderer(null,UNIT_SCALE,gameStage.batch)
+    private val OrthoCamera = gameStage.camera as OrthographicCamera
     override fun onTick() {
         super.onTick()
 
-        with(stage){
+        with(gameStage){
             viewport.apply()
 
             AnimatedTiledMapTile.updateAnimationBaseTime()
             maprenderer.setView(OrthoCamera)
 
             if(backgroundLayers.isNotEmpty()){
-                stage.batch.use(OrthoCamera.combined) {
+                gameStage.batch.use(OrthoCamera.combined) {
                     backgroundLayers.forEach{ maprenderer.renderTileLayer(it)}
                 }
             }
@@ -48,10 +46,19 @@ class RenderSystem(
             draw()
 
             if(foregroundLayers.isNotEmpty()){
-                stage.batch.use(OrthoCamera.combined) {
+                gameStage.batch.use(OrthoCamera.combined) {
                     foregroundLayers.forEach { maprenderer.renderTileLayer(it) }
                 }
             }
+        }
+
+
+        //render UI
+        with(uiStage){
+            viewport.apply()
+
+            act(deltaTime)
+            draw()
         }
     }
     /**
