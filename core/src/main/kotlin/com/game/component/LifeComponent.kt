@@ -1,4 +1,4 @@
-package com.game.Component
+package com.game.component
 
 class LifeComponent(
     var life: Float = 100f,

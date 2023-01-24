@@ -5,8 +5,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
-import com.game.Component.PhysicComponent
-import com.game.Component.PhysicComponent.Companion.physicComponentFromShape2D
+import com.game.component.PhysicComponent
+import com.game.component.PhysicComponent.Companion.physicComponentFromShape2D
 import com.game.event.MapChangeEvent
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.Entity

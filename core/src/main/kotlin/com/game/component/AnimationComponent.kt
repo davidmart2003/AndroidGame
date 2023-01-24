@@ -1,7 +1,6 @@
-package com.game.Component
+package com.game.component
 
 import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 
 enum class  AnimationType{
@@ -23,12 +22,15 @@ data class AnimationComponent(
     lateinit var animation : Animation<TextureRegionDrawable>
     var nextAnimation:String= NO_ANIMATION
 
-    // atlasKey/AniimationStateLoweCAse
-    //char_blue/iddle00
-    //char_blue/iddle01
-    //char_blue/iddle02
+    val isAnimationDone : Boolean
+            get()= animation.isAnimationFinished(stateTime)
+
     fun nextAnimation(model: AnimationType, type: AnimationState){
         this.model=model
+        nextAnimation="$model/${type.atlasKey}"
+    }
+
+    fun nextAnimation(type: AnimationState){
         nextAnimation="$model/${type.atlasKey}"
     }
 

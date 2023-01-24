@@ -1,0 +1,230 @@
+
+FlyingEye.png
+size: 2048, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+attack
+  rotate: false
+  xy: 0, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+attack
+  rotate: false
+  xy: 300, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+attack
+  rotate: false
+  xy: 300, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+attack
+  rotate: false
+  xy: 450, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+attack
+  rotate: false
+  xy: 450, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+attack
+  rotate: false
+  xy: 750, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+attack
+  rotate: false
+  xy: 750, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+attack
+  rotate: false
+  xy: 1050, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+death
+  rotate: false
+  xy: 150, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+death
+  rotate: false
+  xy: 600, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+death
+  rotate: false
+  xy: 600, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+death
+  rotate: false
+  xy: 900, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+idle
+  rotate: false
+  xy: 0, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+run
+  rotate: false
+  xy: 0, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+run
+  rotate: false
+  xy: 150, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+idle
+  rotate: false
+  xy: 150, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+run
+  rotate: false
+  xy: 150, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+idle
+  rotate: false
+  xy: 150, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+run
+  rotate: false
+  xy: 300, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+idle
+  rotate: false
+  xy: 300, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 600, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+idle
+  rotate: false
+  xy: 600, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 750, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+idle
+  rotate: false
+  xy: 750, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+run
+  rotate: false
+  xy: 900, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+idle
+  rotate: false
+  xy: 900, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 900, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+idle
+  rotate: false
+  xy: 900, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+takehit
+  rotate: false
+  xy: 0, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+takehit
+  rotate: false
+  xy: 300, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+takehit
+  rotate: false
+  xy: 450, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+takehit
+  rotate: false
+  xy: 1050, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1

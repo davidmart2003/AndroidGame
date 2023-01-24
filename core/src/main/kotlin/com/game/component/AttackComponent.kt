@@ -1,4 +1,4 @@
-package com.game.Component
+package com.game.component
 
 
 enum class AttackState {

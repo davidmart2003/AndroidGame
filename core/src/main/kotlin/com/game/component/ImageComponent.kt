@@ -1,10 +1,10 @@
-package com.game.Component
+package com.game.component
 
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.game.actor.FlipImage
 import com.github.quillraven.fleks.ComponentListener
 import com.github.quillraven.fleks.Entity
+import com.github.quillraven.fleks.Qualifier
 
 
 class ImageComponent : Comparable<ImageComponent> {
@@ -21,7 +21,7 @@ class ImageComponent : Comparable<ImageComponent> {
 
     companion object{
         class ImageComponentListener(
-            private val stage : Stage
+            @Qualifier("gameStage") private val stage : Stage
         ) : ComponentListener<ImageComponent> {
             override fun onComponentAdded(entity: Entity, component: ImageComponent) {
                 stage.addActor(component.image)
