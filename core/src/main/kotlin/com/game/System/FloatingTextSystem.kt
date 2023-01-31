@@ -6,6 +6,7 @@ import com.game.component.FloatingTextComponent
 import com.github.quillraven.fleks.*
 import ktx.math.vec2
 
+
 @AllOf([FloatingTextComponent::class])
 class FloatingTextSystem(
     @Qualifier("gameStage") private val gameStage: Stage,

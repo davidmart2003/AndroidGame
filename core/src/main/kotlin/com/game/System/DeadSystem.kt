@@ -24,6 +24,7 @@ class DeadSystem(
         }
 
         deadComponent.reviveTime -= deltaTime
+
         if (deadComponent.reviveTime <= 0f) {
             with(lifeComponent[entity]) {
 

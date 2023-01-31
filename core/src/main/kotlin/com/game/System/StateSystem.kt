@@ -13,7 +13,7 @@ class StateSystem (
     override fun onTickEntity(entity: Entity) {
         with(stateComponents[entity]){
 
-            if(nextState!=stateMachine.getCurrentState()){
+            if(nextState!=stateMachine.currentState){
                 stateMachine.changeState(nextState)
             }
                 stateMachine.update()

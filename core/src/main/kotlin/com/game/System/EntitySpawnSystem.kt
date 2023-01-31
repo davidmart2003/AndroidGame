@@ -45,7 +45,9 @@ class EntitySpawnSystem(
                     physicOffset = vec2(-1f* UNIT_SCALE, -10f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
                     attackExtraRange = 0.6f,
-                    attackScaling = 1.25f,
+                    lifeScaling = 5f,
+                    speedScaling = 1f,
+                    attackScaling = 3.75f,
 
                 )
                 "Flying Eye" -> SpawnConfiguration(
@@ -53,26 +55,41 @@ class EntitySpawnSystem(
                     physicScaling = vec2(0.1f, 0.08f),
                     physicOffset = vec2(0.5f, -6f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
-                    aiTreePAth = "ai/FlyingEye.tree"
+                    aiTreePAth = "ai/FlyingEye.tree",
+                    lifeScaling = 1.33f,
+                    speedScaling = 1f,
+                    attackScaling = 1f,
+                    dropExp = 2
                 )
                 "Goblin" -> SpawnConfiguration(
                     AnimationType.Goblin,
-                    lifeScaling=0.75f,
                     physicScaling = vec2(0.2f, 0.13f),
                     physicOffset = vec2(0f* UNIT_SCALE, -6f * UNIT_SCALE),
-                    bodyType = BodyDef.BodyType.DynamicBody
+                    bodyType = BodyDef.BodyType.DynamicBody,
+                    aiTreePAth = "ai/Goblin.tree",
+                    lifeScaling=3f,
+                    speedScaling = 1.4f,
+                    attackScaling = 2.25f,
                 )
                 "MushRoom" -> SpawnConfiguration(
                     AnimationType.Mushroom,
                     physicScaling = vec2(0.1f, 0.13f),
                     physicOffset = vec2(0.4f, -8f * UNIT_SCALE),
-                    bodyType = BodyDef.BodyType.DynamicBody
+                    bodyType = BodyDef.BodyType.DynamicBody,
+                    aiTreePAth = "ai/MushRoom.tree",
+                    lifeScaling = 5f,
+                    speedScaling = 1f,
+                    attackScaling = 3.75f,
                 )
                 "Skeleton" -> SpawnConfiguration(
                     AnimationType.Skeleton,
                     physicScaling = vec2(0.1f, 0.2f),
                     physicOffset = vec2(0.5f, 2f * UNIT_SCALE),
-                    bodyType = BodyDef.BodyType.DynamicBody
+                    bodyType = BodyDef.BodyType.DynamicBody,
+                    aiTreePAth = "ai/Skeleton.tree",
+                    lifeScaling = 6.25f,
+                    speedScaling = 0.6f,
+                    attackScaling = 7.5f,
                 )
                 else -> gdxError("$type no tiene configuration")
             }
@@ -154,6 +171,7 @@ class EntitySpawnSystem(
                     add<LifeComponent>{
                         maxLife = DEFAULT_LIFE* configuration.lifeScaling
                         life=maxLife
+                        exp=configuration.dropExp
                     }
                 }
                 if (type == "Player") {

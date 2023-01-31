@@ -71,7 +71,7 @@ class  PhysicSystem(
         val entityA = contact.fixtureA.entity
         val entityB = contact.fixtureB.entity
 
-        val isEntityBCollisionCollsionFixture = !contact.fixtureB.isSensor
+        val isEntityBCollisionFixture = !contact.fixtureB.isSensor
         val isEntityACollisionFixture =  !contact.fixtureA.isSensor
 
         val isEntityAAiSensor = entityA in aiComponents && contact.fixtureA.isSensor && contact.fixtureA.userData==AI_SENSOR
@@ -79,10 +79,10 @@ class  PhysicSystem(
 
         when {
 
-        isEntityAAiSensor && isEntityBCollisionCollsionFixture ->{
+        isEntityAAiSensor && isEntityBCollisionFixture ->{
             aiComponents[entityA].nearbyEntities +=entityB
         }
-            isEntityBAiSensor && isEntityBCollisionCollsionFixture ->{
+            isEntityBAiSensor && isEntityACollisionFixture ->{
                 aiComponents[entityB].nearbyEntities +=entityA
             }
         }

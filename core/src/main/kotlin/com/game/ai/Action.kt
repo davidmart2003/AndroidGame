@@ -8,15 +8,18 @@ import com.badlogic.gdx.ai.utils.random.FloatDistribution
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.math.MathUtils
 import com.game.component.AnimationState
+import com.github.quillraven.fleks.ComponentMapper
+import com.github.quillraven.fleks.world
 import ktx.math.vec2
 
 abstract class Action(
 
 ) : LeafTask<AiEntity>() {
     val entity: AiEntity
-        get()= `object`
+        get() = `object`
 
-    override fun copyTo(task: Task<AiEntity>?)=task
+
+    override fun copyTo(task: Task<AiEntity>?) = task
 
 
 }
@@ -24,18 +27,18 @@ abstract class Action(
 class IdleTask(
     @JvmField
     @TaskAttribute(required = true)
-    var duration:FloatDistribution?=null
-) : Action(){
-    private var currentDuration=0f
+    var duration: FloatDistribution? = null
+) : Action() {
+    private var currentDuration = 0f
     override fun execute(): Status {
-        if(status != Status.RUNNING){
+        if (status != Status.RUNNING) {
             entity.animation(AnimationState.IDLE)
-            currentDuration = duration?.nextFloat() ?:1f
+            currentDuration = duration?.nextFloat() ?: 1f
             return Status.RUNNING
         }
 
-        currentDuration -=GdxAI.getTimepiece().deltaTime
-        if(currentDuration <=0f){
+        currentDuration -= GdxAI.getTimepiece().deltaTime
+        if (currentDuration <= 0f) {
             return Status.SUCCEEDED
         }
 
@@ -43,28 +46,30 @@ class IdleTask(
     }
 
     override fun copyTo(task: Task<AiEntity>?): Task<AiEntity>? {
-        (task as IdleTask).duration= duration
+        (task as IdleTask).duration = duration
         return task
     }
 }
 
-class WanderTask : Action(){
-    private  val startPos = vec2()
+class WanderTask(
+
+) : Action() {
+    private val startPos = vec2()
     private val targetpos = vec2()
     override fun execute(): Status {
-        if(status!= Status.RUNNING){
+        if (status != Status.RUNNING) {
             entity.animation((AnimationState.RUN))
-            if(startPos.isZero){
+            if (startPos.isZero) {
                 startPos.set(entity.location)
             }
             targetpos.set(startPos)
-            targetpos.x += MathUtils.random(-3f,3f)
-            targetpos.y += MathUtils.random(-3f,3f)
+            targetpos.x += MathUtils.random(-1f, 1f)
+            targetpos.y += MathUtils.random(-1f, 1f)
             entity.moveTo(targetpos)
-            return  Status.RUNNING
+            return Status.RUNNING
         }
 
-        if(entity.inRange(0.5f,targetpos)){
+        if (entity.inRange(0.5f, targetpos)) {
             entity.stopMovement()
             return Status.SUCCEEDED
         }
@@ -72,15 +77,15 @@ class WanderTask : Action(){
     }
 }
 
-class AttackTask : Action(){
+class AttackTask : Action() {
     override fun execute(): Status {
-        if(status!=Status.RUNNING){
-            entity.animation(AnimationState.ATTACK,Animation.PlayMode.NORMAL,true)
+        if (status != Status.RUNNING) {
+            entity.animation(AnimationState.ATTACK, Animation.PlayMode.NORMAL, true)
             entity.doAndStartAttack()
             return Status.RUNNING
         }
 
-        if(entity.isAnimationDone){
+        if (entity.isAnimationDone) {
             entity.animation(AnimationState.IDLE)
             entity.stopMovement()
 
@@ -90,3 +95,28 @@ class AttackTask : Action(){
         return Status.RUNNING
     }
 }
+
+class FollowTask : Action() {
+    private val startPos = vec2()
+    private val targetpos = vec2()
+    override fun execute(): Status {
+        if (status != Status.RUNNING) {
+            entity.animation(AnimationState.RUN)
+            if (startPos.isZero) {
+                startPos.set(entity.location)
+            }
+            targetpos.set(startPos)
+            targetpos.x = entity.followPlayerX()
+            targetpos.y = entity.followPlayerY()
+            entity.moveTo(targetpos)
+            return  Status.SUCCEEDED
+        }
+        if (entity.inRange(0.5f, targetpos)) {
+            entity.stopMovement()
+            return Status.SUCCEEDED
+        }
+
+        return Status.RUNNING
+    }
+}
+

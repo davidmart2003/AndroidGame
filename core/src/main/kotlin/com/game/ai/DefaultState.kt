@@ -13,6 +13,7 @@ enum class DefaultState : EntityState {
             when{
                 entity.wantsToAttack -> entity.state(ATTACK)
                 entity.wantsToRun -> entity.state(RUN)
+                entity.takehit->entity.state(TAKEHIT)
             }
         }
         },
@@ -25,6 +26,8 @@ enum class DefaultState : EntityState {
             when{
                 entity.wantsToAttack->entity.state(ATTACK)
                 !entity.wantsToRun ->entity.state(IDLE)
+                entity.takehit->entity.state(TAKEHIT)
+                
             }
         }
        },
@@ -60,11 +63,11 @@ enum class DefaultState : EntityState {
             entity.animation(AnimationState.TAKEHIT, Animation.PlayMode.NORMAL)
 
         }
-
         override fun update(entity: AiEntity) {
-            if(entity.isAnimationDone){
-                entity.state(IDLE)
-                entity.root(false)
+            when{
+                entity.wantsToAttack -> entity.state(ATTACK)
+                entity.wantsToRun -> entity.state(RUN)
+                !entity.wantsToRun ->entity.state(IDLE)
             }
         }
            },

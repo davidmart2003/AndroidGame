@@ -15,12 +15,16 @@ data class SpawnConfiguration(
     val physicScaling: Vector2 = vec2(1f, 1f),
     val physicOffset: Vector2 = vec2(1f, 1f),
     val bodyType : BodyDef.BodyType = BodyDef.BodyType.DynamicBody,
-    val aiTreePAth:String=""
+    val aiTreePAth:String="",
+    val exp:Int=0,
+    val dropExp:Int=0,
+    val lvlPlayer:Int=1,
+    val nextLevel:Int=10
 )
 
 const val DEFAULT_SPEED = 3f
 const val DEFAULT_ATTACK_DAMAGE= 5f
-const val DEFAULT_LIFE =25f
+const val DEFAULT_LIFE =20f
 
 data class SpawnComponent(
     var type: String = "",
