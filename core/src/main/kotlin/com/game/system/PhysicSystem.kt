@@ -1,4 +1,4 @@
-package com.game.System
+package com.game.system
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.physics.box2d.*
@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.World
 import com.game.component.AiComponent
 import com.game.component.ImageComponent
 import com.game.component.PhysicComponent
-import com.game.System.EntitySpawnSystem.Companion.AI_SENSOR
+import com.game.system.EntitySpawnSystem.Companion.AI_SENSOR
 import com.github.quillraven.fleks.*
 import ktx.math.component1
 import ktx.math.component2

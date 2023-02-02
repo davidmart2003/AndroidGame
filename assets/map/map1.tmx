@@ -212,7 +212,7 @@
 </data>
  </layer>
  <objectgroup id="4" name="Entities">
-  <object id="1" name="Player" gid="1" x="679.945" y="149.387" width="56" height="56"/>
+  <object id="1" name="Player" gid="1" x="202.612" y="556.72" width="56" height="56"/>
   <object id="16" name="Flying Eye" gid="2" x="267" y="201" width="150" height="150"/>
   <object id="21" name="Goblin" gid="3" x="269" y="375.667" width="150" height="150"/>
   <object id="24" name="Flying Eye" gid="2" x="662.333" y="288.333" width="150" height="150"/>

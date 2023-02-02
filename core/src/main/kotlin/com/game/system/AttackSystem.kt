@@ -1,10 +1,10 @@
-package com.game.System
+package com.game.system
 
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.physics.box2d.World
 import com.game.component.*
-import com.game.System.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
+import com.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
@@ -80,7 +80,7 @@ class AttackSystem(
                     // NO NOS ATACAMOS A NOSOTROS MISMOs
                     return@query true
                 }
-//TODO que los enemigos se ataquen a si mismos
+                //TODO que los enemigos se ataquen a si mismos
                 configureEntity(fixtureEntity){
                     lifeComponent.getOrNull(it)?.let { lifeComponent ->
                         lifeComponent.takeDamage += attackComponent.damage * MathUtils.random(0.9f,1.1f)

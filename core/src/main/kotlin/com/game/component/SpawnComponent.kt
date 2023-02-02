@@ -8,7 +8,7 @@ data class SpawnConfiguration(
     val model: AnimationType,
     val speedScaling: Float = 1f,
     val canAttack : Boolean = true,
-    val attackScaling : Float=1f,
+    var attackScaling : Float=1f,
     val attackDelay: Float = 0.2f,
     val attackExtraRange : Float = 0f,
     val lifeScaling : Float = 1f,
@@ -23,7 +23,7 @@ data class SpawnConfiguration(
 )
 
 const val DEFAULT_SPEED = 3f
-const val DEFAULT_ATTACK_DAMAGE= 5f
+var DEFAULT_ATTACK_DAMAGE= 5f
 const val DEFAULT_LIFE =20f
 
 data class SpawnComponent(

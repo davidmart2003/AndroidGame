@@ -1,4 +1,4 @@
-package com.game.System
+package com.game.system
 
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer

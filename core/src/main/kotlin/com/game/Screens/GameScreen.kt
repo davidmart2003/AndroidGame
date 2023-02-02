@@ -12,7 +12,7 @@ import com.game.component.FloatingTextComponent
 import com.game.component.ImageComponent.Companion.ImageComponentListener
 import com.game.component.PhysicComponent.Companion.PhysicComponentListener
 import com.game.component.StateComponent
-import com.game.System.*
+import com.game.system.*
 import com.game.event.MapChangeEvent
 import com.game.event.fire
 import com.game.input.PlayerKeyboardInputProcessor
@@ -21,6 +21,7 @@ import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.box2d.createWorld
 import ktx.math.vec2
+import java.util.logging.Level
 
 class GameScreen : KtxScreen {
 
@@ -54,13 +55,15 @@ class GameScreen : KtxScreen {
             add<MoveSystem>()
             add<AttackSystem>()
             add<LifeSystem>()
-            add<DeadSystem>()
             add<AnimationSystem>()
+            add<DeadSystem>()
             add<StateSystem>()
             add<AiSystem>()
             add<PhysicSystem>()
             add<CameraSystem>()
             add<FloatingTextSystem>()
+            add<LevelSystem>()
+            add<SpawnPortalSystem>()
             add<RenderSystem>()
             add<DebugSystem>()
         }

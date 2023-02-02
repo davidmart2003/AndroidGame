@@ -1,11 +1,10 @@
-package com.game.System
+package com.game.system
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.game.System.AttackSystem.Companion.AABB_RECT
-import com.github.quillraven.fleks.Entity
+import com.game.system.AttackSystem.Companion.AABB_RECT
 import com.github.quillraven.fleks.IntervalSystem
 import com.github.quillraven.fleks.Qualifier
 import ktx.assets.disposeSafely

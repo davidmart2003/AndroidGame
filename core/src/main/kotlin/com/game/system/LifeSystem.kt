@@ -1,4 +1,4 @@
-package com.game.System
+package com.game.system
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
 import com.game.component.*
 import com.github.quillraven.fleks.*
 import ktx.assets.disposeSafely
+import ktx.log.logger
 
 @AllOf([LifeComponent::class])
 @NoneOf([DeadComponent::class])
@@ -30,10 +31,15 @@ class LifeSystem(
             (lifeComponent.life + lifeComponent.regeneration * deltaTime).coerceAtMost(lifeComponent.maxLife)
 
         if (lifeComponent.takeDamage > 0f) {
-
+            lifeComponent.isTakingDamage = true
+            if (lifeComponent.isTakingDamage) {
+                animationComponents.getOrNull(entity)?.let { animationComponent ->
+                    animationComponent.nextAnimation(AnimationState.TAKEHIT)
+                    animationComponent.playMode = Animation.PlayMode.NORMAL
+                }
+            }
             val physicComponent = physicComponents[entity]
             lifeComponent.life -= lifeComponent.takeDamage
-            lifeComponent.isTakingDamage = true
             floatingText(
                 lifeComponent.takeDamage.toInt().toString(),
                 physicComponent.body.position,
@@ -48,7 +54,11 @@ class LifeSystem(
         if (lifeComponent.isDead) {
             lifeComponent.isTakingDamage = false
 
-
+            val playerEntities = world.family(allOf = arrayOf(PlayerComponent::class))
+            playerEntities.forEach { player ->
+                lifeComponents[player].exp += lifeComponent.exp
+             //   log.debug {  "Experincia del jugador "+lifeComponents[player].exp.toString()}
+            }
             animationComponents.getOrNull(entity)?.let { animationComponent ->
                 animationComponent.nextAnimation(AnimationState.DEATH)
                 animationComponent.playMode = Animation.PlayMode.NORMAL
@@ -62,12 +72,7 @@ class LifeSystem(
                 }
             }
         }
-        if (lifeComponent.isTakingDamage) {
-            animationComponents.getOrNull(entity)?.let { animationComponent ->
-                animationComponent.nextAnimation(AnimationState.TAKEHIT)
-                animationComponent.playMode = Animation.PlayMode.NORMAL
-            }
-        }
+
     }
 
     private fun floatingText(text: String, position: Vector2, size: Vector2) {
@@ -82,5 +87,9 @@ class LifeSystem(
 
     override fun onDispose() {
         dmgFont.disposeSafely()
+    }
+
+    companion object {
+        private val log = logger<LifeSystem>()
     }
 }

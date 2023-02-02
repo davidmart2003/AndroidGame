@@ -1,4 +1,4 @@
-package com.game.System
+package com.game.system
 
 import com.game.component.ImageComponent
 import com.game.component.MoveComponent

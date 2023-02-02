@@ -1,4 +1,4 @@
-package com.game.System
+package com.game.system
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
@@ -52,8 +52,8 @@ class EntitySpawnSystem(
                 )
                 "Flying Eye" -> SpawnConfiguration(
                     AnimationType.FlyingEye,
-                    physicScaling = vec2(0.1f, 0.08f),
-                    physicOffset = vec2(0.5f, -6f * UNIT_SCALE),
+                    physicScaling = vec2(0.2f, 0.13f),
+                    physicOffset = vec2(0f* UNIT_SCALE, -6f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
                     aiTreePAth = "ai/FlyingEye.tree",
                     lifeScaling = 1.33f,
@@ -70,26 +70,32 @@ class EntitySpawnSystem(
                     lifeScaling=3f,
                     speedScaling = 1.4f,
                     attackScaling = 2.25f,
+                    dropExp = 23
+
                 )
                 "MushRoom" -> SpawnConfiguration(
                     AnimationType.Mushroom,
-                    physicScaling = vec2(0.1f, 0.13f),
-                    physicOffset = vec2(0.4f, -8f * UNIT_SCALE),
+                    physicScaling = vec2(0.2f, 0.13f),
+                    physicOffset = vec2(0f* UNIT_SCALE, -6f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
                     aiTreePAth = "ai/MushRoom.tree",
                     lifeScaling = 5f,
                     speedScaling = 1f,
                     attackScaling = 3.75f,
+                    dropExp = 257
+
                 )
                 "Skeleton" -> SpawnConfiguration(
                     AnimationType.Skeleton,
-                    physicScaling = vec2(0.1f, 0.2f),
-                    physicOffset = vec2(0.5f, 2f * UNIT_SCALE),
+                    physicScaling = vec2(0.2f, 0.13f),
+                    physicOffset = vec2(0f* UNIT_SCALE, -6f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
                     aiTreePAth = "ai/Skeleton.tree",
                     lifeScaling = 6.25f,
                     speedScaling = 0.6f,
                     attackScaling = 7.5f,
+                    dropExp = 5
+
                 )
                 else -> gdxError("$type no tiene configuration")
             }
@@ -176,10 +182,16 @@ class EntitySpawnSystem(
                 }
                 if (type == "Player") {
                     add<PlayerComponent>()
+                    add<LevelComponent>()
                     add<StateComponent> {
                         stateMachine.globalState = DefaultGlobalState.CHECK_ALIVE
                     }
                 }
+                if(type=="MushRoom" || type=="Flying Eye" || type=="Goblin" || type=="Skeleton")
+                    add<EnemyComponent>(){
+                        addEnemies(entity)
+                    }
+
                 if(configuration.aiTreePAth.isNotBlank()){
                     add<AiComponent>{
                         treePath=configuration.aiTreePAth;
