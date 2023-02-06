@@ -1,0 +1,1168 @@
+
+gameObjects.png
+size: 4096, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+FlyingEye/attack
+  rotate: false
+  xy: 0, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+FlyingEye/attack
+  rotate: false
+  xy: 150, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+FlyingEye/attack
+  rotate: false
+  xy: 300, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+FlyingEye/attack
+  rotate: false
+  xy: 450, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+FlyingEye/attack
+  rotate: false
+  xy: 450, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+FlyingEye/attack
+  rotate: false
+  xy: 600, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+FlyingEye/attack
+  rotate: false
+  xy: 750, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+FlyingEye/attack
+  rotate: false
+  xy: 900, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+FlyingEye/death
+  rotate: false
+  xy: 1050, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+FlyingEye/death
+  rotate: false
+  xy: 1200, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+FlyingEye/death
+  rotate: false
+  xy: 1350, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+FlyingEye/death
+  rotate: false
+  xy: 1500, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+FlyingEye/idle
+  rotate: false
+  xy: 1650, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+FlyingEye/run
+  rotate: false
+  xy: 1650, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+FlyingEye/idle
+  rotate: false
+  xy: 1800, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+FlyingEye/run
+  rotate: false
+  xy: 1800, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+FlyingEye/idle
+  rotate: false
+  xy: 1950, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+FlyingEye/run
+  rotate: false
+  xy: 1950, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+FlyingEye/idle
+  rotate: false
+  xy: 2100, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+FlyingEye/run
+  rotate: false
+  xy: 2100, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+FlyingEye/idle
+  rotate: false
+  xy: 2250, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+FlyingEye/run
+  rotate: false
+  xy: 2250, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+FlyingEye/idle
+  rotate: false
+  xy: 2400, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+FlyingEye/run
+  rotate: false
+  xy: 2400, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+FlyingEye/idle
+  rotate: false
+  xy: 2550, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+FlyingEye/run
+  rotate: false
+  xy: 2550, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+FlyingEye/run
+  rotate: false
+  xy: 2700, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+FlyingEye/idle
+  rotate: false
+  xy: 2700, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+FlyingEye/takehit
+  rotate: false
+  xy: 2850, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+FlyingEye/takehit
+  rotate: false
+  xy: 3000, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+FlyingEye/takehit
+  rotate: false
+  xy: 3150, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+FlyingEye/takehit
+  rotate: false
+  xy: 3300, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Goblin/attack
+  rotate: false
+  xy: 3450, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Goblin/attack
+  rotate: false
+  xy: 3600, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Goblin/attack
+  rotate: false
+  xy: 3750, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Goblin/attack
+  rotate: false
+  xy: 3900, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+Goblin/attack
+  rotate: false
+  xy: 3900, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+Goblin/attack
+  rotate: false
+  xy: 3900, 0
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Goblin/attack
+  rotate: false
+  xy: 0, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+Goblin/attack
+  rotate: false
+  xy: 150, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+Goblin/death
+  rotate: false
+  xy: 300, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Goblin/death
+  rotate: false
+  xy: 450, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Goblin/death
+  rotate: false
+  xy: 600, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Goblin/death
+  rotate: false
+  xy: 750, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Goblin/idle
+  rotate: false
+  xy: 900, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Goblin/idle
+  rotate: false
+  xy: 1050, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Goblin/idle
+  rotate: false
+  xy: 1200, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Goblin/idle
+  rotate: false
+  xy: 1350, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Goblin/run
+  rotate: false
+  xy: 1500, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Goblin/run
+  rotate: false
+  xy: 1650, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Goblin/run
+  rotate: false
+  xy: 1800, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Goblin/run
+  rotate: false
+  xy: 1950, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Goblin/run
+  rotate: false
+  xy: 2100, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+Goblin/run
+  rotate: false
+  xy: 2250, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+Goblin/run
+  rotate: false
+  xy: 2400, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+Goblin/run
+  rotate: false
+  xy: 2550, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+Goblin/takehit
+  rotate: false
+  xy: 2700, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Goblin/takehit
+  rotate: false
+  xy: 2850, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Goblin/takehit
+  rotate: false
+  xy: 3000, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Goblin/takehit
+  rotate: false
+  xy: 3150, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Mushroom/attack
+  rotate: false
+  xy: 3300, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Mushroom/attack
+  rotate: false
+  xy: 3450, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Mushroom/attack
+  rotate: false
+  xy: 3600, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Mushroom/attack
+  rotate: false
+  xy: 3750, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+Mushroom/attack
+  rotate: false
+  xy: 3750, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+Mushroom/attack
+  rotate: false
+  xy: 3750, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Mushroom/attack
+  rotate: false
+  xy: 3900, 150
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+Mushroom/attack
+  rotate: false
+  xy: 0, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+Mushroom/death
+  rotate: false
+  xy: 150, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Mushroom/death
+  rotate: false
+  xy: 300, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Mushroom/death
+  rotate: false
+  xy: 450, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Mushroom/death
+  rotate: false
+  xy: 600, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Mushroom/idle
+  rotate: false
+  xy: 750, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Mushroom/idle
+  rotate: false
+  xy: 900, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Mushroom/idle
+  rotate: false
+  xy: 1050, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Mushroom/idle
+  rotate: false
+  xy: 1200, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Mushroom/run
+  rotate: false
+  xy: 1350, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Mushroom/run
+  rotate: false
+  xy: 1500, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Mushroom/run
+  rotate: false
+  xy: 1650, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Mushroom/run
+  rotate: false
+  xy: 1800, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Mushroom/run
+  rotate: false
+  xy: 1950, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+Mushroom/run
+  rotate: false
+  xy: 2100, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+Mushroom/run
+  rotate: false
+  xy: 2250, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+Mushroom/run
+  rotate: false
+  xy: 2400, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+Mushroom/takehit
+  rotate: false
+  xy: 2550, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Mushroom/takehit
+  rotate: false
+  xy: 2700, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Mushroom/takehit
+  rotate: false
+  xy: 2850, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Mushroom/takehit
+  rotate: false
+  xy: 3000, 300
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Portal/run
+  rotate: false
+  xy: 3150, 300
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 0
+Portal/run
+  rotate: false
+  xy: 3300, 300
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+Portal/run
+  rotate: false
+  xy: 3450, 300
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+Portal/run
+  rotate: false
+  xy: 3600, 300
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+Portal/run
+  rotate: false
+  xy: 3750, 300
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+Portal/run
+  rotate: false
+  xy: 3900, 300
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+Portal/run
+  rotate: false
+  xy: 0, 450
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+Portal/run
+  rotate: false
+  xy: 150, 450
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 7
+Skeleton/attack
+  rotate: false
+  xy: 300, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Skeleton/attack
+  rotate: false
+  xy: 450, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Skeleton/attack
+  rotate: false
+  xy: 600, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Skeleton/attack
+  rotate: false
+  xy: 750, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 4
+Skeleton/attack
+  rotate: false
+  xy: 750, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Skeleton/attack
+  rotate: false
+  xy: 750, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 5
+Skeleton/attack
+  rotate: false
+  xy: 900, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 6
+Skeleton/attack
+  rotate: false
+  xy: 1050, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 7
+Skeleton/death
+  rotate: false
+  xy: 1200, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Skeleton/death
+  rotate: false
+  xy: 1350, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Skeleton/death
+  rotate: false
+  xy: 1500, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Skeleton/death
+  rotate: false
+  xy: 1650, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Skeleton/idle
+  rotate: false
+  xy: 1800, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Skeleton/idle
+  rotate: false
+  xy: 1950, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Skeleton/idle
+  rotate: false
+  xy: 2100, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Skeleton/idle
+  rotate: false
+  xy: 2250, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Skeleton/run
+  rotate: false
+  xy: 2400, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Skeleton/run
+  rotate: false
+  xy: 2550, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Skeleton/run
+  rotate: false
+  xy: 2700, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Skeleton/run
+  rotate: false
+  xy: 2850, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+Skeleton/takehit
+  rotate: false
+  xy: 3000, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 0
+Skeleton/takehit
+  rotate: false
+  xy: 3150, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 1
+Skeleton/takehit
+  rotate: false
+  xy: 3300, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 2
+Skeleton/takehit
+  rotate: false
+  xy: 3450, 450
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: 3
+char_blue_1/attack
+  rotate: false
+  xy: 3600, 450
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 0
+char_blue_1/attack
+  rotate: false
+  xy: 3750, 450
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 1
+char_blue_1/attack
+  rotate: false
+  xy: 3900, 450
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 2
+char_blue_1/attack
+  rotate: false
+  xy: 0, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 3
+char_blue_1/attack
+  rotate: false
+  xy: 150, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 4
+char_blue_1/attack
+  rotate: false
+  xy: 300, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 5
+char_blue_1/attack
+  rotate: false
+  xy: 450, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 6
+char_blue_1/attack
+  rotate: false
+  xy: 600, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 7
+char_blue_1/death
+  rotate: false
+  xy: 750, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 0
+char_blue_1/death
+  rotate: false
+  xy: 900, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 1
+char_blue_1/death
+  rotate: false
+  xy: 1050, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 2
+char_blue_1/death
+  rotate: false
+  xy: 1200, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 3
+char_blue_1/death
+  rotate: false
+  xy: 1350, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 4
+char_blue_1/death
+  rotate: false
+  xy: 1500, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 5
+char_blue_1/death
+  rotate: false
+  xy: 1650, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 6
+char_blue_1/death
+  rotate: false
+  xy: 1800, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 7
+char_blue_1/death
+  rotate: false
+  xy: 1950, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 8
+char_blue_1/death
+  rotate: false
+  xy: 2100, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 9
+char_blue_1/death
+  rotate: false
+  xy: 2250, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 10
+char_blue_1/death
+  rotate: false
+  xy: 2400, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 11
+char_blue_1/iddle
+  rotate: false
+  xy: 2550, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 4
+char_blue_1/iddle
+  rotate: false
+  xy: 2700, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 5
+char_blue_1/idle
+  rotate: false
+  xy: 2850, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 0
+char_blue_1/idle
+  rotate: false
+  xy: 3000, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 1
+char_blue_1/idle
+  rotate: false
+  xy: 3150, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 2
+char_blue_1/idle
+  rotate: false
+  xy: 3300, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 3
+char_blue_1/jump
+  rotate: false
+  xy: 3450, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 0
+char_blue_1/jump
+  rotate: false
+  xy: 3600, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 1
+char_blue_1/jump
+  rotate: false
+  xy: 3750, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 2
+char_blue_1/jump
+  rotate: false
+  xy: 3900, 600
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 3
+char_blue_1/jump
+  rotate: false
+  xy: 0, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 4
+char_blue_1/jump
+  rotate: false
+  xy: 150, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 5
+char_blue_1/jump
+  rotate: false
+  xy: 300, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 6
+char_blue_1/jump
+  rotate: false
+  xy: 450, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 7
+char_blue_1/run
+  rotate: false
+  xy: 600, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 0
+char_blue_1/run
+  rotate: false
+  xy: 750, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 1
+char_blue_1/run
+  rotate: false
+  xy: 900, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 2
+char_blue_1/run
+  rotate: false
+  xy: 1050, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 3
+char_blue_1/run
+  rotate: false
+  xy: 1200, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 4
+char_blue_1/run
+  rotate: false
+  xy: 1350, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 5
+char_blue_1/run
+  rotate: false
+  xy: 1500, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 6
+char_blue_1/run
+  rotate: false
+  xy: 1650, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 7
+char_blue_1/takehit
+  rotate: false
+  xy: 1800, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 0
+char_blue_1/takehit
+  rotate: false
+  xy: 1950, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 1
+char_blue_1/takehit
+  rotate: false
+  xy: 2100, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 2
+char_blue_1/takehit
+  rotate: false
+  xy: 2250, 750
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: 3

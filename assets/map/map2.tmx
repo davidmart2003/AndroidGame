@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="5">
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <tileset firstgid="1961" source="entities.tsx"/>
+ <layer id="1" name="Capa de patrones 1" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzbzsjAkM7EwLCdcXDgDCS3DCZ30cqPgwXTK6yx+X0xUGzJQIQJ0M4dZNpLCzcTFQdM1LebGHthdpIbXrSIo6GSboZrOTaKhw4mJq9QSw0KxpJXMMwgJj9Ro+wZgPILAAk8q1c=
+  </data>
+ </layer>
+ <layer id="2" name="background_1" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBi5gI2A3DYgsR2IdwCxLVS8kYmBoQmIm5kgfHzibEjyyGYRAqeAak4D8RkgDoSKTQWaOw2Ip0PNJyQeiMUsdIDupntA+j4QP0BSuxJo7iogXs2ECBds4ugA2Sx0e/C5iYjgIQqwYbEHm//IAehxjQ4osQdfOkGPa3LchgvgixNCcU3Ibfj8RGmc4HMbPj/RElArnY2CoQGIyXOE1BCSx5aH0PMcMWrQASF5bHkIPc8RowYdkFJ/4AJDIZ8BAHyQYo0=
+  </data>
+ </layer>
+ <objectgroup id="4" name="Entities">
+  <object id="1" name="Player" gid="1961" x="68.6667" y="52" width="56" height="56"/>
+  <object id="2" name="MushRoom" gid="1964" x="334.333" y="254.333" width="150" height="150"/>
+  <object id="3" name="MushRoom" gid="1964" x="229.667" y="255" width="150" height="150"/>
+  <object id="4" name="MushRoom" gid="1964" x="72.3333" y="264.333" width="150" height="150"/>
+ </objectgroup>
+ <layer id="3" name="foreground_1" width="30" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztVdsNwjAMdPKRHUtngE5A2aAtsAF0UJwvaPAzIl/0JEuRfbpzkzoBsGNKADPGkt65LgIcMPq45XJ5SYvDAzlPjPWDm5cn1B4K/WOk85KWtyepbPicLx+pJ6+2BKuPF+cAMGJcwm91M6QzuaLfDeMu+Nb2pu2VtoW5t8yhevP8+15fidfq/DXfHf8Fy8xpHK1OzVB5H3Acbi4tde4t0jgUr6zVzo7lPeI4+7y2xQs9czDx
+  </data>
+ </layer>
+</map>
