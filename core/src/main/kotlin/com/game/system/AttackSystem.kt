@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.physics.box2d.World
 import com.game.component.*
 import com.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
+import com.game.system.EntitySpawnSystem.Companion.PLAYER_HIT_BOX_SENSOR
 import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
@@ -70,7 +71,7 @@ class AttackSystem(
                 )
             }
             myWorld.query(AABB_RECT.x, AABB_RECT.y, AABB_RECT.width, AABB_RECT.height){ fixture ->
-                if(fixture.userData != HIT_BOX_SENSOR){
+                if(fixture.userData != PLAYER_HIT_BOX_SENSOR && fixture.userData != HIT_BOX_SENSOR){
                     return@query true
                 }
 

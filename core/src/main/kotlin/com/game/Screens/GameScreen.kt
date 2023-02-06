@@ -64,6 +64,7 @@ class GameScreen : KtxScreen {
             add<FloatingTextSystem>()
             add<LevelSystem>()
             add<SpawnPortalSystem>()
+            add<DespawnSystem>()
             add<RenderSystem>()
             add<DebugSystem>()
         }

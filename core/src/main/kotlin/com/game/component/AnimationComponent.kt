@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 
 enum class  AnimationType{
-    char_blue_1,FlyingEye,Skeleton,Goblin,Mushroom,UNDEFINED;
+    char_blue_1,FlyingEye,Skeleton,Goblin,Mushroom,Portal,UNDEFINED;
 
 
 }

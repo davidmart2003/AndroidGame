@@ -12,3 +12,6 @@ data class MapChangeEvent (
     val map:TiledMap
 ) : Event() {
 }
+class SpawnPortalEvent()
+ : Event() {
+}

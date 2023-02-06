@@ -2,10 +2,16 @@ package com.game.input
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys.*
+import com.badlogic.gdx.maps.tiled.TiledMap
+import com.badlogic.gdx.maps.tiled.TmxMapLoader
+import com.badlogic.gdx.scenes.scene2d.Stage
 import com.game.component.AttackComponent
 import com.game.component.MoveComponent
 import com.game.component.PlayerComponent
+import com.game.event.MapChangeEvent
+import com.game.event.fire
 import com.github.quillraven.fleks.ComponentMapper
+import com.github.quillraven.fleks.Qualifier
 import ktx.app.KtxInputAdapter
 
 class PlayerKeyboardInputProcessor(
@@ -13,7 +19,7 @@ class PlayerKeyboardInputProcessor(
     private val moveComponent: ComponentMapper<MoveComponent> = world.mapper(),
     private val attackComponents: ComponentMapper<AttackComponent> = world.mapper()
 ) : KtxInputAdapter {
-
+    private var currentMap: TiledMap?=null
     private var playerSeno = 0f
     private var playerCoseno = 0f
     private val playerEntities = world.family(allOf = arrayOf(PlayerComponent::class))
@@ -57,6 +63,9 @@ class PlayerKeyboardInputProcessor(
                 }
                 return true
             }
+        if(keycode==G){
+
+        }
         return false
     }
 

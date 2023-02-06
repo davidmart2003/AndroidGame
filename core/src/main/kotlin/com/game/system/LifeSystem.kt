@@ -57,6 +57,7 @@ class LifeSystem(
             val playerEntities = world.family(allOf = arrayOf(PlayerComponent::class))
             playerEntities.forEach { player ->
                 lifeComponents[player].exp += lifeComponent.exp
+                Gdx.input.vibrate(100)
              //   log.debug {  "Experincia del jugador "+lifeComponents[player].exp.toString()}
             }
             animationComponents.getOrNull(entity)?.let { animationComponent ->

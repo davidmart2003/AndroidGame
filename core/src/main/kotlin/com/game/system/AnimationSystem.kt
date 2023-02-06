@@ -12,6 +12,7 @@ import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
 import ktx.app.gdxError
 import ktx.collections.map
+import ktx.log.logger
 
 @AllOf([AnimationComponent::class, ImageComponent::class])
 class AnimationSystem(
@@ -25,39 +26,42 @@ class AnimationSystem(
 
     override fun onTickEntity(entity: Entity) {
         val animationComponent = animationComponents[entity]
-
         if (animationComponent.nextAnimation == NO_ANIMATION) {
             animationComponent.stateTime += deltaTime
 
         } else {
             animationComponent.animation = animation(animationComponent.nextAnimation)
             animationComponent.stateTime = 0f
-            animationComponent.nextAnimation= NO_ANIMATION
+            animationComponent.nextAnimation = NO_ANIMATION
 
         }
+
         animationComponent.animation.playMode = animationComponent.playMode
         imageComponents[entity].image.drawable = animationComponent.animation.getKeyFrame(animationComponent.stateTime)
     }
 
-    private fun animation(anyKeyPath:String) : Animation<TextureRegionDrawable>{
+    private fun animation(anyKeyPath: String): Animation<TextureRegionDrawable> {
         return cachedAnimation.getOrPut(anyKeyPath) {
+            log.debug { textureAtlas.findRegions(anyKeyPath).toString() }
             val regions = textureAtlas.findRegions(anyKeyPath)
-            if(regions.isEmpty){
+            if (regions.isEmpty) {
                 gdxError("No hay regiones para esa imagen")
             }
-            if(anyKeyPath=="char_blue_1/attack"){
-                Animation(`DEFAULT_FRAME-ATTACK_DURATION`,regions.map { TextureRegionDrawable(it) })
+            if (anyKeyPath == "char_blue_1/attack") {
+                Animation(`DEFAULT_FRAME-ATTACK_DURATION`, regions.map { TextureRegionDrawable(it) })
 
-            }else {
-            Animation(DEFAULT_FRAME_DURATION,regions.map { TextureRegionDrawable(it) })
+            } else {
+                Animation(DEFAULT_FRAME_DURATION, regions.map { TextureRegionDrawable(it) })
 
             }
         }
 
     }
 
-    companion object{
-        private const val  DEFAULT_FRAME_DURATION=1/8f
-        private const val `DEFAULT_FRAME-ATTACK_DURATION` =1/15f
+    companion object {
+        private const val DEFAULT_FRAME_DURATION = 1 / 8f
+        private const val `DEFAULT_FRAME-ATTACK_DURATION` = 1 / 15f
+        private val log = logger<AnimationSystem>()
+
     }
 }
