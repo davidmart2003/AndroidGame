@@ -6,12 +6,14 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
+import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Scaling
 import com.game.component.*
 import com.game.component.PhysicComponent.Companion.physicsComponentFromIMage
 import com.game.MyGame.Companion.UNIT_SCALE
 import com.game.actor.FlipImage
 import com.game.ai.DefaultGlobalState
+import com.game.event.DropItemEvent
 import com.game.event.MapChangeEvent
 import com.game.event.SpawnPortalEvent
 import com.github.quillraven.fleks.AllOf
@@ -36,6 +38,7 @@ class EntitySpawnSystem(
 
     private val cachedConfigurations = mutableMapOf<String, SpawnConfiguration>()
     private val cachedSizes = mutableMapOf<AnimationType, Vector2>()
+    private var tipo: String = ""
 
     private fun spawnConfiguration(type: String): SpawnConfiguration =
         cachedConfigurations.getOrPut(type) {
@@ -102,12 +105,20 @@ class EntitySpawnSystem(
                     dropExp = 5
 
                 )
+
                 "Portal" -> SpawnConfiguration(
                     AnimationType.Portal,
                     physicScaling = vec2(0.2f, 0.4f),
                     physicOffset = vec2(0f * UNIT_SCALE, -5f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
 
+                    )
+
+                "Armor" -> SpawnConfiguration(
+                    AnimationType.Armor,
+                    physicScaling = vec2(0.2f, 0.4f),
+                    physicOffset = vec2(0f * UNIT_SCALE, -5f * UNIT_SCALE),
+                    bodyType = BodyDef.BodyType.DynamicBody,
                 )
 
                 else -> gdxError("$type no tiene configuration")
@@ -133,11 +144,21 @@ class EntitySpawnSystem(
                 world.entity {
 
                     add<SpawnComponent>() {
-                        type="Portal"
-                        location.set(1600 * UNIT_SCALE ,350 * UNIT_SCALE )
+                        type = "Portal"
+                        location.set(1600 * UNIT_SCALE, 350 * UNIT_SCALE)
                     }
                 }
 
+            }
+
+            is DropItemEvent -> {
+                world.entity {
+
+                    add<SpawnComponent>() {
+                        type = "Armor"
+                        location.set(1500 * UNIT_SCALE, 300 * UNIT_SCALE)
+                    }
+                }
             }
         }
 
@@ -147,8 +168,11 @@ class EntitySpawnSystem(
     override fun onTickEntity(entity: Entity) {
         with(spawnComponent[entity]) {
             val configuration = spawnConfiguration(type)
+            tipo = type
+
             val relativeSize = size(configuration.model)
-            val tipo : String= type
+
+
             world.entity {
                 val imageComponent = add<ImageComponent> {
                     image = FlipImage().apply {
@@ -157,10 +181,17 @@ class EntitySpawnSystem(
                         setScaling(Scaling.fill)
                     }
                 }
+                if (tipo != "Armor") {
 
-                add<AnimationComponent> {
-                    nextAnimation(configuration.model, AnimationState.RUN)
+                    add<AnimationComponent> {
+                        nextAnimation(configuration.model, AnimationState.RUN)
+                    }
+                }else {
+                    add<AnimationComponent> {
+                        nextAnimation(configuration.model, AnimationState.ARMOR)
+                    }
                 }
+
                 val physicComponent = physicsComponentFromIMage(
                     physicsWorld,
                     imageComponent.image,
@@ -175,13 +206,13 @@ class EntitySpawnSystem(
 
                     box(width, height, configuration.physicOffset) {
                         isSensor = configuration.bodyType != BodyDef.BodyType.StaticBody
-                        if(tipo=="Portal"){
-                            userData= PORTAL_HIT_BOX_SENSOR
-                        }else {
-                            if(tipo=="Player"){
-                                userData=PLAYER_HIT_BOX_SENSOR
-                            }else {
-                            userData = HIT_BOX_SENSOR
+                        if (tipo == "Portal") {
+                            userData = PORTAL_HIT_BOX_SENSOR
+                        } else {
+                            if (tipo == "Player") {
+                                userData = PLAYER_HIT_BOX_SENSOR
+                            } else {
+                                userData = HIT_BOX_SENSOR
 
                             }
 
@@ -221,6 +252,7 @@ class EntitySpawnSystem(
                 if (type == "Player") {
                     add<PlayerComponent>()
                     add<LevelComponent>()
+                    add<ShieldComponents>()
                     add<StateComponent> {
                         stateMachine.globalState = DefaultGlobalState.CHECK_ALIVE
                     }
@@ -229,6 +261,8 @@ class EntitySpawnSystem(
                     add<EnemyComponent>() {
                         addEnemies(entity)
                     }
+                add<ShieldComponents>()
+
 
                 if (configuration.aiTreePAth.isNotBlank()) {
                     add<AiComponent> {
@@ -246,7 +280,14 @@ class EntitySpawnSystem(
     }
 
     private fun size(model: AnimationType) = cachedSizes.getOrPut(model) {
-        val regions = atlas.findRegions("${model.name}/${AnimationState.RUN.atlasKey}")
+        var regions: Array<TextureAtlas.AtlasRegion>
+        if (tipo != "Armor") {
+
+            regions = atlas.findRegions("${model.name}/${AnimationState.RUN.atlasKey}")
+        } else {
+            regions = atlas.findRegions("${model.name}/${AnimationState.ARMOR.atlasKey}")
+
+        }
         if (regions.isEmpty) {
             gdxError("No hay regiones para ese tipo")
         }
@@ -259,7 +300,7 @@ class EntitySpawnSystem(
     companion object {
         const val HIT_BOX_SENSOR = "Hitbox"
         const val PORTAL_HIT_BOX_SENSOR = "Portal"
-        const val PLAYER_HIT_BOX_SENSOR="Player"
+        const val PLAYER_HIT_BOX_SENSOR = "Player"
         const val AI_SENSOR = "AiSensor"
     }
 }

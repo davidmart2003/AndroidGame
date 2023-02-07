@@ -15,3 +15,7 @@ data class MapChangeEvent (
 class SpawnPortalEvent()
  : Event() {
 }
+
+class DropItemEvent(): Event(){
+
+}

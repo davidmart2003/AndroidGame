@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.game.MyGame.Companion.UNIT_SCALE
 import com.game.component.*
 import com.game.event.MapChangeEvent
 import com.game.event.SpawnPortalEvent
@@ -30,32 +31,22 @@ class SpawnPortalSystem(
     private val floatingTextStyle = Label.LabelStyle(dmgFont, Color.RED)
 
     override fun onTickEntity(entity: Entity) {
-        var imageComponent = imgComponents[entity]
         if (enemies.numEntities < 1 && !created) {
-            player.forEach { player ->
-
-               imageComponent= imgComponents[player]
-            }
-            floatingText(
-                "Un portal acaba de aparecer\n, encuentralo para seguir",
-                vec2(imageComponent.image.x,imageComponent.image.y),
-                vec2(2f,2f)
-            )
             stage.fire(SpawnPortalEvent())
             created = true
         }
         //   log.debug { enemies.numEntities.toString()  }
     }
 
-    private fun floatingText(text: String, position: Vector2, size: Vector2) {
-        world.entity {
-            add<FloatingTextComponent> {
-                txtLocation.set(position.x, position.y - size.y * 0.5f)
-                lifeSpan = 5f
-                label = Label(text, floatingTextStyle)
-            }
-        }
-    }
+//    private fun floatingText(text: String, position: Vector2, size: Vector2) {
+//        world.entity {
+//            add<FloatingTextComponent> {
+//                txtLocation.set(position.x, position.y - size.y * 0.5f)
+//                lifeSpan = 5f
+//                label = Label(text, floatingTextStyle)
+//            }
+//        }
+//    }
 
     companion object {
         private val log = logger<LifeSystem>()

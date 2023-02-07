@@ -4,13 +4,13 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 
 enum class  AnimationType{
-    char_blue_1,FlyingEye,Skeleton,Goblin,Mushroom,Portal,UNDEFINED;
+    char_blue_1,FlyingEye,Skeleton,Goblin,Mushroom,Portal,Armor,UNDEFINED;
 
 
 }
 
 enum class AnimationState{
-    IDLE,RUN,DEATH,ATTACK,TAKEHIT,JUMP;
+    IDLE,RUN,DEATH,ATTACK,TAKEHIT,JUMP,ARMOR,SHIELD;
 
     val atlasKey:String = this.toString().lowercase()
 }

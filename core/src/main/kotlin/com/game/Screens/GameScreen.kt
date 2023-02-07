@@ -65,6 +65,7 @@ class GameScreen : KtxScreen {
             add<LevelSystem>()
             add<SpawnPortalSystem>()
             add<DespawnSystem>()
+            add<ShieldSystem>()
             add<RenderSystem>()
             add<DebugSystem>()
         }

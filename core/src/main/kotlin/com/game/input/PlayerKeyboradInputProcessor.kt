@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.game.component.AttackComponent
 import com.game.component.MoveComponent
 import com.game.component.PlayerComponent
+import com.game.component.ShieldComponents
 import com.game.event.MapChangeEvent
 import com.game.event.fire
 import com.github.quillraven.fleks.ComponentMapper
@@ -17,9 +18,10 @@ import ktx.app.KtxInputAdapter
 class PlayerKeyboardInputProcessor(
     private val world: com.github.quillraven.fleks.World,
     private val moveComponent: ComponentMapper<MoveComponent> = world.mapper(),
-    private val attackComponents: ComponentMapper<AttackComponent> = world.mapper()
+    private val attackComponents: ComponentMapper<AttackComponent> = world.mapper(),
+    private val shieldComponents: ComponentMapper<ShieldComponents> = world.mapper()
 ) : KtxInputAdapter {
-    private var currentMap: TiledMap?=null
+    private var currentMap: TiledMap? = null
     private var playerSeno = 0f
     private var playerCoseno = 0f
     private val playerEntities = world.family(allOf = arrayOf(PlayerComponent::class))
@@ -63,8 +65,12 @@ class PlayerKeyboardInputProcessor(
                 }
                 return true
             }
-        if(keycode==G){
-
+        if (keycode == G) {
+            playerEntities.forEach {
+                with(shieldComponents[it]) {
+                    doShield = true
+                }
+            }
         }
         return false
     }
@@ -79,6 +85,13 @@ class PlayerKeyboardInputProcessor(
             }
             updatePlayerMovement()
             return true
+        }
+        if (keycode == G) {
+            playerEntities.forEach {
+                with(shieldComponents[it]) {
+                    doShield = false
+                }
+            }
         }
         return false
     }
