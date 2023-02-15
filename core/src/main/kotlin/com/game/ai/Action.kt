@@ -8,6 +8,7 @@ import com.badlogic.gdx.ai.utils.random.FloatDistribution
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.math.MathUtils
 import com.game.component.AnimationState
+import com.game.event.EntityAggroEvent
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.world
 import ktx.math.vec2
@@ -81,6 +82,7 @@ class AttackTask : Action() {
     override fun execute(): Status {
         if (status != Status.RUNNING) {
             entity.animation(AnimationState.ATTACK, Animation.PlayMode.NORMAL, true)
+            entity.fireEvent(EntityAggroEvent(entity.entity))
             entity.doAndStartAttack()
             return Status.RUNNING
         }

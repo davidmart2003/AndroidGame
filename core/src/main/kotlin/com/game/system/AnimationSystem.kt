@@ -36,7 +36,7 @@ class AnimationSystem(
 
         }
 
-        animationComponent.animation.playMode = animationComponent.playMode
+        animationComponent.animation.playMode = animationComponent.mode
         imageComponents[entity].image.drawable = animationComponent.animation.getKeyFrame(animationComponent.stateTime)
     }
 

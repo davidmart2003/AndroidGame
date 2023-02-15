@@ -38,16 +38,16 @@ class EntitySpawnSystem(
 ) : EventListener, IteratingSystem() {
 
     private val cachedConfigurations = mutableMapOf<String, SpawnConfiguration>()
-    private val cachedSizes = mutableMapOf<AnimationType, Vector2>()
+    private val cachedSizes = mutableMapOf<String, Vector2>()
     private var tipo: String = ""
     private var num: Int = 0
     private var locationPortal: Vector2 = vec2(0f, 0f)
-    private var created : Boolean= false
+    private var created: Boolean = false
     private fun spawnConfiguration(type: String): SpawnConfiguration =
         cachedConfigurations.getOrPut(type) {
             when (type) {
                 "Player" -> SpawnConfiguration(
-                    AnimationType.char_blue_1,
+                    "char_blue_1",
                     physicScaling = vec2(0.3f, 0.3f),
                     physicOffset = vec2(-1f * UNIT_SCALE, -10f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
@@ -59,7 +59,7 @@ class EntitySpawnSystem(
                     )
 
                 "Flying Eye" -> SpawnConfiguration(
-                    AnimationType.FlyingEye,
+                    "FlyingEye",
                     physicScaling = vec2(0.2f, 0.13f),
                     physicOffset = vec2(0f * UNIT_SCALE, -6f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
@@ -71,7 +71,7 @@ class EntitySpawnSystem(
                 )
 
                 "Goblin" -> SpawnConfiguration(
-                    AnimationType.Goblin,
+                    "Goblin",
                     physicScaling = vec2(0.2f, 0.13f),
                     physicOffset = vec2(0f * UNIT_SCALE, -6f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
@@ -84,7 +84,7 @@ class EntitySpawnSystem(
                 )
 
                 "MushRoom" -> SpawnConfiguration(
-                    AnimationType.Mushroom,
+                    "Mushroom",
                     physicScaling = vec2(0.2f, 0.13f),
                     physicOffset = vec2(0f * UNIT_SCALE, -6f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
@@ -97,7 +97,7 @@ class EntitySpawnSystem(
                 )
 
                 "Skeleton" -> SpawnConfiguration(
-                    AnimationType.Skeleton,
+                    "Skeleton",
                     physicScaling = vec2(0.2f, 0.13f),
                     physicOffset = vec2(0f * UNIT_SCALE, -6f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
@@ -110,19 +110,13 @@ class EntitySpawnSystem(
                 )
 
                 "Portal" -> SpawnConfiguration(
-                    AnimationType.Portal,
+                    "Portal",
                     physicScaling = vec2(0.2f, 0.4f),
                     physicOffset = vec2(0f * UNIT_SCALE, -5f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
 
                     )
 
-                "Armor" -> SpawnConfiguration(
-                    AnimationType.Armor,
-                    physicScaling = vec2(0.2f, 0.4f),
-                    physicOffset = vec2(0f * UNIT_SCALE, -5f * UNIT_SCALE),
-                    bodyType = BodyDef.BodyType.DynamicBody,
-                )
 
                 else -> gdxError("$type no tiene configuration")
             }
@@ -131,7 +125,7 @@ class EntitySpawnSystem(
     override fun handle(event: Event?): Boolean {
         when (event) {
             is MapChangeEvent -> {
-                CREATED=false
+                CREATED = false
 
                 val entityLayer = event.map.layer("Entities")
                 entityLayer.objects.forEach { mapObject ->
@@ -175,7 +169,7 @@ class EntitySpawnSystem(
             val configuration = spawnConfiguration(type)
             tipo = type
 
-            val relativeSize = size(configuration.model)
+            val relativeSize = size(configuration.atlasKey)
 
 
             world.entity {
@@ -186,15 +180,8 @@ class EntitySpawnSystem(
                         setScaling(Scaling.fill)
                     }
                 }
-                if (tipo != "Armor") {
-
-                    add<AnimationComponent> {
-                        nextAnimation(configuration.model, AnimationState.RUN)
-                    }
-                } else {
-                    add<AnimationComponent> {
-                        nextAnimation(configuration.model, AnimationState.ARMOR)
-                    }
+                add<AnimationComponent> {
+                    nextAnimation(configuration.atlasKey, AnimationState.RUN)
                 }
 
                 val physicComponent = physicsComponentFromIMage(
@@ -284,23 +271,18 @@ class EntitySpawnSystem(
         world.remove(entity)
     }
 
-    private fun size(model: AnimationType) = cachedSizes.getOrPut(model) {
-        var regions: Array<TextureAtlas.AtlasRegion>
-        if (tipo != "Armor") {
-
-            regions = atlas.findRegions("${model.name}/${AnimationState.RUN.atlasKey}")
-        } else {
-            regions = atlas.findRegions("${model.name}/${AnimationState.ARMOR.atlasKey}")
-
-        }
-        if (regions.isEmpty) {
-            gdxError("No hay regiones para ese tipo")
+    private fun size(atlasKey: String): Vector2 {
+        return cachedSizes.getOrPut(atlasKey) {
+            val regions = atlas.findRegions("$atlasKey/${AnimationState.IDLE.atlasKey}")
+            if (regions.isEmpty) {
+                gdxError("There are no texture regions for $atlasKey")
+            }
+            val firstFrame = regions.first()
+            vec2(firstFrame.originalWidth * UNIT_SCALE, firstFrame.originalHeight * UNIT_SCALE)
         }
 
-        val firstFrame = regions.first()
-
-        vec2(firstFrame.originalWidth * UNIT_SCALE, firstFrame.originalHeight * UNIT_SCALE)
     }
+
 
     companion object {
         const val HIT_BOX_SENSOR = "Hitbox"

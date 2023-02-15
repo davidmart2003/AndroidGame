@@ -1,0 +1,48 @@
+
+ui.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+background
+  rotate: false
+  xy: 2, 4
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+backgroundInfo
+  rotate: false
+  xy: 516, 4
+  size: 164, 168
+  orig: 164, 168
+  offset: 0, 0
+  index: -1
+damage
+  rotate: false
+  xy: 1030, 4
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+flyingeye
+  rotate: false
+  xy: 2, 518
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 516, 518
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: -1
+lifebar
+  rotate: false
+  xy: 1030, 518
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1

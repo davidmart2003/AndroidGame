@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import ktx.math.vec2
 
 data class SpawnConfiguration(
-    val model: AnimationType,
+    val atlasKey: String,
     val speedScaling: Float = 1f,
     val canAttack : Boolean = true,
     var attackScaling : Float=1f,

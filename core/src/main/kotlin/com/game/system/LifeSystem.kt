@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
 import com.game.MyGame
 import com.game.component.*
-import com.game.event.DropItemEvent
+import com.game.event.EntityDamageEvent
 import com.game.event.fire
 import com.github.quillraven.fleks.*
 import ktx.actors.stage
@@ -46,10 +46,11 @@ class LifeSystem(
 
             if (lifeComponent.takeDamage > 0f) {
                 lifeComponent.isTakingDamage = true
+                stage.fire(EntityDamageEvent(entity))
                 if (lifeComponent.isTakingDamage) {
                     animationComponents.getOrNull(entity)?.let { animationComponent ->
                         animationComponent.nextAnimation(AnimationState.TAKEHIT)
-                        animationComponent.playMode = Animation.PlayMode.NORMAL
+                        animationComponent.mode = Animation.PlayMode.NORMAL
                     }
                 }
                 val physicComponent = physicComponents[entity]
@@ -79,10 +80,10 @@ class LifeSystem(
             }
             animationComponents.getOrNull(entity)?.let { animationComponent ->
                 animationComponent.nextAnimation(AnimationState.DEATH)
-                animationComponent.playMode = Animation.PlayMode.NORMAL
+                animationComponent.mode = Animation.PlayMode.NORMAL
             }
 
-            stage.fire(DropItemEvent())
+
             configureEntity(entity) {
                 deadComponent.add(it) {
                     if (entity in playerComponent) {
@@ -114,15 +115,7 @@ class LifeSystem(
 
     override fun handle(event: Event?): Boolean {
         when (event){
-            is DropItemEvent -> {
-                world.entity {
 
-                    add<SpawnComponent>() {
-                        type = "Armor"
-                        location.set(position.x ,position.y)
-                    }
-                }
-            }
         }
         return true
     }

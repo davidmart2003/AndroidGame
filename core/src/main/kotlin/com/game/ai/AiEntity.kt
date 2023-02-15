@@ -4,9 +4,13 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.Event
+import com.badlogic.gdx.scenes.scene2d.Stage
 import com.game.component.*
+import com.game.event.fire
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
+import com.github.quillraven.fleks.Qualifier
 import com.github.quillraven.fleks.World
 import ktx.math.component1
 import ktx.math.component2
@@ -16,7 +20,8 @@ private val TMP_RECT = Rectangle()
 
 data class AiEntity(
     val entity: Entity,
-    val world: World,
+    private val world: World,
+    private val stage:Stage,
     private val animationComponents: ComponentMapper<AnimationComponent> = world.mapper(),
     private val moveComponents: ComponentMapper<MoveComponent> = world.mapper(),
     private val attackComponents: ComponentMapper<AttackComponent> = world.mapper(),
@@ -32,7 +37,7 @@ data class AiEntity(
     val wantsToAttack: Boolean
         get() = attackComponents.getOrNull(entity)?.doAttack ?: false
 
-    val takehit : Boolean
+    val takehit: Boolean
         get() = lifeComponents.getOrNull(entity)?.isTakingDamage ?: false
     val wantsToRun: Boolean
         get() {
@@ -44,7 +49,7 @@ data class AiEntity(
         get() = attackComponents[entity]
 
     val isAnimationDone: Boolean
-        get() = animationComponents[entity].isAnimationDone
+        get() = animationComponents[entity].isAnimationFinished()
 
     val isDead: Boolean
         get() = lifeComponents[entity].isDead
@@ -52,7 +57,7 @@ data class AiEntity(
     fun animation(type: AnimationState, mode: PlayMode = PlayMode.LOOP, resetAnimation: Boolean = false) {
         with(animationComponents[entity]) {
             nextAnimation(type)
-            this.playMode = mode
+            this.mode = mode
 
             if (resetAnimation) {
                 stateTime = 0f
@@ -60,25 +65,26 @@ data class AiEntity(
         }
     }
 
-    fun followPlayerX() :  Float{
+    fun followPlayerX(): Float {
         val playerEntities = world.family(allOf = arrayOf(PlayerComponent::class))
-        playerEntities.forEach { player->
-            with(physicComponents[player]){
+        playerEntities.forEach { player ->
+            with(physicComponents[player]) {
                 return this.body.position.x
             }
         }
         return 0f
     }
 
-    fun followPlayerY() :  Float{
+    fun followPlayerY(): Float {
         val playerEntities = world.family(allOf = arrayOf(PlayerComponent::class))
-        playerEntities.forEach { player->
-            with(physicComponents[player]){
+        playerEntities.forEach { player ->
+            with(physicComponents[player]) {
                 return this.body.position.y
             }
         }
         return 0f
     }
+
     fun state(next: EntityState, inmediateChange: Boolean = false) {
         with(stateComponents[entity]) {
             nextState = next
@@ -147,8 +153,8 @@ data class AiEntity(
         TMP_RECT.set(
             sourceX + offsetX - sizeX * 0.5f,
             sourceY + offsetY - sizeY * 0.5f,
-            sizeX+offsetX,
-            sizeY+offsetY
+            sizeX + offsetX,
+            sizeY + offsetY
 
         )
 
@@ -164,12 +170,12 @@ data class AiEntity(
 
     fun canAttack(): Boolean {
         val attackComponent = attackComponents[entity]
-        
+
         if (!attackComponent.isReady) {
             return false
         }
 
-        val enemy = nearbyEnemies().firstOrNull()?: return false
+        val enemy = nearbyEnemies().firstOrNull() ?: return false
 
         val enemyPhysicComponent = physicComponents[enemy]
         val (sourceX, sourceY) = enemyPhysicComponent.body.position
@@ -184,6 +190,9 @@ data class AiEntity(
     }
 
     fun hasEnemyNearby() = nearbyEnemies().isNotEmpty()
+    fun fireEvent(event : Event) {
+        stage.fire(event)
+    }
 
 
 }

@@ -16,11 +16,15 @@ import com.game.system.*
 import com.game.event.MapChangeEvent
 import com.game.event.fire
 import com.game.input.PlayerKeyboardInputProcessor
+import com.game.model.GameModel
+import com.game.ui.view.gameView
+import com.game.ui.view.loadSkin
 import com.github.quillraven.fleks.world
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.box2d.createWorld
 import ktx.math.vec2
+import ktx.scene2d.actors
 import java.util.logging.Level
 
 class GameScreen : KtxScreen {
@@ -68,6 +72,14 @@ class GameScreen : KtxScreen {
             add<ShieldSystem>()
             add<RenderSystem>()
             add<DebugSystem>()
+        }
+    }
+
+    init {
+        loadSkin()
+        uiStage.actors {
+            gameView(GameModel(world,gameStage))
+
         }
     }
 

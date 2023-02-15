@@ -91,7 +91,7 @@ class AttackSystem(
                 return@query true
             }
         }
-        val isDone = animationComponents.getOrNull(entity)?.isAnimationDone ?:true
+        val isDone = animationComponents.getOrNull(entity)?.isAnimationFinished() ?:true
         if(isDone){
             attackComponent.state = AttackState.READY
             AABB_RECT.set(0f,0f,0f,0f)
