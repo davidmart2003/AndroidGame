@@ -3,33 +3,46 @@ package com.game.Screens
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.viewport.ExtendViewport
-import com.game.view.GameView
+import com.game.ui.view.*
 import ktx.app.KtxScreen
-import ktx.scene2d.Scene2DSkin
-import ktx.scene2d.actors
+import ktx.scene2d.*
 
 class UiScreen : KtxScreen {
 
-    private val stage: Stage = Stage(ExtendViewport(320f,180f))
+    private val stage: Stage = Stage(ExtendViewport(720f,480f))
+    private lateinit var  gameView: GameView
+    init {
+        loadSkin()
+    }
 
     override fun resize(width: Int, height: Int) {
-        stage.viewport.update(width,height)
+        stage.viewport.update(width,height,true)
     }
 
     override fun show() {
         stage.clear()
-        Scene2DSkin.defaultSkin= Skin()
         stage.actors {
-            GameView(Scene2DSkin.defaultSkin)
+            gameView= gameView()
+
         }
+        stage.isDebugAll=true
     }
 
     override fun render(delta: Float) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
             hide()
             show()
+        }else  if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)){
+            gameView.playerLife(0f)
+        }else  if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)){
+            gameView.playerLife(0.5f)
+        }else  if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)){
+            gameView.playerLife(1f)
+        }else  if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)){
+            gameView.showEnemyInfo(Drawables.PLAYER,0.5f)
+        }else  if(Gdx.input.isKeyJustPressed(Input.Keys.E)){
+            gameView.popup("SI ME CORRO")
         }
 
         stage.act()
@@ -38,5 +51,6 @@ class UiScreen : KtxScreen {
 
     override fun dispose() {
         stage.dispose()
+        disposeSkin()
     }
 }
