@@ -15,16 +15,15 @@ class ShieldSystem(
     override fun onTickEntity(entity: Entity) {
         val shieldComponent = shieldComponents[entity]
 
-        if(shieldComponent.doShield ){
+        if (shieldComponent.doShield) {
             animationComponents.getOrNull(entity)?.let { animation ->
-            animation.nextAnimation(AnimationState.SHIELD)
-                animation.playMode=PlayMode.NORMAL
+                animation.nextAnimation(AnimationState.SHIELD)
+                animation.playMode = PlayMode.NORMAL
 
             }
-            val isDone = animationComponents.getOrNull(entity)?.isAnimationDone ?: true
-            if (isDone) {
-                shieldComponent.holdingShield = true
-            }
+
+            shieldComponent.holdingShield = true
+
         }
 
     }

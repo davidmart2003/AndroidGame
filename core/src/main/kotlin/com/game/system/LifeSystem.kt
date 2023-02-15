@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.Event
+import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
+import com.game.MyGame
 import com.game.component.*
 import com.game.event.DropItemEvent
 import com.game.event.fire
@@ -15,6 +18,7 @@ import com.github.quillraven.fleks.*
 import ktx.actors.stage
 import ktx.assets.disposeSafely
 import ktx.log.logger
+import ktx.math.vec2
 
 @AllOf([LifeComponent::class])
 @NoneOf([DeadComponent::class])
@@ -27,9 +31,10 @@ class LifeSystem(
     private val animationComponents: ComponentMapper<AnimationComponent>,
     private val shieldComponents: ComponentMapper<ShieldComponents>
 
-) : IteratingSystem() {
+) : EventListener,IteratingSystem() {
     private val dmgFont = BitmapFont(Gdx.files.internal("damage.fnt")).apply { data.setScale(2f) }
     private val floatingTextStyle = LabelStyle(dmgFont, Color.RED)
+    private var position : Vector2 = vec2(0f,0f)
     override fun onTickEntity(entity: Entity) {
         val lifeComponent = lifeComponents[entity]
         val playerEntities = world.family(allOf = arrayOf(PlayerComponent::class))
@@ -48,6 +53,7 @@ class LifeSystem(
                     }
                 }
                 val physicComponent = physicComponents[entity]
+                position = physicComponent.body.position
                 lifeComponent.life -= lifeComponent.takeDamage
                 floatingText(
                     lifeComponent.takeDamage.toInt().toString(),
@@ -60,6 +66,8 @@ class LifeSystem(
                 lifeComponent.isTakingDamage = false
             }
 
+        }else {
+            lifeComponent.takeDamage=0f
         }
         if (lifeComponent.isDead) {
             lifeComponent.isTakingDamage = false
@@ -73,6 +81,7 @@ class LifeSystem(
                 animationComponent.nextAnimation(AnimationState.DEATH)
                 animationComponent.playMode = Animation.PlayMode.NORMAL
             }
+
             stage.fire(DropItemEvent())
             configureEntity(entity) {
                 deadComponent.add(it) {
@@ -101,5 +110,20 @@ class LifeSystem(
 
     companion object {
         private val log = logger<LifeSystem>()
+    }
+
+    override fun handle(event: Event?): Boolean {
+        when (event){
+            is DropItemEvent -> {
+                world.entity {
+
+                    add<SpawnComponent>() {
+                        type = "Armor"
+                        location.set(position.x ,position.y)
+                    }
+                }
+            }
+        }
+        return true
     }
 }

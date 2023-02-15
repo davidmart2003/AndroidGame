@@ -8,12 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Scaling
+import com.game.MyGame.Companion.CREATED
 import com.game.component.*
 import com.game.component.PhysicComponent.Companion.physicsComponentFromIMage
 import com.game.MyGame.Companion.UNIT_SCALE
 import com.game.actor.FlipImage
 import com.game.ai.DefaultGlobalState
-import com.game.event.DropItemEvent
 import com.game.event.MapChangeEvent
 import com.game.event.SpawnPortalEvent
 import com.github.quillraven.fleks.AllOf
@@ -33,13 +33,16 @@ import kotlin.math.roundToInt
 class EntitySpawnSystem(
     private val physicsWorld: World,
     private val atlas: TextureAtlas,
-    private val spawnComponent: ComponentMapper<SpawnComponent>
+    private val spawnComponent: ComponentMapper<SpawnComponent>,
+    private val enemyComponents: ComponentMapper<EnemyComponent>
 ) : EventListener, IteratingSystem() {
 
     private val cachedConfigurations = mutableMapOf<String, SpawnConfiguration>()
     private val cachedSizes = mutableMapOf<AnimationType, Vector2>()
     private var tipo: String = ""
-
+    private var num: Int = 0
+    private var locationPortal: Vector2 = vec2(0f, 0f)
+    private var created : Boolean= false
     private fun spawnConfiguration(type: String): SpawnConfiguration =
         cachedConfigurations.getOrPut(type) {
             when (type) {
@@ -50,7 +53,7 @@ class EntitySpawnSystem(
                     bodyType = BodyDef.BodyType.DynamicBody,
                     attackExtraRange = 0.6f,
                     lifeScaling = 5f,
-                    speedScaling = 2f,
+                    speedScaling = 3f,
                     attackScaling = 3.75f,
 
                     )
@@ -128,6 +131,8 @@ class EntitySpawnSystem(
     override fun handle(event: Event?): Boolean {
         when (event) {
             is MapChangeEvent -> {
+                CREATED=false
+
                 val entityLayer = event.map.layer("Entities")
                 entityLayer.objects.forEach { mapObject ->
                     val type = mapObject.name ?: gdxError("MapObject no tiene tipo")
@@ -141,25 +146,25 @@ class EntitySpawnSystem(
             }
 
             is SpawnPortalEvent -> {
+                num++
                 world.entity {
 
+                    if (num == 1) {
+                        locationPortal = vec2(1600f * UNIT_SCALE, 350f * UNIT_SCALE)
+                    }
+                    if (num == 2) {
+                        locationPortal = vec2(370f * UNIT_SCALE, 172f * UNIT_SCALE)
+                    }
                     add<SpawnComponent>() {
                         type = "Portal"
-                        location.set(1600 * UNIT_SCALE, 350 * UNIT_SCALE)
+                        location.set(locationPortal.x, locationPortal.y)
+
                     }
+
                 }
 
             }
 
-            is DropItemEvent -> {
-                world.entity {
-
-                    add<SpawnComponent>() {
-                        type = "Armor"
-                        location.set(1500 * UNIT_SCALE, 300 * UNIT_SCALE)
-                    }
-                }
-            }
         }
 
         return true
@@ -186,7 +191,7 @@ class EntitySpawnSystem(
                     add<AnimationComponent> {
                         nextAnimation(configuration.model, AnimationState.RUN)
                     }
-                }else {
+                } else {
                     add<AnimationComponent> {
                         nextAnimation(configuration.model, AnimationState.ARMOR)
                     }
@@ -250,17 +255,17 @@ class EntitySpawnSystem(
                     }
                 }
                 if (type == "Player") {
+
                     add<PlayerComponent>()
                     add<LevelComponent>()
                     add<ShieldComponents>()
                     add<StateComponent> {
                         stateMachine.globalState = DefaultGlobalState.CHECK_ALIVE
                     }
+
                 }
                 if (type == "MushRoom" || type == "Flying Eye" || type == "Goblin" || type == "Skeleton")
-                    add<EnemyComponent>() {
-                        addEnemies(entity)
-                    }
+                    add<EnemyComponent>()
                 add<ShieldComponents>()
 
 

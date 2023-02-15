@@ -45,10 +45,10 @@ class AnimationSystem(
             log.debug { textureAtlas.findRegions(anyKeyPath).toString() }
             val regions = textureAtlas.findRegions(anyKeyPath)
             if (regions.isEmpty) {
-                gdxError("No hay regiones para esa imagen")
+                gdxError("No hay regiones para esa imagen, $anyKeyPath")
             }
             if (anyKeyPath == "char_blue_1/attack") {
-                Animation(`DEFAULT_FRAME-ATTACK_DURATION`, regions.map { TextureRegionDrawable(it) })
+                Animation(DEFAULT_FRAME_ATTACK_DURATION, regions.map { TextureRegionDrawable(it) })
 
             } else {
                 Animation(DEFAULT_FRAME_DURATION, regions.map { TextureRegionDrawable(it) })
@@ -60,7 +60,7 @@ class AnimationSystem(
 
     companion object {
         private const val DEFAULT_FRAME_DURATION = 1 / 8f
-        private const val `DEFAULT_FRAME-ATTACK_DURATION` = 1 / 15f
+        private const val DEFAULT_FRAME_ATTACK_DURATION = 1 / 15f
         private val log = logger<AnimationSystem>()
 
     }

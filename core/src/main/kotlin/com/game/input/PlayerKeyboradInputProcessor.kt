@@ -54,13 +54,22 @@ class PlayerKeyboardInputProcessor(
                 RIGHT -> playerCoseno = 1f
                 LEFT -> playerCoseno = -1f
             }
+            playerEntities.forEach {
+                with(shieldComponents[it]) {
+                    holdingShield=false
+                }
+            }
             updatePlayerMovement()
             return true
         } else
             if (keycode == SPACE) {
+
                 playerEntities.forEach {
                     with(attackComponents[it]) {
                         doAttack = true
+                    }
+                    with(shieldComponents[it]) {
+                        holdingShield=false
                     }
                 }
                 return true

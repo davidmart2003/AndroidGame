@@ -94,6 +94,7 @@ class AttackSystem(
         val isDone = animationComponents.getOrNull(entity)?.isAnimationDone ?:true
         if(isDone){
             attackComponent.state = AttackState.READY
+            AABB_RECT.set(0f,0f,0f,0f)
         }
 
     }

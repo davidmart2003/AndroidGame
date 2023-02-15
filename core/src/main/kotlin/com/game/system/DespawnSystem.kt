@@ -16,14 +16,16 @@ import ktx.math.vec2
 @NoneOf([SpawnComponent::class])
 class DespawnSystem(
     @Qualifier("gameStage") private val gameStage: Stage,
-
+    private val playerComponents: ComponentMapper<PlayerComponent>
 ) : IteratingSystem() {
     private var locationX: Float = 0f;
     private var currentMap: TiledMap? = null
+    private var numMap: Int=1
     override fun onTickEntity(entity: Entity) {
+        val playerComponent = playerComponents[entity]
         world.removeAll()
-
-        currentMap = TmxMapLoader().load("map/map2.tmx")
+        numMap++
+        currentMap = TmxMapLoader().load("map/map$numMap.tmx")
         gameStage.fire(MapChangeEvent(currentMap!!))
 
     }

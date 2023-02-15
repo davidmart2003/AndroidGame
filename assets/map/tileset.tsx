@@ -293,6 +293,51 @@
    <object id="1" x="0" y="0" width="7.12487" height="12.6883"/>
   </objectgroup>
  </tile>
+ <tile id="420">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="2" y="0" width="14" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="421">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="422">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="440">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="5.09091" y="0" width="10.9091" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="441">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="442">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="10.7273" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="460">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="5" y="0" width="11" height="6"/>
+  </objectgroup>
+ </tile>
+ <tile id="461">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="5"/>
+  </objectgroup>
+ </tile>
+ <tile id="462">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="14" height="6"/>
+  </objectgroup>
+ </tile>
  <tile id="610">
   <objectgroup draworder="index" id="2">
    <object id="1" x="1" y="0" width="15" height="16"/>
@@ -318,6 +363,22 @@
    <object id="1" x="0" y="0" width="15" height="16"/>
   </objectgroup>
  </tile>
+ <tile id="640">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="2" y="0" width="14" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="641">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+   <object id="2" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="642">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="12.8182" height="16"/>
+  </objectgroup>
+ </tile>
  <tile id="650">
   <objectgroup draworder="index" id="2">
    <object id="1" x="1" y="0" width="15" height="11"/>
@@ -331,6 +392,36 @@
  <tile id="652">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="15" height="11"/>
+  </objectgroup>
+ </tile>
+ <tile id="660">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="5.18182" y="0" width="10.8182" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="661">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="662">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="10.3636" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="680">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="5" y="0" width="11" height="6"/>
+  </objectgroup>
+ </tile>
+ <tile id="681">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="5"/>
+  </objectgroup>
+ </tile>
+ <tile id="682">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="10.2727" height="6"/>
   </objectgroup>
  </tile>
  <tile id="735">
@@ -366,6 +457,298 @@
  <tile id="905">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="12.8627"/>
+  </objectgroup>
+ </tile>
+ <tile id="1294">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="1" width="15" height="15"/>
+  </objectgroup>
+ </tile>
+ <tile id="1295">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="-2.09091" width="16" height="10"/>
+  </objectgroup>
+ </tile>
+ <tile id="1296">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="1" width="16" height="7.72727"/>
+  </objectgroup>
+ </tile>
+ <tile id="1297">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="1" width="16" height="7.63636"/>
+  </objectgroup>
+ </tile>
+ <tile id="1298">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="1" width="16" height="7.09091"/>
+  </objectgroup>
+ </tile>
+ <tile id="1299">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1314">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1319">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1334">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="3" y="0" width="13" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1339">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="13" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1354">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1359">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1374">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1379">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1394">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="1" y="0" width="15" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1395">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="8.09091" width="16" height="7.90909"/>
+  </objectgroup>
+ </tile>
+ <tile id="1396">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="8.45455" width="16" height="7.54545"/>
+  </objectgroup>
+ </tile>
+ <tile id="1397">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="6.72727" width="16" height="9.27273"/>
+  </objectgroup>
+ </tile>
+ <tile id="1398">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="8" width="16" height="8"/>
+  </objectgroup>
+ </tile>
+ <tile id="1399">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1400">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+  <animation>
+   <frame tileid="1403" duration="200"/>
+   <frame tileid="1404" duration="200"/>
+   <frame tileid="1405" duration="200"/>
+   <frame tileid="1406" duration="200"/>
+   <frame tileid="1407" duration="200"/>
+   <frame tileid="1408" duration="200"/>
+   <frame tileid="1409" duration="200"/>
+   <frame tileid="1410" duration="200"/>
+  </animation>
+ </tile>
+ <tile id="1401">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1402">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1403">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1404">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1405">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1406">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1407">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1408">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1409">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1410">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1411">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1412">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1413">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1414">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1415">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1416">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1420">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+  <animation>
+   <frame tileid="1423" duration="200"/>
+   <frame tileid="1424" duration="200"/>
+   <frame tileid="1426" duration="200"/>
+   <frame tileid="1427" duration="200"/>
+   <frame tileid="1428" duration="200"/>
+  </animation>
+ </tile>
+ <tile id="1421">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+  <animation>
+   <frame tileid="1428" duration="200"/>
+   <frame tileid="1429" duration="200"/>
+   <frame tileid="1430" duration="200"/>
+   <frame tileid="1431" duration="200"/>
+   <frame tileid="1432" duration="200"/>
+   <frame tileid="1433" duration="200"/>
+   <frame tileid="1434" duration="200"/>
+  </animation>
+ </tile>
+ <tile id="1422">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+  <animation>
+   <frame tileid="1412" duration="300"/>
+   <frame tileid="1413" duration="300"/>
+   <frame tileid="1414" duration="300"/>
+   <frame tileid="1416" duration="300"/>
+  </animation>
+ </tile>
+ <tile id="1423">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1424">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1425">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1426">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1427">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1428">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1429">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1430">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1431">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1432">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1433">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
+ <tile id="1434">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
   </objectgroup>
  </tile>
  <tile id="1439">

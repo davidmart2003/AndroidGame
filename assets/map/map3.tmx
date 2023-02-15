@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="45" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="6">
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <tileset firstgid="1961" source="entities.tsx"/>
+ <layer id="1" name="Capa de patrones 1" width="45" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxrZWVgaCUDEwJzWSjTjw+Q495RN4+6edTNA+9mXPZTy8/EuHkogVE30weMupk+AOZmUNk0VAC9yraBLp9H3UwbMBTdjA+Munn4uhkAJY2pXA==
+  </data>
+ </layer>
+ <layer id="2" name="background_1" width="45" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzVll1OwzAQhPviZwrlBlURN6hA3KBAuUEgcAN+CuoZSiROzFpkxTBZ27GTPDDSqHHjn8/OZrMrN5udiXN1JGPm4mPxiXhB16eJOZdy/7HQF+LLyPyrwJ78mtfiG/GteAu/3uftmAONbdr2egBzSrinT+jv17wXP4jrdq4a5r1yP/0PrsvttSEO3X8JM59rY/TRNfFc2XcwzmKuiEP3n8vc9IgVPeuKzpX9FGDWMxgSzznCM3+W6xfxK8Xzm3gnfk/MPVY8fwTWCcWH156Y90bsW+J4LmG2che2Q/cW7u87aI3FPIj/DWXm3DW1S3mV2ccE5q7/wKzxNSUjP8MUVyxf63tXTczMzzDFHMvXKsxdmq9C7dr9vnd9+msbr3cFMVGSn1XIzIrlRdTY9Qbm6S+jT4w5JZ17jPzslfoOxJhD3yMvqzbkeiPHc3Do+8G1sMWsNYXFZ9UwywhTqsbbum4dzG2shWrXZUbOVI2lWkcY+9R4XAdbdTHXcMic4tS4wb1tMhlDzyJ2zpZz8wbubUg8fwOvLOtx
+  </data>
+ </layer>
+ <layer id="5" name="background_2" width="45" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIwXsZ2NgOADEB9kG2iXUBcPVX6NgFIwCysFo+TAKhjoYTcOjYBQMfjDU8ykA4LwLmw==
+  </data>
+ </layer>
+ <objectgroup id="4" name="Entities">
+  <object id="1" name="Player" gid="1961" x="48.8691" y="172.669" width="56" height="56"/>
+  <object id="2" name="MushRoom" gid="1964" x="219.953" y="107.389" width="150" height="150"/>
+  <object id="3" name="MushRoom" gid="1964" x="3.59649" y="356.565" width="150" height="150"/>
+  <object id="4" name="Skeleton" gid="1965" x="520.52" y="149.71" width="150" height="150"/>
+  <object id="5" name="Skeleton" gid="1965" x="520.951" y="312.517" width="150" height="150"/>
+ </objectgroup>
+ <layer id="3" name="foreground_1" width="45" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztwQEBAAAAgiD/r25IQAEAAPBoDhAAAQ==
+  </data>
+ </layer>
+</map>

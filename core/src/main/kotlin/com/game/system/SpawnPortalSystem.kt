@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.game.MyGame.Companion.CREATED
 import com.game.MyGame.Companion.UNIT_SCALE
 import com.game.component.*
 import com.game.event.MapChangeEvent
@@ -18,24 +19,25 @@ import ktx.actors.stage
 import ktx.log.logger
 import ktx.math.vec2
 
-@AnyOf([PlayerComponent::class, EnemyComponent::class])
+@AllOf([PlayerComponent::class])
+
 class SpawnPortalSystem(
     @Qualifier("gameStage") private val stage: Stage,
     private val physicComponents: ComponentMapper<PhysicComponent>,
     private val imgComponents: ComponentMapper<ImageComponent>,
 ) : IteratingSystem() {
     val enemies = world.family(allOf = arrayOf(EnemyComponent::class))
-    val player = world.family(allOf = arrayOf(PlayerComponent::class))
-    var created: Boolean = false
+
     private val dmgFont = BitmapFont(Gdx.files.internal("damage.fnt")).apply { data.setScale(2f) }
     private val floatingTextStyle = Label.LabelStyle(dmgFont, Color.RED)
-
+    private var createdMap: Boolean = true
     override fun onTickEntity(entity: Entity) {
-        if (enemies.numEntities < 1 && !created) {
+        if (enemies.numEntities < 1 && !CREATED) {
             stage.fire(SpawnPortalEvent())
-            created = true
+            CREATED=true
         }
-        //   log.debug { enemies.numEntities.toString()  }
+
+        log.debug { enemies.numEntities.toString() }
     }
 
 //    private fun floatingText(text: String, position: Vector2, size: Vector2) {
