@@ -10,17 +10,29 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
+<<<<<<< HEAD
 import com.game.model.GameModel
+=======
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
 import com.game.widget.CharacterInfo
 import com.game.widget.characterInfo
 import ktx.actors.alpha
 import ktx.actors.plusAssign
 import ktx.actors.txt
+<<<<<<< HEAD
 import ktx.scene2d.*
 
 
 class GameView(
     model: GameModel,
+=======
+import ktx.scene2d.KTable
+import ktx.scene2d.label
+import ktx.scene2d.table
+
+
+class GameView(
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
     skin: Skin,
 ) : Table(skin), KTable {
 
@@ -29,6 +41,7 @@ class GameView(
     private val popupLabel: Label
 
     init {
+<<<<<<< HEAD
         //UI
         setFillParent(true)
         playerInfo = characterInfo(Drawables.PLAYER) {
@@ -39,6 +52,12 @@ class GameView(
             this.alpha = 0f
             it.row()
             it.top()
+=======
+        setFillParent(true)
+        enemyInfo = characterInfo(Drawables.PLAYER) {
+            this.alpha = 0f
+            it.row()
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
         }
 
 
@@ -54,6 +73,7 @@ class GameView(
 
             it.expand().width(330f).top().row()
         }
+<<<<<<< HEAD
 
 
         //data binding
@@ -87,6 +107,19 @@ class GameView(
 
     fun playerLife(percentage: Float) = playerInfo.life(percentage)
     fun enemyLife(percentage: Float) = enemyInfo.life(percentage)
+=======
+        playerInfo = characterInfo(Drawables.PLAYER) {
+            it.row()
+        }
+    }
+private fun Actor.resetFadeOutDelay(){
+    this.actions.filterIsInstance<SequenceAction>().lastOrNull()?.let { sequence ->
+        val delay = sequence.actions.last() as DelayAction
+        delay.time=0f
+     }
+}
+    fun playerLife(percentage: Float) = playerInfo.life(percentage)
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
 
     fun showEnemyInfo(drawables: Drawables, lifePercentage: Float) {
         enemyInfo.character(drawables)
@@ -105,6 +138,7 @@ class GameView(
 
     fun popup(infoText: String) {
         popupLabel.txt = infoText
+<<<<<<< HEAD
 
         popupLabel.parent.clearActions()
         popupLabel.parent += Actions.sequence(Actions.fadeIn(0.2f), delay(4f, fadeOut(0.75f)))
@@ -117,3 +151,9 @@ fun <S> KWidget<S>.gameView(
     skin: Skin = Scene2DSkin.defaultSkin,
     init: GameView.(S) -> Unit = {}
 ): GameView = actor(GameView(model, skin), init)
+=======
+        popupLabel.parent.clearActions()
+        popupLabel.parent += Actions.sequence(Actions.fadeIn(0.2f), delay(4f, fadeOut(0.75f)))
+    }
+}
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2

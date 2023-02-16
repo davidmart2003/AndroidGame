@@ -6,23 +6,34 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.game.component.AnimationComponent
 import com.game.component.LifeComponent
 import com.game.component.PlayerComponent
+<<<<<<< HEAD
 import com.game.event.EntityAggroEvent
 import com.game.event.EntityDamageEvent
 import com.game.event.EntityLootEvent
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.World
+=======
+import com.github.quillraven.fleks.ComponentMapper
+import com.github.quillraven.fleks.World
+import org.graalvm.compiler.hotspot.replacements.ObjectSubstitutions.notify
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
 
 
 class GameModel(
     world: World,
     stage: Stage,
+<<<<<<< HEAD
 ) : PropertyChangeSource(), EventListener {
+=======
+): EventListener{
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
 
     private val playerComponents: ComponentMapper<PlayerComponent> = world.mapper()
     private val lifeComponents: ComponentMapper<LifeComponent> = world.mapper()
     private val animationComponents: ComponentMapper<AnimationComponent> = world.mapper()
 
+<<<<<<< HEAD
     var playerLife = 1f
         private set(value) {
             notify(::playerLife, value)
@@ -81,6 +92,18 @@ class GameModel(
 
             else -> return false
         }
+=======
+    var playerLife=1f
+    private set(value) {
+       // notify(::playerLife,value)
+        field=value
+    }
+    var enemyLife=1f
+    var lootText=""
+
+    override fun handle(event: Event?): Boolean {
+        playerLife=2f
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
         return true
     }
 

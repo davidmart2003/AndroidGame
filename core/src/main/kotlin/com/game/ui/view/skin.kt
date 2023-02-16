@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable
+<<<<<<< HEAD
 import com.game.model.GameModel
+=======
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
 import ktx.assets.disposeSafely
 import ktx.scene2d.KWidget
 import ktx.scene2d.Scene2DSkin
@@ -20,7 +23,10 @@ enum class Drawables(
 ) {
     BACKGROUNDINFO("backgroundInfo"),
     PLAYER("idle"),
+<<<<<<< HEAD
     FLYINGEYE("flyingeye"),
+=======
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
     LIFEBAR("lifebar"),
     FRAME_BGD("background"),
     FRAME_FGD("background"),
@@ -69,4 +75,14 @@ fun loadSkin() {
 
 fun disposeSkin() {
     Scene2DSkin.defaultSkin.disposeSafely()
+<<<<<<< HEAD
 }
+=======
+}
+
+@Scene2dDsl
+fun <S> KWidget<S>.gameView(
+    skin: Skin = Scene2DSkin.defaultSkin,
+    init: GameView.(S) -> Unit = {}
+): GameView = actor(GameView(skin), init)
+>>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
