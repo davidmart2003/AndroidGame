@@ -34,7 +34,7 @@ class MoveSystem(
         val (velX, velY) = physicComponent.body.linearVelocity
 
         if (entity in playerComponents) {
-            log.debug { "ACTUALIZANDO" }
+          //  log.debug { "ACTUALIZANDO" }
 
             moveComponent.sin = playerSin
             moveComponent.cos = playerCos

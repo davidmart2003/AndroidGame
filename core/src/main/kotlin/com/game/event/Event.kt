@@ -32,6 +32,5 @@ class EntityAggroEvent(val entity: Entity?): Event(){
 class ButtonPressedEvent(val sin:Float,val cos:Float):Event(){
 
 }
-class ButtonNoPressedEvent(val sin:Float,val cos:Float):Event(){
-
-}
+class ButtonAttackPressed(val attack : Boolean) : Event()
+class ButtonShieldPressed(val shield : Boolean) : Event()

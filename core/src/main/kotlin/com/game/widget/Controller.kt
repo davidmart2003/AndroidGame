@@ -9,7 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
 import com.badlogic.gdx.utils.Scaling
 import com.game.ai.Action
+import com.game.event.ButtonAttackPressed
 import com.game.event.ButtonPressedEvent
+import com.game.event.ButtonShieldPressed
 import com.game.event.fire
 import com.game.ui.view.Buttons
 import com.game.ui.view.Drawables
@@ -30,6 +32,8 @@ class Controller(
     private val down: Button = button(Buttons.DOWN.skinKey)
     private val right: Button = button(Buttons.RIGHT.skinKey)
     private val left: Button = button(Buttons.LEFT.skinKey)
+    private val attack: Button = button(Buttons.LEFT.skinKey)
+    private val shield: Button = button(Buttons.LEFT.skinKey)
 
 
     init {
@@ -52,6 +56,16 @@ class Controller(
             setSize(100f,100f)
 
         }
+        this += attack.apply {
+            setSize(100f,100f)
+            setPosition(400f, 100f)
+
+        }
+        this += shield.apply {
+            setSize(100f,100f)
+            setPosition(600f, 100f)
+
+        }
 
         left.onTouchDown { stage.fire(ButtonPressedEvent(0f, -1f)) }
         left.onClick { stage.fire(ButtonPressedEvent(0f, 0f)) }
@@ -65,6 +79,11 @@ class Controller(
         down.onTouchDown { stage.fire(ButtonPressedEvent(-1f, 0f)) }
         down.onClick { stage.fire(ButtonPressedEvent(0f, 0f)) }
 
+        attack.onTouchDown { stage.fire(ButtonAttackPressed(true)) }
+        attack.onClick { stage.fire(ButtonAttackPressed(false)) }
+
+        shield.onTouchDown { stage.fire(ButtonShieldPressed(true)) }
+        shield.onClick { stage.fire(ButtonShieldPressed(false)) }
     }
 
     companion object {
