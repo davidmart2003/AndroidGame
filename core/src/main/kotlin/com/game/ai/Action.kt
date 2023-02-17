@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.math.MathUtils
 import com.game.component.AnimationState
 import com.game.event.EntityAggroEvent
+import com.game.ui.view.GameView
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.world
+import ktx.log.logger
 import ktx.math.vec2
 
 abstract class Action(
@@ -63,6 +65,8 @@ class WanderTask(
             if (startPos.isZero) {
                 startPos.set(entity.location)
             }
+            entity.fireEvent(EntityAggroEvent(null))
+
             targetpos.set(startPos)
             targetpos.x += MathUtils.random(-1f, 1f)
             targetpos.y += MathUtils.random(-1f, 1f)
@@ -82,10 +86,10 @@ class AttackTask : Action() {
     override fun execute(): Status {
         if (status != Status.RUNNING) {
             entity.animation(AnimationState.ATTACK, Animation.PlayMode.NORMAL, true)
-            entity.fireEvent(EntityAggroEvent(entity.entity))
             entity.doAndStartAttack()
             return Status.RUNNING
         }
+        entity.fireEvent(EntityAggroEvent(entity.entity))
 
         if (entity.isAnimationDone) {
             entity.animation(AnimationState.IDLE)
@@ -107,6 +111,8 @@ class FollowTask : Action() {
             if (startPos.isZero) {
                 startPos.set(entity.location)
             }
+            entity.fireEvent(EntityAggroEvent(entity.entity))
+            log.debug { "TE SIGO" }
             targetpos.set(startPos)
             targetpos.x = entity.followPlayerX()
             targetpos.y = entity.followPlayerY()
@@ -119,6 +125,10 @@ class FollowTask : Action() {
         }
 
         return Status.RUNNING
+    }
+
+    companion object{
+        private val log= logger<Action>()
     }
 }
 

@@ -23,6 +23,7 @@ import com.github.quillraven.fleks.IteratingSystem
 import ktx.app.gdxError
 import ktx.box2d.box
 import ktx.box2d.circle
+import ktx.log.logger
 import ktx.math.vec2
 import ktx.tiled.layer
 import ktx.tiled.x
@@ -34,7 +35,7 @@ class EntitySpawnSystem(
     private val physicsWorld: World,
     private val atlas: TextureAtlas,
     private val spawnComponent: ComponentMapper<SpawnComponent>,
-    private val enemyComponents: ComponentMapper<EnemyComponent>
+    private val playerComponents: ComponentMapper<PlayerComponent>
 ) : EventListener, IteratingSystem() {
 
     private val cachedConfigurations = mutableMapOf<String, SpawnConfiguration>()
@@ -128,14 +129,24 @@ class EntitySpawnSystem(
                 CREATED = false
 
                 val entityLayer = event.map.layer("Entities")
+
                 entityLayer.objects.forEach { mapObject ->
                     val type = mapObject.name ?: gdxError("MapObject no tiene tipo")
+
                     world.entity {
                         add<SpawnComponent> {
                             this.type = type
                             this.location.set(mapObject.x * UNIT_SCALE, mapObject.y * UNIT_SCALE)
                         }
+                        if (type == "Player" && event.playerComponent != null) {
+                            add<PlayerComponent>() {
+                                this.actualLife = event.playerComponent.actualLife
+                                this.actualStrenght = event.playerComponent.actualStrenght
+                             //   log.debug { "$actualLife Fuerza=$actualStrenght" }
+                            }
+                        }
                     }
+
                 }
             }
 
@@ -232,18 +243,30 @@ class EntitySpawnSystem(
                         maxDelay = configuration.attackDelay
                         damage = (DEFAULT_ATTACK_DAMAGE * configuration.attackScaling).roundToInt()
                         extraRange = configuration.attackExtraRange
+                        if (entity in playerComponents) {
+                            damage=playerComponents[entity].actualStrenght.roundToInt()
+                        }
                     }
                 }
                 if (configuration.lifeScaling > 0f) {
                     add<LifeComponent> {
                         maxLife = DEFAULT_LIFE * configuration.lifeScaling
-                        life = maxLife
                         exp = configuration.dropExp
+                        if (entity in playerComponents) {
+                            life=playerComponents[entity].actualLife
+                        }
                     }
                 }
                 if (type == "Player") {
 
-                    add<PlayerComponent>()
+                    add<PlayerComponent> {
+                        if (entity in playerComponents) {
+                            log.debug { "$actualLife Fuerza=$actualStrenght" }
+
+                            actualLife = playerComponents[entity].actualLife
+                            actualStrenght=playerComponents[entity].actualStrenght
+                        }
+                    }
                     add<LevelComponent>()
                     add<ShieldComponents>()
                     add<StateComponent> {
@@ -273,7 +296,7 @@ class EntitySpawnSystem(
 
     private fun size(atlasKey: String): Vector2 {
         return cachedSizes.getOrPut(atlasKey) {
-            val regions = atlas.findRegions("$atlasKey/${AnimationState.IDLE.atlasKey}")
+            val regions = atlas.findRegions("$atlasKey/${AnimationState.RUN.atlasKey}")
             if (regions.isEmpty) {
                 gdxError("There are no texture regions for $atlasKey")
             }
@@ -289,5 +312,7 @@ class EntitySpawnSystem(
         const val PORTAL_HIT_BOX_SENSOR = "Portal"
         const val PLAYER_HIT_BOX_SENSOR = "Player"
         const val AI_SENSOR = "AiSensor"
+        private val log = logger<LifeSystem>()
+
     }
 }

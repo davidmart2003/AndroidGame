@@ -10,140 +10,129 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
-<<<<<<< HEAD
 import com.game.model.GameModel
-=======
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
+import com.game.system.LifeSystem
 import com.game.widget.CharacterInfo
+import com.game.widget.Controller
 import com.game.widget.characterInfo
+import com.game.widget.controller
 import ktx.actors.alpha
 import ktx.actors.plusAssign
 import ktx.actors.txt
-<<<<<<< HEAD
+import ktx.log.logger
 import ktx.scene2d.*
 
 
 class GameView(
     model: GameModel,
-=======
-import ktx.scene2d.KTable
-import ktx.scene2d.label
-import ktx.scene2d.table
-
-
-class GameView(
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
-    skin: Skin,
+    skin: Skin
 ) : Table(skin), KTable {
 
-    private val playerInfo: CharacterInfo
     private val enemyInfo: CharacterInfo
+    private val playerInfo: CharacterInfo
+    private val controller : Controller
     private val popupLabel: Label
 
     init {
-<<<<<<< HEAD
-        //UI
+        // UI
         setFillParent(true)
-        playerInfo = characterInfo(Drawables.PLAYER) {
+        playerInfo = characterInfo(Drawables.PLAYER, skin) {
             it.top().left()
-
-        }
-        enemyInfo = characterInfo(Drawables.PLAYER) {
-            this.alpha = 0f
-            it.row()
-            it.top()
-=======
-        setFillParent(true)
-        enemyInfo = characterInfo(Drawables.PLAYER) {
-            this.alpha = 0f
-            it.row()
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
         }
 
+        enemyInfo = characterInfo(Drawables.FLYINGEYE, skin) {
+            this.alpha = 0f
+            it.top().right().row()
+        }
 
         table {
             background = skin[Drawables.FRAME_BGD]
 
-            this@GameView.popupLabel = label("", style = Labels.FRAME.skinKey) { lblCell ->
+            this@GameView.popupLabel = label(text = "", style = Labels.FRAME.skinKey) { lblCell ->
                 this.setAlignment(Align.topLeft)
                 this.wrap = true
-                lblCell.expand().fill().pad(4f)
+                lblCell.expand().fill().pad(14f)
             }
+
             this.alpha = 0f
-
-            it.expand().width(330f).top().row()
-        }
-<<<<<<< HEAD
-
-
-        //data binding
-        model.onPropertyChange(model::playerLife) { playerLife ->
-            playerLife(playerLife)
+            it.expand().width(130f).height(200f).top().row()
         }
 
-        model.onPropertyChange(model::lootText) { lootText ->
-            popup(lootText)
+        controller = controller(Drawables.DOWN,skin){
+            it.top().left().row()
         }
 
-        model.onPropertyChange(model::enemyLife) { enemyLife ->
-            enemyLife(enemyLife)
+
+
+
+        // data binding
+        model.onPropertyChange(GameModel::playerLife) { lifePercentage ->
+            playerLife(lifePercentage)
         }
-
-        model.onPropertyChange(model::enemyType) { enemyType ->
-            when (enemyType) {
-                "flyingeye" ->
-                    showEnemyInfo(Drawables.FLYINGEYE, model.enemyLife)
-
+        model.onPropertyChange(GameModel::enemyLife) { lifePercentage ->
+            enemyLife(lifePercentage)
+        }
+        model.onPropertyChange(GameModel::lootText) { lootInfo ->
+            popup(lootInfo)
+        }
+        model.onPropertyChange(GameModel::enemyType) { type ->
+            log.debug { "ENTRO QUI BROTYHER $type " }
+            when (type) {
+                "FlyingEye" -> showEnemyInfo(Drawables.FLYINGEYE, model.enemyLife)
+                else -> showEnemyInfo(null,1f)
             }
+
         }
     }
+
+    fun playerLife(percentage: Float) = playerInfo.life(percentage)
+
 
     private fun Actor.resetFadeOutDelay() {
-        this.actions.filterIsInstance<SequenceAction>().lastOrNull()?.let { sequence ->
-            val delay = sequence.actions.last() as DelayAction
-            delay.time = 0f
-        }
+        this.actions
+            .filterIsInstance<SequenceAction>()
+            .lastOrNull()
+            ?.let { sequence ->
+                val delay = sequence.actions.last() as DelayAction
+                delay.time = 0f
+            }
     }
 
-    fun playerLife(percentage: Float) = playerInfo.life(percentage)
-    fun enemyLife(percentage: Float) = enemyInfo.life(percentage)
-=======
-        playerInfo = characterInfo(Drawables.PLAYER) {
-            it.row()
-        }
-    }
-private fun Actor.resetFadeOutDelay(){
-    this.actions.filterIsInstance<SequenceAction>().lastOrNull()?.let { sequence ->
-        val delay = sequence.actions.last() as DelayAction
-        delay.time=0f
-     }
-}
-    fun playerLife(percentage: Float) = playerInfo.life(percentage)
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
-
-    fun showEnemyInfo(drawables: Drawables, lifePercentage: Float) {
-        enemyInfo.character(drawables)
+    fun showEnemyInfo(charDrawable: Drawables?, lifePercentage: Float) {
+        log.debug { "·ENTrOOOO" }
+        enemyInfo.character(charDrawable)
         enemyInfo.life(lifePercentage, 0f)
 
-        if (enemyInfo.alpha == 0f) {
-            enemyInfo.clearActions()
-            enemyInfo += Actions.sequence(
-                Actions.fadeIn(1f, Interpolation.bounceIn),
-                delay(5f, fadeOut(0.5f))
-            )
+        if (charDrawable != null) {
+            enemyInfo.alpha = 1f
+//            // enemy info hidden -> fade it in
+//            enemyInfo.clearActions()
+//            enemyInfo += sequence(fadeIn(1f, Interpolation.bounceIn), delay(5f, fadeOut(0.5f)))
+        } else {
+            enemyInfo.alpha=0f
+//             enemy info already fading in -> just reset the fadeout timer. No need to fade in again
+//            enemyInfo.resetFadeOutDelay()
+        }
+    }
+
+    fun enemyLife(percentage: Float) = enemyInfo.also { it.resetFadeOutDelay() }.life(percentage)
+
+
+    fun popup(infoText: String) {
+        popupLabel.txt = infoText
+        if (popupLabel.parent.alpha == 0f) {
+            popupLabel.parent.clearActions()
+            popupLabel.parent += sequence(fadeIn(0.2f), delay(4f, fadeOut(0.75f)))
         } else {
             popupLabel.parent.resetFadeOutDelay()
         }
     }
 
-    fun popup(infoText: String) {
-        popupLabel.txt = infoText
-<<<<<<< HEAD
-
-        popupLabel.parent.clearActions()
-        popupLabel.parent += Actions.sequence(Actions.fadeIn(0.2f), delay(4f, fadeOut(0.75f)))
+    companion object {
+        private val log = logger<LifeSystem>()
     }
 }
+
 
 @Scene2dDsl
 fun <S> KWidget<S>.gameView(
@@ -151,9 +140,3 @@ fun <S> KWidget<S>.gameView(
     skin: Skin = Scene2DSkin.defaultSkin,
     init: GameView.(S) -> Unit = {}
 ): GameView = actor(GameView(model, skin), init)
-=======
-        popupLabel.parent.clearActions()
-        popupLabel.parent += Actions.sequence(Actions.fadeIn(0.2f), delay(4f, fadeOut(0.75f)))
-    }
-}
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2

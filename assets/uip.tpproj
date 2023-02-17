@@ -25,11 +25,7 @@ stripWhitespaceY=false
 wrapX=ClampToEdge
 wrapY=ClampToEdge
 premultiplyAlpha=false
-<<<<<<< HEAD
 grid=true
-=======
-grid=false
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
 square=false
 bleed=true
 limitMemory=true
@@ -38,11 +34,7 @@ prettyPrint=false
 legacyOutput=true
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-<<<<<<< HEAD
 inputFiles=[{path:UiImagesSliced,type:Input,dirFilePrefix:null,recursive:false,flattenPaths:false},{path:damage.png,type:Input,regionName:null}]
-=======
-inputFiles=[{path:UiImagesSliced,type:Input,dirFilePrefix:null,recursive:false,flattenPaths:false}]
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
 keepInputFileExtensions=false
 
 

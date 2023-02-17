@@ -26,7 +26,7 @@ class DespawnSystem(
         world.removeAll()
         numMap++
         currentMap = TmxMapLoader().load("map/map$numMap.tmx")
-        gameStage.fire(MapChangeEvent(currentMap!!))
+        gameStage.fire(MapChangeEvent(currentMap!!,playerComponents[entity]))
 
     }
 

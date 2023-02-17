@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys.*
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
+import com.badlogic.gdx.scenes.scene2d.Event
+import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.game.component.AttackComponent
-import com.game.component.MoveComponent
-import com.game.component.PlayerComponent
-import com.game.component.ShieldComponents
+import com.game.component.*
+import com.game.event.ButtonPressedEvent
 import com.game.event.MapChangeEvent
 import com.game.event.fire
 import com.github.quillraven.fleks.ComponentMapper
@@ -20,16 +20,15 @@ class PlayerKeyboardInputProcessor(
     private val moveComponent: ComponentMapper<MoveComponent> = world.mapper(),
     private val attackComponents: ComponentMapper<AttackComponent> = world.mapper(),
     private val shieldComponents: ComponentMapper<ShieldComponents> = world.mapper()
-) : KtxInputAdapter {
+) : KtxInputAdapter, EventListener {
     private var currentMap: TiledMap? = null
     private var playerSeno = 0f
     private var playerCoseno = 0f
-    private val playerEntities = world.family(allOf = arrayOf(PlayerComponent::class))
+    private val playerEntities =
+        world.family(allOf = arrayOf(PlayerComponent::class), noneOf = arrayOf(SpawnComponent::class))
 
     init {
         Gdx.input.inputProcessor = this
-
-
     }
 
     private fun Int.isMovementKey(): Boolean {
@@ -56,7 +55,7 @@ class PlayerKeyboardInputProcessor(
             }
             playerEntities.forEach {
                 with(shieldComponents[it]) {
-                    holdingShield=false
+                    holdingShield = false
                 }
             }
             updatePlayerMovement()
@@ -69,7 +68,7 @@ class PlayerKeyboardInputProcessor(
                         doAttack = true
                     }
                     with(shieldComponents[it]) {
-                        holdingShield=false
+                        holdingShield = false
                     }
                 }
                 return true
@@ -103,5 +102,14 @@ class PlayerKeyboardInputProcessor(
             }
         }
         return false
+    }
+
+    override fun handle(event: Event?): Boolean {
+        when (event) {
+
+
+            else -> return false
+        }
+        return true
     }
 }

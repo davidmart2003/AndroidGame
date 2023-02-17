@@ -2,6 +2,7 @@ package com.game.ai
 
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.game.component.AnimationState
+import com.game.event.EntityAggroEvent
 
 enum class DefaultState : EntityState {
     IDLE{

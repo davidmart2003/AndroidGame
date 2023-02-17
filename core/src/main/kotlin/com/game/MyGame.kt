@@ -17,8 +17,8 @@ class MyGame : KtxGame<KtxScreen>() {
 
         addScreen(GameScreen())
         addScreen(UiScreen())
-        setScreen<GameScreen>()
-       // setScreen<UiScreen>()
+       // setScreen<GameScreen>()
+        setScreen<UiScreen>()
     }
 
     override fun dispose() {

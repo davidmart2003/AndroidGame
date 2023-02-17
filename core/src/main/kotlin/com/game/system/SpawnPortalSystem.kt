@@ -37,7 +37,7 @@ class SpawnPortalSystem(
             CREATED=true
         }
 
-        log.debug { enemies.numEntities.toString() }
+     //   log.debug { enemies.numEntities.toString() }
     }
 
 //    private fun floatingText(text: String, position: Vector2, size: Vector2) {

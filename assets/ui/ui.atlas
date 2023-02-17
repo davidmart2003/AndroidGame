@@ -7,13 +7,8 @@ repeat: none
 background
   rotate: false
   xy: 2, 4
-<<<<<<< HEAD
   size: 64, 64
   orig: 64, 64
-=======
-  size: 164, 168
-  orig: 164, 168
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
   offset: 0, 0
   index: -1
 backgroundInfo
@@ -30,34 +25,58 @@ damage
   orig: 512, 512
   offset: 0, 0
   index: -1
-<<<<<<< HEAD
-flyingeye
+down
   rotate: false
   xy: 2, 518
+  size: 56, 54
+  orig: 56, 54
+  offset: 0, 0
+  index: -1
+flyingeye
+  rotate: false
+  xy: 516, 518
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 idle
   rotate: false
-  xy: 516, 518
-=======
-idle
-  rotate: false
-  xy: 2, 518
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
+  xy: 1030, 518
   size: 56, 56
   orig: 56, 56
   offset: 0, 0
   index: -1
+left
+  rotate: false
+  xy: 2, 1032
+  size: 54, 56
+  orig: 54, 56
+  offset: 0, 0
+  index: -1
 lifebar
   rotate: false
-<<<<<<< HEAD
-  xy: 1030, 518
-=======
-  xy: 516, 518
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
+  xy: 516, 1032
   size: 64, 16
   orig: 64, 16
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 1030, 1032
+  size: 54, 56
+  orig: 54, 56
+  offset: 0, 0
+  index: -1
+
+ui2.png
+size: 1024, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+up
+  rotate: false
+  xy: 2, 4
+  size: 56, 54
+  orig: 56, 54
   offset: 0, 0
   index: -1

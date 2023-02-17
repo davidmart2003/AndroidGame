@@ -1,5 +1,6 @@
 package com.game.Screens
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.GdxAI
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.tiled.TiledMap
@@ -89,14 +90,14 @@ class GameScreen : KtxScreen {
         world.systems.forEach { system ->
             if (system is EventListener) {
                 gameStage.addListener(system)
+                uiStage.addListener(system)
             }
         }
 
         currentMap = TmxMapLoader().load("map/map1.tmx")
         gameStage.fire(MapChangeEvent(currentMap!!))
 
-        PlayerKeyboardInputProcessor(world)
-
+        Gdx.input.inputProcessor=uiStage
 
     }
 

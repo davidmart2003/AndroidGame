@@ -18,7 +18,7 @@ class ShieldSystem(
         if (shieldComponent.doShield) {
             animationComponents.getOrNull(entity)?.let { animation ->
                 animation.nextAnimation(AnimationState.SHIELD)
-                animation.playMode = PlayMode.NORMAL
+                animation.mode = PlayMode.NORMAL
 
             }
 

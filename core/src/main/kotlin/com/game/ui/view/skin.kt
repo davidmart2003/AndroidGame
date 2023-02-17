@@ -5,15 +5,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable
-<<<<<<< HEAD
 import com.game.model.GameModel
-=======
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
 import ktx.assets.disposeSafely
 import ktx.scene2d.KWidget
 import ktx.scene2d.Scene2DSkin
 import ktx.scene2d.Scene2dDsl
 import ktx.scene2d.actor
+import ktx.style.button
 import ktx.style.label
 import ktx.style.set
 import ktx.style.skin
@@ -23,13 +21,14 @@ enum class Drawables(
 ) {
     BACKGROUNDINFO("backgroundInfo"),
     PLAYER("idle"),
-<<<<<<< HEAD
     FLYINGEYE("flyingeye"),
-=======
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
     LIFEBAR("lifebar"),
     FRAME_BGD("background"),
     FRAME_FGD("background"),
+    UP("up"),
+    DOWN("down"),
+    RIGHT("right"),
+    LEFT("left"),
 
 }
 
@@ -37,6 +36,12 @@ enum class Labels {
     FRAME;
 
     val skinKey = this.name.lowercase()
+}
+
+enum class Buttons {
+    UP,DOWN,LEFT,RIGHT;
+
+    val skinKey= this.name.lowercase()
 }
 
 enum class Fonts(
@@ -50,39 +55,50 @@ enum class Fonts(
 }
 
 operator fun Skin.get(drawable: Drawables): Drawable = this.getDrawable(drawable.atlasKey)
-operator fun Skin.get(font: Fonts): BitmapFont =this.getFont(font.skinKey)
+operator fun Skin.get(font: Fonts): BitmapFont = this.getFont(font.skinKey)
 
 fun loadSkin() {
     Scene2DSkin.defaultSkin = skin(TextureAtlas("ui/ui.atlas")) { skin ->
-       Fonts.values().forEach { fnt->
-           skin[fnt.skinKey] = BitmapFont(Gdx.files.internal(fnt.fontPath), skin.getRegion(fnt.atlasRegionKey)).apply {
-               data.setScale(fnt.scaling)
-               data.markupEnabled=true
-           }
-       }
+        Fonts.values().forEach { fnt ->
+            skin[fnt.skinKey] = BitmapFont(
+                Gdx.files.internal(fnt.fontPath),
+                skin.getRegion(fnt.atlasRegionKey)
+            ).apply {
+                data.setScale(fnt.scaling)
+                data.markupEnabled = true
+            }
+        }
 
         label(Labels.FRAME.skinKey) {
             font = skin[Fonts.DEFAULT]
             background = skin[Drawables.FRAME_BGD].apply {
-                leftWidth=3f
-                rightWidth=3f
-                topHeight=5f
+                leftWidth = 3f
+                rightWidth = 3f
+                topHeight = 5f
             }
 
+        }
+        button(Buttons.UP.skinKey){
+            up=skin[Drawables.UP]
+            down=skin[Drawables.UP]
+        }
+        button(Buttons.DOWN.skinKey){
+            up=skin[Drawables.DOWN]
+            down=skin[Drawables.DOWN]
+        }
+        button(Buttons.LEFT.skinKey) {
+            up = skin[Drawables.LEFT]
+            down = skin[Drawables.LEFT]
+        }
+        button(Buttons.RIGHT.skinKey){
+            up=skin[Drawables.RIGHT]
+            down=skin[Drawables.RIGHT]
         }
     }
 }
 
 fun disposeSkin() {
     Scene2DSkin.defaultSkin.disposeSafely()
-<<<<<<< HEAD
-}
-=======
 }
 
-@Scene2dDsl
-fun <S> KWidget<S>.gameView(
-    skin: Skin = Scene2DSkin.defaultSkin,
-    init: GameView.(S) -> Unit = {}
-): GameView = actor(GameView(skin), init)
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
+

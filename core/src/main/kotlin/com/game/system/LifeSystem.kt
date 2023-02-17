@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
 import com.game.MyGame
 import com.game.component.*
+import com.game.event.EntityAggroEvent
 import com.game.event.EntityDamageEvent
 import com.game.event.fire
 import com.github.quillraven.fleks.*
@@ -56,6 +57,10 @@ class LifeSystem(
                 val physicComponent = physicComponents[entity]
                 position = physicComponent.body.position
                 lifeComponent.life -= lifeComponent.takeDamage
+                if(entity in playerComponent){
+
+                playerComponent[entity].actualLife = lifeComponent.life
+                }
                 floatingText(
                     lifeComponent.takeDamage.toInt().toString(),
                     physicComponent.body.position,
@@ -72,6 +77,7 @@ class LifeSystem(
         }
         if (lifeComponent.isDead) {
             lifeComponent.isTakingDamage = false
+            stage.fire(EntityAggroEvent(null))
 
             playerEntities.forEach { player ->
                 lifeComponents[player].exp += lifeComponent.exp

@@ -12,20 +12,22 @@ abstract class PropertyChangeSource {
         actions += action
     }
 
-    fun notify(property: KProperty<*>, value:Any) {
+    fun notify(property: KProperty<*>, value: Any) {
         listenerMap[property]?.forEach { it(value) }
     }
 
-<<<<<<< HEAD
 
-=======
-    /*
-    val model = GameModel()
-    model.playerLife
-
-        //view
-        model.onPropertyChange(model::playerLife){playerLife->
-        lifeBar.setValue(playerLife)
-     */
->>>>>>> 168e7a52a31f5513ef11a91c3771d3f1e504aae2
 }
+
+class PropertyNotifier<T : Any>(initialValue: T) {
+    private var _value: T = initialValue
+
+    operator fun getValue(thisRef: PropertyChangeSource, property: KProperty<*>): T = _value
+
+    operator fun setValue(thisRef: PropertyChangeSource, property: KProperty<*>, value: T) {
+        _value = value
+        thisRef.notify(property, value)
+    }
+}
+
+inline fun <reified T : Any> propertyNotify(initialValue: T): PropertyNotifier<T> = PropertyNotifier(initialValue)
