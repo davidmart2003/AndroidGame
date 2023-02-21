@@ -35,7 +35,8 @@ class EntitySpawnSystem(
     private val physicsWorld: World,
     private val atlas: TextureAtlas,
     private val spawnComponent: ComponentMapper<SpawnComponent>,
-    private val playerComponents: ComponentMapper<PlayerComponent>
+    private val playerComponents: ComponentMapper<PlayerComponent>,
+    private val inventoryCmps: ComponentMapper<InventoryComponent>,
 ) : EventListener, IteratingSystem() {
 
     private val cachedConfigurations = mutableMapOf<String, SpawnConfiguration>()
@@ -105,7 +106,7 @@ class EntitySpawnSystem(
                     aiTreePAth = "ai/Skeleton.tree",
                     lifeScaling = 6.25f,
                     speedScaling = 0.6f,
-                    attackScaling = 7.5f,
+                    attackScaling = 10.5f,
                     dropExp = 5
 
                 )
@@ -183,7 +184,7 @@ class EntitySpawnSystem(
             val relativeSize = size(configuration.atlasKey)
 
 
-            world.entity {
+            val spawnedEntity= world.entity {
                 val imageComponent = add<ImageComponent> {
                     image = FlipImage().apply {
                         setPosition(location.x, location.y)
@@ -267,6 +268,7 @@ class EntitySpawnSystem(
                             actualStrenght=playerComponents[entity].actualStrenght
                         }
                     }
+                    add<InventoryComponent>()
                     add<LevelComponent>()
                     add<ShieldComponents>()
                     add<StateComponent> {
@@ -275,7 +277,9 @@ class EntitySpawnSystem(
 
                 }
                 if (type == "MushRoom" || type == "Flying Eye" || type == "Goblin" || type == "Skeleton")
-                    add<EnemyComponent>()
+                    add<EnemyComponent>(){
+                        name=type
+                    }
                 add<ShieldComponents>()
 
 
@@ -287,6 +291,14 @@ class EntitySpawnSystem(
                         isSensor = true
                         userData = AI_SENSOR
                     }
+                }
+            }
+            if (spawnedEntity in playerComponents) {
+                with(inventoryCmps[spawnedEntity]) {
+                    itemsToAdd += ItemType.SWORD
+                    itemsToAdd += ItemType.ARMOR
+                    itemsToAdd += ItemType.HELMET
+                    itemsToAdd += ItemType.BOOTS
                 }
             }
 

@@ -1,6 +1,7 @@
 package com.game.ui.view
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.Color.*
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
@@ -11,35 +12,42 @@ import ktx.scene2d.KWidget
 import ktx.scene2d.Scene2DSkin
 import ktx.scene2d.Scene2dDsl
 import ktx.scene2d.actor
-import ktx.style.button
-import ktx.style.label
-import ktx.style.set
-import ktx.style.skin
+import ktx.style.*
+import java.awt.Color
 
 enum class Drawables(
     val atlasKey: String
-) {
+)  {
     BACKGROUNDINFO("backgroundInfo"),
     PLAYER("idle"),
     FLYINGEYE("flyingeye"),
     LIFEBAR("lifebar"),
-    FRAME_BGD("background"),
+    FRAME_BGD("frame_bgd"),
     FRAME_FGD("background"),
+    PAUSE("pause"),
     UP("up"),
     DOWN("down"),
     RIGHT("right"),
     LEFT("left"),
-
+    FONDO("fondo"),
+    ATTACK("attack"),
+    SHIELD("shield"),
+    BUTTON("defaultbutton"),
+    INVENTORY_SLOT("inv_slot"),
+    INVENTORY_SLOT_HELMET("inv_slot_helmet"),
+    INVENTORY_SLOT_ARMOR("inv_slot_armor"),
+    INVENTORY_SLOT_WEAPON("inv_slot_weapon"),
+    INVENTORY_SLOT_BOOTS("inv_slot_boots"),
 }
 
 enum class Labels {
-    FRAME;
+    FRAME,TITLE;
 
     val skinKey = this.name.lowercase()
 }
 
 enum class Buttons {
-    UP,DOWN,LEFT,RIGHT;
+    UP,DOWN,LEFT,RIGHT,DEFAULT,ATTACK,SHIELD;
 
     val skinKey= this.name.lowercase()
 }
@@ -48,7 +56,8 @@ enum class Fonts(
     val atlasRegionKey: String,
     val scaling: Float,
 ) {
-    DEFAULT("damage", 0.5f);
+    DEFAULT("text", 0.5f),
+    TITLE("text", 2f);
 
     val skinKey = "Font_${this.name.lowercase()}"
     val fontPath = "${this.atlasRegionKey}.fnt"
@@ -66,16 +75,37 @@ fun loadSkin() {
             ).apply {
                 data.setScale(fnt.scaling)
                 data.markupEnabled = true
+                color= WHITE
             }
         }
 
         label(Labels.FRAME.skinKey) {
+            fontColor=com.badlogic.gdx.graphics.Color(WHITE)
             font = skin[Fonts.DEFAULT]
             background = skin[Drawables.FRAME_BGD].apply {
-                leftWidth = 3f
-                rightWidth = 3f
-                topHeight = 5f
+                leftWidth = 100f
+                rightWidth = 100f
+                topHeight = 100f
+                bottomHeight=100f
             }
+
+        }
+        label(Labels.TITLE.skinKey) {
+            fontColor=com.badlogic.gdx.graphics.Color(WHITE)
+            font = skin[Fonts.TITLE]
+            background = skin[Drawables.FRAME_BGD].apply {
+                leftWidth = 100f
+                rightWidth = 100f
+                topHeight = 100f
+                bottomHeight=100f
+            }
+
+        }
+        textButton (Buttons.DEFAULT.skinKey){
+            font=skin[Fonts.DEFAULT]
+            down=skin[Drawables.BUTTON]
+            up=skin[Drawables.BUTTON]
+            fontColor=com.badlogic.gdx.graphics.Color(BLACK)
 
         }
         button(Buttons.UP.skinKey){
@@ -93,6 +123,14 @@ fun loadSkin() {
         button(Buttons.RIGHT.skinKey){
             up=skin[Drawables.RIGHT]
             down=skin[Drawables.RIGHT]
+        }
+        button(Buttons.ATTACK.skinKey){
+            up=skin[Drawables.ATTACK]
+            down=skin[Drawables.ATTACK]
+        }
+        button(Buttons.SHIELD.skinKey){
+            up=skin[Drawables.SHIELD]
+            down=skin[Drawables.SHIELD]
         }
     }
 }

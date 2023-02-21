@@ -34,7 +34,7 @@ prettyPrint=false
 legacyOutput=true
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:UiImagesSliced,type:Input,dirFilePrefix:null,recursive:false,flattenPaths:false},{path:damage.png,type:Input,regionName:null}]
+inputFiles=[{path:UiImagesSliced,type:Input,dirFilePrefix:null,recursive:false,flattenPaths:false}]
 keepInputFileExtensions=false
 
 

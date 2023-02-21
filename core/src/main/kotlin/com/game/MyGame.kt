@@ -2,23 +2,32 @@ package com.game
 
 
 import com.badlogic.gdx.Application
-import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
-import com.game.Screens.GameScreen
-import com.game.Screens.UiScreen
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.game.Screens.InventoryScreen
+import com.game.Screens.MenuScreen
 import com.game.ui.view.disposeSkin
 
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
 
 class MyGame : KtxGame<KtxScreen>() {
+    private val batch: Batch by lazy { SpriteBatch() }
+    val gameStage by lazy { Stage(ExtendViewport(16f, 9f)) }
+    val uiStage by lazy { Stage(ExtendViewport(1280f, 720f), batch) }
+    lateinit var textureAtlas: TextureAtlas
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
-
-        addScreen(GameScreen())
-        addScreen(UiScreen())
-        setScreen<GameScreen>()
-     //   setScreen<UiScreen>()
+        textureAtlas = TextureAtlas(Gdx.files.internal("graphics/gameObjects.atlas"))
+        addScreen(MenuScreen(this))
+     //   addScreen(InventoryScreen())
+       // setScreen<InventoryScreen>()
+        setScreen<MenuScreen>()
+        //setScreen<UiScreen>()
     }
 
     override fun dispose() {

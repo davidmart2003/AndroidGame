@@ -112,7 +112,7 @@ class FollowTask : Action() {
                 startPos.set(entity.location)
             }
             entity.fireEvent(EntityAggroEvent(entity.entity))
-            log.debug { "TE SIGO" }
+
             targetpos.set(startPos)
             targetpos.x = entity.followPlayerX()
             targetpos.y = entity.followPlayerY()

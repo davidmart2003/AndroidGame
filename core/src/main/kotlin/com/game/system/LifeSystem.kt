@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
 import com.game.MyGame
 import com.game.component.*
+import com.game.event.DeathSound
 import com.game.event.EntityAggroEvent
 import com.game.event.EntityDamageEvent
 import com.game.event.fire
@@ -28,6 +29,7 @@ class LifeSystem(
     private val lifeComponents: ComponentMapper<LifeComponent>,
     private val deadComponent: ComponentMapper<DeadComponent>,
     private val playerComponent: ComponentMapper<PlayerComponent>,
+    private val enemyComponent: ComponentMapper<EnemyComponent>,
     private val physicComponents: ComponentMapper<PhysicComponent>,
     private val animationComponents: ComponentMapper<AnimationComponent>,
     private val shieldComponents: ComponentMapper<ShieldComponents>
@@ -76,6 +78,9 @@ class LifeSystem(
             lifeComponent.takeDamage=0f
         }
         if (lifeComponent.isDead) {
+            if(entity in enemyComponent){
+                stage.fire(DeathSound(enemyComponent[entity].name))
+            }
             lifeComponent.isTakingDamage = false
             stage.fire(EntityAggroEvent(null))
 

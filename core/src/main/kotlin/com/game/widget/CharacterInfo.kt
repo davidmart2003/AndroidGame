@@ -20,12 +20,12 @@ class CharacterInfo(
     private val background: Image = Image(skin[Drawables.BACKGROUNDINFO])
     private val character: Image = Image(if (charDrawable == null) null else skin[charDrawable])
     private val lifeBar: Image = Image(skin[Drawables.LIFEBAR])
-    private val fondo : Image = Image(skin[Drawables.FRAME_BGD])
+    private val fondo : Image = Image(skin[Drawables.FRAME_FGD])
 
 
     init {
         this +=fondo.apply {
-            setPosition(32f,70f)
+            setPosition(32f,72f)
         }
         this += background
         this += character.apply {

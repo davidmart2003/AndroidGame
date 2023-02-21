@@ -10,6 +10,7 @@ import com.github.quillraven.fleks.AllOf
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
+import ktx.log.logger
 
 @AllOf([ShieldComponents::class])
 class ShieldSystem(
@@ -19,23 +20,33 @@ class ShieldSystem(
 ) : IteratingSystem(), EventListener {
 
     private var playerShield: Boolean = false
+    private var isDone: Boolean = false
     override fun onTickEntity(entity: Entity) {
         val shieldComponent = shieldComponents[entity]
         if (entity in playerComponents) {
 
-            shieldComponent.doShield = playerShield
-        }
-        if (shieldComponent.doShield) {
-            animationComponents.getOrNull(entity)?.let { animation ->
-                animation.nextAnimation(AnimationState.SHIELD)
-                animation.mode = PlayMode.NORMAL
 
+            shieldComponent.doShield = playerShield
+
+            if (!playerShield) {
+                shieldComponent.holdingShield = playerShield
+                isDone=false
             }
 
-            shieldComponent.holdingShield = true
+            if (shieldComponent.doShield) {
+                if (!isDone) {
 
+                    animationComponents.getOrNull(entity)?.let { animation ->
+                        animation.nextAnimation(AnimationState.SHIELD)
+                        animation.mode = PlayMode.NORMAL
+                        isDone=true
+                    }
+                }
+
+
+                shieldComponent.holdingShield = true
+            }
         }
-
     }
 
     override fun handle(event: Event?): Boolean {
@@ -45,6 +56,10 @@ class ShieldSystem(
             }
         }
         return true
+    }
+
+    companion object {
+        private val log = logger<ShieldSystem>()
     }
 
 }

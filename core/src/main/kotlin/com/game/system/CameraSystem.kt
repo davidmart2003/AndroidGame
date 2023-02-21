@@ -9,6 +9,10 @@ import com.game.event.MapChangeEvent
 import com.github.quillraven.fleks.*
 import ktx.tiled.height
 import ktx.tiled.width
+import java.lang.Double.max
+import java.lang.Double.min
+import kotlin.math.max
+import kotlin.math.min
 
 
 /**
@@ -40,11 +44,14 @@ class CameraSystem(
 
         val viewWidth= camera.viewportWidth*0.5f
         val viewHeight = camera.viewportHeight*0.5f
-
+        val camMinW = min(viewWidth,maxWidth-viewWidth)
+        val camMaxW = max(viewWidth,maxWidth-viewWidth)
+        val camMinH = min(viewHeight,maxHeight-viewHeight)
+        val camMaxH = max(viewHeight,maxHeight-viewHeight)
         with(imageComponents[entity]){
             camera.position.set(
-                image.x.coerceIn(viewWidth,maxWidth-viewWidth),
-                image.y.coerceIn(viewHeight,maxHeight-viewHeight),
+                image.x.coerceIn(camMinW,camMaxW),
+                image.y.coerceIn(camMinH,camMaxH),
                 camera.position.z
             )
         }

@@ -1,47 +1,56 @@
-package com.game.Screens
+package com.game.S
+
+import com.game.Screens.MenuScreen
+
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ai.GdxAI
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
+import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.game.MyGame
 import com.game.component.AiComponent
 import com.game.component.FloatingTextComponent
 import com.game.component.ImageComponent.Companion.ImageComponentListener
 import com.game.component.PhysicComponent.Companion.PhysicComponentListener
 import com.game.component.StateComponent
+import com.game.event.*
 import com.game.system.*
-import com.game.event.MapChangeEvent
-import com.game.event.fire
 import com.game.input.PlayerKeyboardInputProcessor
 import com.game.model.GameModel
-import com.game.ui.view.gameView
-import com.game.ui.view.loadSkin
+import com.game.model.InventoryModel
+import com.game.ui.view.*
+import com.game.widget.pauseUp
 import com.github.quillraven.fleks.world
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
 import ktx.box2d.createWorld
+import ktx.log.logger
 import ktx.math.vec2
 import ktx.scene2d.actors
 import java.util.logging.Level
 
-class GameScreen : KtxScreen {
+class GameScreen(val game: MyGame) : KtxScreen, EventListener {
 
-    private val textureAtlas: TextureAtlas = TextureAtlas("graphics/gameObjects.atlas")
-    private val gameStage: Stage = Stage(ExtendViewport(16f, 9f))
-    private val uiStage : Stage= Stage(ExtendViewport(1280f,720f))
+    private val textureAtlas: TextureAtlas = game.textureAtlas
+    private val gameStage: Stage = game.gameStage
+    private val uiStage: Stage = Stage(ExtendViewport(1280f, 720f))
     private var currentMap: TiledMap? = null
     private val physicsWorld = createWorld(gravity = vec2()).apply {
         autoClearForces = false
 
     }
+    private  var inventory:InventoryView
+    private var gameView: GameView
     private val world = world {
         injectables {
-            add("gameStage",gameStage)
-            add("uiStage",uiStage)
+            add("gameStage", gameStage)
+            add("uiStage", uiStage)
             add(textureAtlas)
             add(physicsWorld)
         }
@@ -68,58 +77,112 @@ class GameScreen : KtxScreen {
             add<CameraSystem>()
             add<FloatingTextSystem>()
             add<LevelSystem>()
+            add<InventorySystem>()
             add<SpawnPortalSystem>()
             add<DespawnSystem>()
+            add<AudioSystem>()
             add<ShieldSystem>()
             add<RenderSystem>()
-            add<DebugSystem>()
+           // add<DebugSystem>()
         }
     }
 
     init {
         loadSkin()
-        uiStage.actors {
-            gameView(GameModel(world,gameStage))
-
-        }
-    }
-
-    override fun show() {
-        super.show()
-
         world.systems.forEach { system ->
             if (system is EventListener) {
                 gameStage.addListener(system)
                 uiStage.addListener(system)
             }
         }
+        uiStage.actors {
+            gameView = gameView(GameModel(world, gameStage))
+            inventory =inventoryView(InventoryModel(world, gameStage)) {
+                this.isVisible = false
+            }
 
+        }
+    }
+
+    override fun show() {
+        super.show()
         currentMap = TmxMapLoader().load("map/map1.tmx")
         gameStage.fire(MapChangeEvent(currentMap!!))
-
-        Gdx.input.inputProcessor=uiStage
+        uiStage.addListener(this)
+        gameStage.addListener(this)
+        Gdx.input.inputProcessor = uiStage
 
     }
+
+    /**
+     * Pausa diferentes sistemas del mundo de entidades para parar el juego
+     */
+    private fun pauseWorld(pause: Boolean) {
+        //Sistemas que van a seguir ejecutandose
+        val mandatorySystems = setOf(
+            AnimationSystem::class, CameraSystem::class, RenderSystem::class, DebugSystem::class
+        )
+        //Para el resto de sistemas que no se ha especificado
+        world.systems.filter { it::class !in mandatorySystems }.forEach { it.enabled = !pause }
+    }
+
+    /**
+     * Se ejecuta cuando entra en estado de pausa la ventana, y pausa el juego
+     */
+    override fun pause() = pauseWorld(true) // TODO Do popup on exit the app
+
 
     override fun render(delta: Float) {
         val dt = delta.coerceAtMost(0.25f)
         GdxAI.getTimepiece().update(dt)
         world.update(delta.coerceAtMost(0.25f))
-
     }
-
 
     override fun resize(width: Int, height: Int) {
         gameStage.viewport.update(width, height, true)
-        uiStage.viewport.update(width,height,true   )
+        uiStage.viewport.update(width, height, true)
     }
 
     override fun dispose() {
-        gameStage.disposeSafely()
-        uiStage.disposeSafely()
         world.dispose()
-        textureAtlas.dispose()
         currentMap?.disposeSafely()
         physicsWorld.disposeSafely()
+    }
+
+    override fun handle(event: Event?): Boolean {
+        when (event) {
+
+            is PauseEvent -> {
+                gameView.pause()
+                pause()
+               // Gdx.input.inputProcessor = uiStage
+            }
+
+            is ResumeEvent -> {
+                gameView.resume()
+                resume()
+            }
+
+            is MenuScreenEvent ->{
+                gameStage.clear()
+                uiStage.clear()
+
+                game.addScreen(MenuScreen(game))
+                game.setScreen<MenuScreen>()
+
+                game.removeScreen<GameScreen>()
+                super.hide()
+                this.dispose()
+            }
+
+            is InventoryEvent ->{
+                inventory.isVisible=true
+            }
+        }
+        return true
+    }
+
+    companion object {
+        private val log = logger<GameScreen>()
     }
 }

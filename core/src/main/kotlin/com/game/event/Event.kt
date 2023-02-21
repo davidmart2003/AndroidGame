@@ -26,6 +26,9 @@ class EntityLootEvent(): Event(){
 class EntityDamageEvent(val entity: Entity): Event(){
 
 }
+class DeathSound(var name :String): Event()
+class ThemeSound(): Event()
+
 class EntityAggroEvent(val entity: Entity?): Event(){
 
 }
@@ -34,3 +37,13 @@ class ButtonPressedEvent(val sin:Float,val cos:Float):Event(){
 }
 class ButtonAttackPressed(val attack : Boolean) : Event()
 class ButtonShieldPressed(val shield : Boolean) : Event()
+class NewGameEvent():Event()
+
+class ExitGameEvent():Event()
+class SettingsGameEvent():Event()
+class CreditsGameEvent():Event()
+class PauseEvent():Event()
+class ResumeEvent():Event()
+data class EntityAddItemEvent(val entity: Entity, val item: Entity) : Event()
+class InventoryEvent():Event()
+class MenuScreenEvent():Event()

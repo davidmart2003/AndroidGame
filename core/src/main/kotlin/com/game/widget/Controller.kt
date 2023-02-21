@@ -32,8 +32,8 @@ class Controller(
     private val down: Button = button(Buttons.DOWN.skinKey)
     private val right: Button = button(Buttons.RIGHT.skinKey)
     private val left: Button = button(Buttons.LEFT.skinKey)
-    private val attack: Button = button(Buttons.LEFT.skinKey)
-    private val shield: Button = button(Buttons.LEFT.skinKey)
+    private val attack: Button = button(Buttons.ATTACK.skinKey)
+    private val shield: Button = button(Buttons.SHIELD.skinKey)
 
 
     init {
@@ -58,32 +58,43 @@ class Controller(
         }
         this += attack.apply {
             setSize(100f,100f)
-            setPosition(400f, 100f)
+            setPosition(800f, 100f)
 
         }
         this += shield.apply {
             setSize(100f,100f)
-            setPosition(600f, 100f)
+            setPosition(1000f, 100f)
 
         }
 
         left.onTouchDown { stage.fire(ButtonPressedEvent(0f, -1f)) }
-        left.onClick { stage.fire(ButtonPressedEvent(0f, 0f)) }
+        left.onClick {
+            stage.fire(ButtonPressedEvent(0f, 0f))
+            stage.fire(ButtonShieldPressed(false))}
 
         right.onTouchDown { stage.fire(ButtonPressedEvent(0f, 1f)) }
-        right.onClick { stage.fire(ButtonPressedEvent(0f, 0f)) }
+        right.onClick {
+            stage.fire(ButtonPressedEvent(0f, 0f))
+            stage.fire(ButtonShieldPressed(false))}
 
         up.onTouchDown { stage.fire(ButtonPressedEvent(1f, 0f)) }
-        up.onClick { stage.fire(ButtonPressedEvent(0f, 0f)) }
+        up.onClick {
+            stage.fire(ButtonPressedEvent(0f, 0f))
+            stage.fire(ButtonShieldPressed(false))}
 
         down.onTouchDown { stage.fire(ButtonPressedEvent(-1f, 0f)) }
-        down.onClick { stage.fire(ButtonPressedEvent(0f, 0f)) }
+        down.onClick {
+            stage.fire(ButtonPressedEvent(0f, 0f))
+            stage.fire(ButtonShieldPressed(false))}
 
         attack.onTouchDown { stage.fire(ButtonAttackPressed(true)) }
-        attack.onClick { stage.fire(ButtonAttackPressed(false)) }
+        attack.onClick { stage.fire(
+            ButtonAttackPressed(false))
+            stage.fire(ButtonShieldPressed(false))}
 
-        shield.onTouchDown { stage.fire(ButtonShieldPressed(true)) }
-        shield.onClick { stage.fire(ButtonShieldPressed(false)) }
+        //shield.onTouchDown { stage.fire(ButtonShieldPressed(true)) }
+        shield.onClick { stage.fire(ButtonShieldPressed(true)) }
+
     }
 
     companion object {

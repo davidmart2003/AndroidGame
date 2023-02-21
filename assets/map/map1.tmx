@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="129" height="44" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="59">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="129" height="44" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="70">
+ <properties>
+  <property name="music" value="audio/music/theme.wav"/>
+ </properties>
  <tileset firstgid="1" name="entities" tilewidth="150" tileheight="150" tilecount="5" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
@@ -213,8 +216,12 @@
 </data>
  </layer>
  <objectgroup id="4" name="Entities">
-  <object id="1" name="Player" gid="1" x="1353.61" y="501.387" width="56" height="56"/>
-  <object id="58" name="Flying Eye" gid="2" x="1258.67" y="556" width="150" height="150"/>
+  <object id="1" name="Player" gid="1" x="1463.61" y="403.387" width="56" height="56">
+   <properties>
+    <property name="music" value="audio/music/theme.wav"/>
+   </properties>
+  </object>
+  <object id="64" name="Flying Eye" gid="1967" x="1445" y="423" width="150" height="150"/>
  </objectgroup>
  <layer id="7" name="foreground_1" width="129" height="44">
   <data encoding="csv">
