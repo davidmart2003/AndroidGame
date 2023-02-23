@@ -12,6 +12,11 @@ import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.IteratingSystem
 import ktx.log.logger
 
+/**
+ * Sistema que se encarga del escudo
+ *
+ * @property animationComponents Conjunto de entidades
+ */
 @AllOf([ShieldComponents::class])
 class ShieldSystem(
     private val animationComponents: ComponentMapper<AnimationComponent>,

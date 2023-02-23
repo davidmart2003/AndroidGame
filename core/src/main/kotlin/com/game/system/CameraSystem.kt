@@ -17,8 +17,8 @@ import kotlin.math.min
 
 /**
  * El sistema de movimiento de la camera , haremos que la camera siga al jugador principal
- * @param stage Escenario donde esta nuestra camera a mover
- * @param Imagen del componente para saber donde esta en todo momento , en este caso la imagen del jugador principal
+ * @param stage Escenario donde se renderiza el juego
+ * @param imageComponents Conjunto de entidades que tienen ImageComponent
  */
 @AllOf([PlayerComponent::class,ImageComponent::class])
 class CameraSystem(
@@ -58,8 +58,9 @@ class CameraSystem(
     }
 
     /**
-     * Evento de tiledMap que sirve para copger el tamaño maximo del mapa tanto por ancho
-     * que por alto
+     *Se ejecuta cuando se lanza un evento
+     *
+     * @param event Evento lanzado
      */
     override fun handle(event: Event?): Boolean {
 

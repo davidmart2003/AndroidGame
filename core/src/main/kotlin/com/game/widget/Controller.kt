@@ -9,10 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
 import com.badlogic.gdx.utils.Scaling
 import com.game.ai.Action
-import com.game.event.ButtonAttackPressed
-import com.game.event.ButtonPressedEvent
-import com.game.event.ButtonShieldPressed
-import com.game.event.fire
+import com.game.event.*
 import com.game.ui.view.Buttons
 import com.game.ui.view.Drawables
 import com.game.ui.view.get

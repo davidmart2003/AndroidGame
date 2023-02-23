@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.game.event.NewGameEvent
+import com.game.event.SettingsGameEvent
 import com.game.event.fire
 import com.game.model.GameModel
 import ktx.actors.onClick
@@ -20,7 +21,7 @@ class MenuView(
     private val btnOptions: TextButton
     private val btnCredits: TextButton
     private val btnExit: TextButton
-    private val fondo : Image = Image(skin[Drawables.FONDO])
+    private val fondo: Image = Image(skin[Drawables.FONDO])
 
     init {
         setFillParent(true)
@@ -28,11 +29,10 @@ class MenuView(
         table {
 
 
-
-                label(text = "The Warrior's Dream", style = Labels.TITLE.skinKey) {
-                    setSize(100f, 100f)
-                    it.row()
-                }
+            label(text = "The Warrior's Dream", style = Labels.TITLE.skinKey) {
+                setSize(100f, 100f)
+                it.row()
+            }
 
             this@MenuView.btnNewGame =
                 textButton(text = "NewGame", style = Buttons.DEFAULT.skinKey) {
@@ -50,7 +50,7 @@ class MenuView(
                     label.y -= 8
 
                     onClick {
-                        //              stage.fire()
+                        stage.fire(SettingsGameEvent())
                     }
                     it.padLeft(100f)
                     it.padBottom(10f)

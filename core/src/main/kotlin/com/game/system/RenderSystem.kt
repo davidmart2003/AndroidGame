@@ -14,7 +14,13 @@ import com.github.quillraven.fleks.*
 import com.github.quillraven.fleks.collection.compareEntity
 import ktx.graphics.use
 import ktx.tiled.forEachLayer
-
+/**
+ * Sistema que se encarga de renderizar las entidades
+ *
+ * @property gameStage Escenario donde se renderiza el juego
+ * @property uiStage Escenario donde se renderiza la interfaz de usuario
+ * @property imgCmps Conjunto de entidades que contiene ImageComponent
+ */
 @AllOf([ImageComponent::class])
 class RenderSystem(
     @Qualifier("gameStage") private  val gameStage:Stage,
@@ -23,11 +29,29 @@ class RenderSystem(
 ) : EventListener,IteratingSystem(
     comparator = compareEntity { e1, e2 -> imageComponents[e1].compareTo(imageComponents[e2])  }
 ) {
-
+    /**
+     * Lista de capas del suelo del mapa
+     */
     private val backgroundLayers = mutableListOf<TiledMapTileLayer>()
+
+    /**
+     * Lista de capas del fondo del mapa
+     */
     private val foregroundLayers= mutableListOf<TiledMapTileLayer>()
+
+    /**
+     * Renderizado del mapa
+     */
     private val maprenderer = OrthogonalTiledMapRenderer(null,UNIT_SCALE,gameStage.batch)
+
+    /**
+     * Camara del juego
+     */
     private val OrthoCamera = gameStage.camera as OrthographicCamera
+
+    /**
+     * Cada vez que se ejecuta dibuja el escenario del mapa sea animado o no
+     */
     override fun onTick() {
         super.onTick()
 
@@ -62,12 +86,19 @@ class RenderSystem(
         }
     }
     /**
+     *Por cada entidad envia la imagen de la entidad al frente del mapa
      *
+     * @param entity Entidad a ejecutar
      */
     override fun onTickEntity(entity: Entity) {
         imageComponents[entity].image.toFront()
     }
 
+    /**
+     * Se ejecuta cuando un evento es lanzado
+     *
+     * @param event Evento lanzado
+     */
     override fun handle(event: Event?): Boolean {
         when (event) {
             is MapChangeEvent -> {

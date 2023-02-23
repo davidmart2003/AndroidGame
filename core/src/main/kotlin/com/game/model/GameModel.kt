@@ -7,13 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.game.component.AnimationComponent
 import com.game.component.LifeComponent
 import com.game.component.PlayerComponent
-import com.game.event.EntityAggroEvent
-import com.game.event.EntityDamageEvent
-import com.game.event.EntityLootEvent
+import com.game.event.*
 import com.github.quillraven.fleks.ComponentMapper
 import com.github.quillraven.fleks.Entity
 import com.github.quillraven.fleks.World
 import ktx.log.logger
+import kotlin.math.roundToInt
 
 
 class GameModel(
@@ -21,41 +20,40 @@ class GameModel(
     stage: Stage,
 ) : PropertyChangeSource(), EventListener {
 
-
     private val playerComponents: ComponentMapper<PlayerComponent> = world.mapper()
     private val lifeComponents: ComponentMapper<LifeComponent> = world.mapper()
     private val animationComponents: ComponentMapper<AnimationComponent> = world.mapper()
+    var level by propertyNotify(1)
+    var life by propertyNotify(1)
+    var speed by propertyNotify(1)
+    var attack by propertyNotify(1)
 
     var playerLife by propertyNotify(1f)
 
     private var lastEnemy = Entity(-1)
     var enemyLife = 1f
     var enemyType by propertyNotify("")
-    var lootText = ""
-        private set(value) {
-            notify(::lootText, value)
-            field = value
-        }
+    var lootText by propertyNotify("")
 
     init {
         stage.addListener(this)
     }
 
     private fun updateEnemy(enemy: Entity?) {
-        if(enemy==null){
-            enemyType= enemy.toString()
+        if (enemy == null) {
+            enemyType = enemy.toString()
             return
         }
         val lifeCmp = lifeComponents[enemy]
         enemyLife = lifeCmp.life / lifeCmp.maxLife
-        log.debug { "$enemy "}
+       // log.debug { "$enemy " }
         if (lastEnemy != enemy) {
             // update enemy type
             lastEnemy = enemy
             animationComponents.getOrNull(enemy)?.atlasKey?.let { enemyType ->
                 this.enemyType = enemyType
             }
-        }else {
+        } else {
             animationComponents.getOrNull(enemy)?.atlasKey?.let { enemyType ->
                 this.enemyType = enemyType
             }
@@ -75,20 +73,34 @@ class GameModel(
                 }
             }
 
-            is EntityLootEvent -> {
-                lootText = "You found something useful"
-            }
 
+            is SpawnPortalEvent -> {
+                lootText="A portal has been spawned, search it"
+            }
             is EntityAggroEvent -> {
                 updateEnemy(event.entity)
             }
 
+            is LevelUpEvent -> {
+                level = event.level
+            }
+
+            is MaxLifeEvent ->{
+                life = event.life.roundToInt()
+            }
+            is SpeedEvent ->{
+                 speed = event.speed.roundToInt()
+            }
+            is AttackEvent ->{
+                attack = event.attack.roundToInt()
+            }
             else -> return false
         }
 
         return true
     }
-    companion object{
-        private val log= logger<Action>()
+
+    companion object {
+        private val log = logger<Action>()
     }
 }

@@ -14,6 +14,13 @@ import ktx.app.gdxError
 import ktx.collections.map
 import ktx.log.logger
 
+/**
+ * Sistema que se encarga de las animaciones de las entidades
+ *
+ * @property textureAtlas Atlas que contiene las animaciones
+ * @property animationComponents Conjunto de entidades que contiene animationComponente
+ * @property imageComponents Conjuntos de entidades que contiene imageComponent
+ */
 @AllOf([AnimationComponent::class, ImageComponent::class])
 class AnimationSystem(
     private val textureAtlas: TextureAtlas,
@@ -21,9 +28,17 @@ class AnimationSystem(
     private val imageComponents: ComponentMapper<ImageComponent>
 ) : IteratingSystem() {
 
+    /**
+     * Almacen de las animaciones que estan cargadas
+     */
     private val cachedAnimation = mutableMapOf<String, Animation<TextureRegionDrawable>>()
 
 
+    /**
+     * Por cada entidad que esta en el sistema cambia su animacion
+     *
+     * @param Entidad a ejecutar
+     */
     override fun onTickEntity(entity: Entity) {
         val animationComponent = animationComponents[entity]
         if (animationComponent.nextAnimation == NO_ANIMATION) {
@@ -40,6 +55,13 @@ class AnimationSystem(
         imageComponents[entity].image.drawable = animationComponent.animation.getKeyFrame(animationComponent.stateTime)
     }
 
+    /**
+     * Carga la animacion segun el atlas y la guarda en el almacen
+     *
+     * @param anyKeyPath nombre de la animación en el atlas
+     *
+     * @return Devuelve la annimación cargada
+     */
     private fun animation(anyKeyPath: String): Animation<TextureRegionDrawable> {
         return cachedAnimation.getOrPut(anyKeyPath) {
             log.debug { textureAtlas.findRegions(anyKeyPath).toString() }

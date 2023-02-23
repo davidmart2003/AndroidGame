@@ -8,6 +8,8 @@ import com.game.ui.view.get
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
 import com.badlogic.gdx.utils.Scaling
 import com.game.ui.view.Drawables
+import com.game.ui.view.Labels
+import jdk.jfr.Label
 import jdk.jfr.Percentage
 import ktx.actors.plusAssign
 import ktx.scene2d.*
@@ -21,7 +23,7 @@ class CharacterInfo(
     private val character: Image = Image(if (charDrawable == null) null else skin[charDrawable])
     private val lifeBar: Image = Image(skin[Drawables.LIFEBAR])
     private val fondo : Image = Image(skin[Drawables.FRAME_FGD])
-
+    val lblLvl : com.badlogic.gdx.scenes.scene2d.ui.Label
 
     init {
         this +=fondo.apply {
@@ -37,6 +39,10 @@ class CharacterInfo(
             setPosition(21f, 16f)
             setSize(128f, 16f)
         }
+        lblLvl = label("", Labels.LEVEL.skinKey).apply {
+            setPosition(64f,116f)
+        }
+        this +=lblLvl
     }
 
 
@@ -52,6 +58,7 @@ class CharacterInfo(
         }
     }
 
+    fun level(lvl: Int) = lblLvl.setText(lvl.toString())
     fun life(percentage: Float,duration:Float=0.75f){
         lifeBar.clearActions()
         lifeBar += Actions.scaleTo(MathUtils.clamp(percentage,0f,1f),1f,duration)

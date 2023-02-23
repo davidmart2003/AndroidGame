@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="4">
+ <properties>
+  <property name="music" value="audio/music/theme4.wav"/>
+ </properties>
+ <tileset firstgid="1" source="tileset.tsx"/>
+ <tileset firstgid="1961" name="entities" tilewidth="150" tileheight="150" tilecount="6" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="56" height="56" source="../Game/char_blue_1/idle_00.png"/>
+  </tile>
+  <tile id="1">
+   <image width="150" height="150" source="../Game/FlyingEye/run_00.png"/>
+  </tile>
+  <tile id="2">
+   <image width="150" height="150" source="../Game/Goblin/idle_00.png"/>
+  </tile>
+  <tile id="3">
+   <image width="150" height="150" source="../Game/Mushroom/idle_00.png"/>
+  </tile>
+  <tile id="4">
+   <image width="150" height="150" source="../Game/Skeleton/idle_00.png"/>
+  </tile>
+  <tile id="5">
+   <image width="64" height="64" source="../Game/Portal/run_00.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="1967" source="entities.tsx"/>
+ <layer id="1" name="Capa de patrones 1" width="32" height="18">
+  <data encoding="base64" compression="zlib">
+   eJyrYmVgqBogXD2AdoNwEg4xeuDqUftH7R+1f9T+UftH7R9E9g90/UtvDADuDPow
+  </data>
+ </layer>
+ <layer id="2" name="background_1" width="32" height="18">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg8gJ+VgUEAiAWBWAiIhWnAh9EiQFzFimq/Mit2d9ECaGCx3xyN7wPk+5LgJnzq0eVssNjvjcZPAPITgVgViNWIcAdMPTFyAUT4HwYsgeJWVI6bFCL8DwPE+p8UgC3+48nwP6lpBAawxT856R9fnOMDpMQ/LQAp8U8LQCj+yY1XYgGh+CcUr5S6j9L4Jzbd4XIntvCnRfzjcie28MeV/2kBsIV/MZBfAsSlQFyGxi6nAh+ZXYHFfnoDkP0Ab/Qrpg==
+  </data>
+ </layer>
+ <objectgroup id="4" name="Entities">
+  <object id="2" name="Demon" gid="1967" x="218" y="204.667" width="288" height="160">
+   <properties>
+    <property name="music" value=""/>
+   </properties>
+  </object>
+  <object id="3" name="Player" gid="1968" x="133.333" y="179.333" width="56" height="56"/>
+ </objectgroup>
+ <layer id="3" name="foreground_1" width="32" height="18">
+  <data encoding="base64" compression="zlib">
+   eJztwQEBAAAAgiD/r25IQAEAfBkJAAAB
+  </data>
+ </layer>
+</map>

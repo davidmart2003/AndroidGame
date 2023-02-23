@@ -18,6 +18,11 @@ import ktx.math.vec2
 import ktx.tiled.*
 import kotlin.math.max
 
+/**
+ * Sistema que se encarga de spawnear las colisiones
+ *
+ * @property world Mundo de físicas
+ */
 @AllOf([PhysicComponent::class])
 class CollisionSpawnSystem(
     private val myWorld: World,
@@ -45,25 +50,19 @@ class CollisionSpawnSystem(
         }
     }
 
-
+    /**
+     * Se ejecuta cuando se lanza un evento
+     *
+     * @param event Evento lanzado
+     */
     override fun handle(event: Event?): Boolean {
         when (event){
             is MapChangeEvent ->{
                 event.map.forEachLayer<TiledMapTileLayer> { layer->
                     layer.forEachCell(0,0, max(event.map.width,event.map.height)){ cell,x,y ->
                         if(cell.tile.objects.isEmpty()){
-                            //Si esta vacía, significa que esta celda no esta
-                            //referenciada a un objeto collision, es decir no hacemos nada
                             return@forEachCell
                         }
-                        //mapObject son los objetos que contiene el tileMap
-                        // En este caso las colisiones
-                        //Recorremos todas las celdas que tienen objetos y crearemos
-                        //la entidad de la colision necesitando :
-                        // El mundo de nuestras físicas
-                        //La x de la celda
-                        //la y de la celda
-                        // El tipo de forma que tiene nuestro objeto
                         cell.tile.objects.forEach { mapObject->
                             world.entity {
                                 physicComponentFromShape2D(myWorld,x,y,mapObject.shape)

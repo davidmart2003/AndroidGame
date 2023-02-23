@@ -34,6 +34,7 @@ class SpawnPortalSystem(
     override fun onTickEntity(entity: Entity) {
         if (enemies.numEntities < 1 && !CREATED) {
             stage.fire(SpawnPortalEvent())
+
             CREATED=true
         }
 

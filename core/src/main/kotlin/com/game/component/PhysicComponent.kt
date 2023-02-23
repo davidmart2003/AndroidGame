@@ -16,6 +16,15 @@ import ktx.box2d.body
 import ktx.box2d.loop
 import ktx.math.vec2
 
+/**
+ * Componente de las entidad que requieran de un sistema de físicas
+ *
+ * @property prevPos Posición anterior respecto a la actual que tenía la entidad
+ * @property impulse Impulso de la entidad
+ * @property offset Posicion del cuerpo en el mundo de físicas acorde a la pantalla
+ * @property size Tamaño del cuerpo
+ * @property body Cuerpo de la entidad
+ */
 class PhysicComponent {
     val prevPos = vec2()
     val impulse = vec2()
@@ -25,12 +34,12 @@ class PhysicComponent {
 
     companion object {
         /**
+         *Crea las físicas de colisión para cada entidad segun el shape
          *
          * @param world Nuestro mundo de fisicas (box2d)
-         * @param x Posicion donde queremos crear nuestra entidad en x
-         * @param y Posicion donde queremos crear nuestra entidad en Y
+         * @param x Posición inicial de la colisión en el eje x
+         * @param y  Posición inicial de la colisión en el eje y
          * @param shape Tipo de forma que tendra nuestra entidad
-         * @return Devolvemos la fisica creada a nuestra entidad
          */
         fun EntityCreateCfg.physicComponentFromShape2D(
             world: World,
@@ -38,13 +47,26 @@ class PhysicComponent {
             y:Int,
             shape:Shape2D
         ): PhysicComponent{
-            //En nuestro tiledMap todas las colisiones son rectangulos
             when(shape){
                 is Rectangle ->{
-                    //Tamaño de la forma de la colision (trabaja en pixeles , hacemos conversion )+ la posicion inicial donde esta
+                    /**
+                     * Posicion X del cuerpo
+                     */
                     val bodyX = x + shape.x * UNIT_SCALE
+
+                    /**
+                     *  Posicion Y del cuerpo
+                     */
                     val bodyY = y + shape.y * UNIT_SCALE
+
+                    /**
+                     *  Anchura del cuerpo
+                     */
                     val bodyWidth = shape.width * UNIT_SCALE
+
+                    /**
+                     *  Altura del cuerpo
+                     */
                     val bodyHeight = shape.height * UNIT_SCALE
 
 
@@ -67,6 +89,14 @@ class PhysicComponent {
             }
         }
 
+        /**
+         *  Crea las físicas de colision segun una imagen
+         *
+         *  @param world Mundo de físicas
+         *  @param image Imagen de la entidad
+         *  @param bodyType Tipo del cuerpo de la entidad
+         *  @param fixtureAction Fixture de la entidad
+         */
         fun EntityCreateCfg.physicsComponentFromIMage(
             world: World,
             image: Image,
@@ -87,7 +117,17 @@ class PhysicComponent {
                 }
             }
         }
+
+        /**
+         * Listener que actúa cada vezx que el componente es añadido
+         */
         class PhysicComponentListener : ComponentListener<PhysicComponent>{
+            /**
+             * Cuando el componente es añadido se guarda el userData segun la entidad
+             *
+             * @param entity Entidad que fue añadida
+             * @param component Tipo de componente
+             */
             override fun onComponentAdded(entity: Entity, component: PhysicComponent) {
                 component.body.userData=entity
             }

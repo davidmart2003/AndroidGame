@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.game.MyGame
 import com.game.component.AiComponent
@@ -21,11 +20,8 @@ import com.game.component.PhysicComponent.Companion.PhysicComponentListener
 import com.game.component.StateComponent
 import com.game.event.*
 import com.game.system.*
-import com.game.input.PlayerKeyboardInputProcessor
 import com.game.model.GameModel
-import com.game.model.InventoryModel
 import com.game.ui.view.*
-import com.game.widget.pauseUp
 import com.github.quillraven.fleks.world
 import ktx.app.KtxScreen
 import ktx.assets.disposeSafely
@@ -33,7 +29,6 @@ import ktx.box2d.createWorld
 import ktx.log.logger
 import ktx.math.vec2
 import ktx.scene2d.actors
-import java.util.logging.Level
 
 class GameScreen(val game: MyGame) : KtxScreen, EventListener {
 
@@ -77,13 +72,12 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
             add<CameraSystem>()
             add<FloatingTextSystem>()
             add<LevelSystem>()
-            add<InventorySystem>()
             add<SpawnPortalSystem>()
             add<DespawnSystem>()
             add<AudioSystem>()
             add<ShieldSystem>()
             add<RenderSystem>()
-           // add<DebugSystem>()
+            add<DebugSystem>()
         }
     }
 
@@ -97,7 +91,7 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
         }
         uiStage.actors {
             gameView = gameView(GameModel(world, gameStage))
-            inventory =inventoryView(InventoryModel(world, gameStage)) {
+            inventory =inventoryView(GameModel(world, gameStage)) {
                 this.isVisible = false
             }
 
@@ -106,7 +100,7 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
 
     override fun show() {
         super.show()
-        currentMap = TmxMapLoader().load("map/map1.tmx")
+        currentMap = TmxMapLoader().load("map/map4.tmx")
         gameStage.fire(MapChangeEvent(currentMap!!))
         uiStage.addListener(this)
         gameStage.addListener(this)
@@ -178,6 +172,20 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
             is InventoryEvent ->{
                 inventory.isVisible=true
             }
+
+            is HideInventoryEvent ->{
+                inventory.isVisible=false
+            }
+
+            is DeadEvent ->{
+                pause()
+                gameView.death()
+            }
+            is WinEvent ->{
+                pause()
+                gameView.win()
+            }
+
         }
         return true
     }

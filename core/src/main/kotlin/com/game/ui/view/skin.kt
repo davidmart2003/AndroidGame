@@ -1,19 +1,15 @@
 package com.game.ui.view
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.Color.*
+import com.badlogic.gdx.graphics.Color.BLACK
+import com.badlogic.gdx.graphics.Color.WHITE
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable
-import com.game.model.GameModel
 import ktx.assets.disposeSafely
-import ktx.scene2d.KWidget
 import ktx.scene2d.Scene2DSkin
-import ktx.scene2d.Scene2dDsl
-import ktx.scene2d.actor
 import ktx.style.*
-import java.awt.Color
 
 enum class Drawables(
     val atlasKey: String
@@ -24,8 +20,11 @@ enum class Drawables(
     LIFEBAR("lifebar"),
     FRAME_BGD("frame_bgd"),
     FRAME_FGD("background"),
-    PAUSE("pause"),
     UP("up"),
+    PAUSE("pause"),
+    SLIDER("slider"),
+    CHECKBOXPR("checkboxpr"),
+    CHECKBOXUN("checkboxun"),
     DOWN("down"),
     RIGHT("right"),
     LEFT("left"),
@@ -33,15 +32,21 @@ enum class Drawables(
     ATTACK("attack"),
     SHIELD("shield"),
     BUTTON("defaultbutton"),
-    INVENTORY_SLOT("inv_slot"),
-    INVENTORY_SLOT_HELMET("inv_slot_helmet"),
-    INVENTORY_SLOT_ARMOR("inv_slot_armor"),
-    INVENTORY_SLOT_WEAPON("inv_slot_weapon"),
-    INVENTORY_SLOT_BOOTS("inv_slot_boots"),
 }
 
+enum class  Sliders{
+    DEFAULT;
+
+    val skinKey = this.name.lowercase()
+}
+
+enum class  CheckBoxs{
+    DEFAULT;
+
+    val skinKey = this.name.lowercase()
+}
 enum class Labels {
-    FRAME,TITLE;
+    FRAME,TITLE,LEVEL;
 
     val skinKey = this.name.lowercase()
 }
@@ -78,6 +83,16 @@ fun loadSkin() {
                 color= WHITE
             }
         }
+        slider(Sliders.DEFAULT.skinKey){
+            knob=skin[Drawables.BUTTON]
+            background= skin[Drawables.SLIDER]
+        }
+        checkBox(CheckBoxs.DEFAULT.skinKey){
+            font = skin[Fonts.DEFAULT]
+            fontColor=com.badlogic.gdx.graphics.Color(WHITE)
+            checkboxOn=skin[Drawables.CHECKBOXPR]
+            checkboxOff=skin[Drawables.CHECKBOXUN]
+        }
 
         label(Labels.FRAME.skinKey) {
             fontColor=com.badlogic.gdx.graphics.Color(WHITE)
@@ -88,6 +103,12 @@ fun loadSkin() {
                 topHeight = 100f
                 bottomHeight=100f
             }
+
+        }
+        label(Labels.LEVEL.skinKey) {
+            fontColor=com.badlogic.gdx.graphics.Color(WHITE)
+            font = skin[Fonts.DEFAULT]
+
 
         }
         label(Labels.TITLE.skinKey) {

@@ -5,21 +5,36 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.game.MyGame
 import com.game.component.*
+import com.game.event.AttackEvent
 import com.game.event.ButtonAttackPressed
+import com.game.event.HitEvent
+import com.game.event.fire
 import com.game.system.EntitySpawnSystem.Companion.HIT_BOX_SENSOR
 import com.game.system.EntitySpawnSystem.Companion.PLAYER_HIT_BOX_SENSOR
-import com.github.quillraven.fleks.AllOf
-import com.github.quillraven.fleks.ComponentMapper
-import com.github.quillraven.fleks.Entity
-import com.github.quillraven.fleks.IteratingSystem
+import com.github.quillraven.fleks.*
+import ktx.actors.stage
 import ktx.box2d.query
 import ktx.log.logger
 import ktx.math.component1
 import ktx.math.component2
 
+/**
+ * Sistema que se encarga del ataque
+ *
+ * @property attackComponents Conjunto de entidades que contienen AttackComponent
+ * @property physicComponents Conjunto de entidades que contienen PhysicComponent
+ * @property ImageComponents Conjunto de entidades que contienen ImageComponent
+ * @property playerComponents Conjunto de entidades que contienen PlayerComponent
+ * @property animationComponents Conjunto de entidades que contienen AnimationComponent
+ * @property lifeComponentq Conjunto de entidades que contienen LifeComponent
+ * @property world Mundo de entidades
+ */
 @AllOf([AttackComponent::class, PhysicComponent::class, ImageComponent::class])
 class AttackSystem(
+    @Qualifier("gameStage") private val stage: Stage,
     private val attackComponents: ComponentMapper<AttackComponent>,
     private val physicComponents: ComponentMapper<PhysicComponent>,
     private val ImageComponents: ComponentMapper<ImageComponent>,
@@ -28,15 +43,22 @@ class AttackSystem(
     private val lifeComponent: ComponentMapper<LifeComponent>,
     private val myWorld: World
 ) : IteratingSystem(), EventListener {
+    /**
+     * True si el jugador ataca
+     */
+    var playerAttack: Boolean = false
 
-    var playerAttack : Boolean=false
-
+    /**
+     * Por cada entidad que este lista para atacar, empieza el ataque, si el ataque empezó hace daño a los enemigos cercanos
+     */
     override fun onTickEntity(entity: Entity) {
         val attackComponent = attackComponents[entity]
 
 
-        if(entity in playerComponents){
-            attackComponent.doAttack=playerAttack
+        if (entity in playerComponents) {
+            stage.fire(AttackEvent(attackComponent.damage.toFloat()))
+
+            attackComponent.doAttack = playerAttack
         }
         if (attackComponent.isReady && !attackComponent.doAttack) {
             //La entidad esta lista para atacar pero no quiere atacar no hacemos nada
@@ -56,7 +78,11 @@ class AttackSystem(
         if (attackComponent.delay <= 0f && attackComponent.isAttacking) {
             //HAcer daño a enemigos cercacos
             attackComponent.state = AttackState.DEAL_DAMAGE
+            if(entity in playerComponents){
 
+                stage.fire(HitEvent())
+
+            }
             val image = ImageComponents[entity].image
             val physicComponent = physicComponents[entity]
             val attackLeft = image.flipX
@@ -112,16 +138,24 @@ class AttackSystem(
     }
 
     companion object {
+        /**
+         * Rectangulo que se crea al atacar para colisionar con los enemigos
+         */
         val AABB_RECT = Rectangle()
         private val log = logger<AttackComponent>()
 
     }
 
+    /**
+     * Swe ejecuta cuando se lanza un evento
+     *
+     * @param Evento lanzado
+     */
     override fun handle(event: Event?): Boolean {
         when (event) {
             is ButtonAttackPressed -> {
-                playerAttack=event.attack
-                log.debug { "Ataque" }
+                playerAttack = event.attack
+                //log.debug { "Ataque" }
             }
 
         }

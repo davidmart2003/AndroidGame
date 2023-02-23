@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.game.MyGame
 import com.game.S.GameScreen
@@ -12,8 +13,10 @@ import com.game.component.ImageComponent
 import com.game.component.LifeComponent
 import com.game.component.PhysicComponent
 import com.game.component.PlayerComponent
+import com.game.event.HideSettingsGameEvent
 import com.game.event.MenuScreenEvent
 import com.game.event.NewGameEvent
+import com.game.event.SettingsGameEvent
 import com.game.model.GameModel
 import com.game.system.*
 import com.game.ui.view.*
@@ -28,10 +31,7 @@ import javax.sound.sampled.AudioSystem
 
 class MenuScreen(val game: MyGame) : KtxScreen,EventListener {
 
-    private val stage: Stage = Stage(ExtendViewport(720f, 480f))
-    private val world = world { }
-    private val model = GameModel(world, stage)
-
+    private val settingPref = game.settingPref
     /**
      * Escenario que representa la UI del juego, se inicia con la uiStage del jueg0
      */
@@ -51,7 +51,7 @@ class MenuScreen(val game: MyGame) : KtxScreen,EventListener {
     /**
      * Vista que contiene los ajustes
      */
-    // private var settingsView: SettingsView
+     private var settingsView: SettingsView
 
     /**
      * Vista que contiene los creditos
@@ -119,7 +119,9 @@ class MenuScreen(val game: MyGame) : KtxScreen,EventListener {
 
         uiStage.actors {
             menuView = menuView(GameModel(eWorld, uiStage))
-            // settingsView = settingsView(bundle = game.bundle, prefs = settingsPrefs)
+            settingsView = settingsView(settingPref){
+                isVisible=false
+            }
         }
         //Añade al escenario del juego y UI esta msima clase
         uiStage.addListener(this)
@@ -159,8 +161,15 @@ class MenuScreen(val game: MyGame) : KtxScreen,EventListener {
                 this.dispose()
             }
 
-            is MenuScreenEvent ->{
+            is SettingsGameEvent ->{
+                menuView.touchable=Touchable.disabled
+                settingsView.isVisible=true
+            }
 
+            is HideSettingsGameEvent ->{
+                menuView.touchable=Touchable.enabled
+
+                settingsView.isVisible=false
             }
         }
         return true

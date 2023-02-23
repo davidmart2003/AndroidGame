@@ -7,6 +7,13 @@ import com.github.quillraven.fleks.*
 import ktx.math.vec2
 
 
+/**
+ * Sistema que se encarga de los textos flotantes
+ *
+ * @property gameStage Escenario donde se renderiza el juego
+ * @property uiSTage Escenario donde se renderiza la interfaz de usuario
+ * @property txtComponents Conjunto de entidades que contienen FloatingTextComponent
+ */
 @AllOf([FloatingTextComponent::class])
 class FloatingTextSystem(
     @Qualifier("gameStage") private val gameStage: Stage,

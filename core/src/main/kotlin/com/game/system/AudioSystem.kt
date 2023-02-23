@@ -11,12 +11,33 @@ import ktx.assets.disposeSafely
 import ktx.log.logger
 import ktx.tiled.propertyOrNull
 
+/**
+ * Sistema que se encarga del audio del juego
+ */
 class AudioSystem : EventListener, IntervalSystem() {
+    /**
+     * Almacen de los sonidos cargados
+     */
     private val soundCache = mutableMapOf<String, Sound>()
+
+    /**
+     * Almacen de la musica cargadas
+     */
     private val musicCache = mutableMapOf<String, Music>()
+
+    /**
+     * Lista de espera de sonidos para ejecutarlos de manera ordenada
+     */
     private val soundRequests = mutableMapOf<String, Sound>()
+
+    /**
+     * Musica que se va a reproducir
+     */
     private var music: Music? = null
 
+    /**
+     * Cada vez que se ejecuta reproduce los sonidos que estan en espera
+     */
     override fun onTick() {
         if (soundRequests.isEmpty()) {
             return
@@ -26,6 +47,11 @@ class AudioSystem : EventListener, IntervalSystem() {
         soundRequests.clear()
     }
 
+    /**
+     * Se ejecuta cuando se lanza un evento
+     *
+     * @param event El evento lanzado
+     */
     override fun handle(event: Event): Boolean {
         when (event) {
             is MapChangeEvent -> {
@@ -48,8 +74,14 @@ class AudioSystem : EventListener, IntervalSystem() {
                     "Goblin" ->{queueSound("audio/deathGoblin.wav")}
                     "MushRoom" ->{queueSound("audio/deathMushRoom.wav")}
                     "Skeleton" ->{queueSound("audio/deathSkeleton.wav")}
+                    "Player"->{queueSound("audio/death.mp3")}
+                    "Demon"->{queueSound("audio/deathSkeleton.wav")}
                 }
 
+            }
+
+            is HitEvent ->{
+                queueSound("audio/hit.wav")
             }
 
             else -> return false
@@ -57,6 +89,10 @@ class AudioSystem : EventListener, IntervalSystem() {
         return true
     }
 
+    /**
+     *  Carga los sonidos y los almacena en la lista de espera
+     *  @param path Ruta del sonido que se va a reproducir
+     */
     private fun queueSound(path: String) {
         log.debug { "Queueing new sound '$path'" }
         if (soundRequests.containsKey(path)) {
@@ -70,6 +106,9 @@ class AudioSystem : EventListener, IntervalSystem() {
         soundRequests[path] = snd
     }
 
+    /**
+     * Libera los recursos al cerrar el mundo de entidades
+     */
     override fun onDispose() {
         soundCache.values.forEach { it.disposeSafely() }
         musicCache.values.forEach { it.disposeSafely() }

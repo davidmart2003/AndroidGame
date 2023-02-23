@@ -39,11 +39,11 @@ boots
   orig: 16, 16
   offset: 0, 0
   index: -1
-defaultbutton
+checkboxpr
   rotate: false
   xy: 948, 1032
-  size: 88, 56
-  orig: 88, 56
+  size: 56, 56
+  orig: 56, 56
   offset: 0, 0
   index: -1
 
@@ -52,53 +52,53 @@ size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-down
+checkboxun
   rotate: false
   xy: 2, 4
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: -1
+defaultbutton
+  rotate: false
+  xy: 948, 4
+  size: 88, 56
+  orig: 88, 56
+  offset: 0, 0
+  index: -1
+down
+  rotate: false
+  xy: 2, 518
   size: 56, 54
   orig: 56, 54
   offset: 0, 0
   index: -1
 flyingeye
   rotate: false
-  xy: 948, 4
+  xy: 948, 518
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 fondo
   rotate: false
-  xy: 2, 518
+  xy: 2, 1032
   size: 944, 499
   orig: 944, 499
   offset: 0, 0
   index: -1
 frame_fgd
   rotate: false
-  xy: 948, 518
+  xy: 948, 1032
   size: 48, 32
   orig: 48, 32
   offset: 0, 0
   index: -1
 frame_bgd
   rotate: false
-  xy: 948, 518
+  xy: 948, 1032
   size: 48, 32
   orig: 48, 32
-  offset: 0, 0
-  index: -1
-helmet
-  rotate: false
-  xy: 2, 1032
-  size: 16, 16
-  orig: 16, 16
-  offset: 0, 0
-  index: -1
-idle
-  rotate: false
-  xy: 948, 1032
-  size: 56, 56
-  orig: 56, 56
   offset: 0, 0
   index: -1
 
@@ -107,70 +107,70 @@ size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-inv_slot_armor
+helmet
   rotate: false
   xy: 2, 4
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 948, 4
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: -1
+inv_slot_armor
+  rotate: false
+  xy: 2, 518
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 inv_slot
   rotate: false
-  xy: 2, 4
+  xy: 2, 518
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 inv_slot_boots
   rotate: false
-  xy: 2, 4
+  xy: 2, 518
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 inv_slot_helmet
   rotate: false
-  xy: 2, 4
+  xy: 2, 518
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 inv_slot_weapon
   rotate: false
-  xy: 2, 4
+  xy: 2, 518
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 left
   rotate: false
-  xy: 948, 4
+  xy: 948, 518
   size: 54, 56
   orig: 54, 56
   offset: 0, 0
   index: -1
 lifebar
   rotate: false
-  xy: 2, 518
+  xy: 2, 1032
   size: 64, 16
   orig: 64, 16
   offset: 0, 0
   index: -1
 pause
-  rotate: false
-  xy: 948, 518
-  size: 56, 52
-  orig: 56, 52
-  offset: 0, 0
-  index: -1
-right
-  rotate: false
-  xy: 2, 1032
-  size: 54, 56
-  orig: 54, 56
-  offset: 0, 0
-  index: -1
-shield
   rotate: false
   xy: 948, 1032
   size: 56, 52
@@ -183,30 +183,57 @@ size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-sword
+right
   rotate: false
   xy: 2, 4
+  size: 54, 56
+  orig: 54, 56
+  offset: 0, 0
+  index: -1
+shield
+  rotate: false
+  xy: 948, 4
+  size: 56, 52
+  orig: 56, 52
+  offset: 0, 0
+  index: -1
+slider
+  rotate: false
+  xy: 2, 518
+  size: 160, 47
+  orig: 160, 47
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 948, 518
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 sword2
   rotate: false
-  xy: 948, 4
+  xy: 2, 1032
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 text
   rotate: false
-  xy: 2, 518
+  xy: 948, 1032
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
+
+ui5.png
+size: 1024, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
 up
   rotate: false
-  xy: 948, 518
+  xy: 2, 4
   size: 56, 54
   orig: 56, 54
   offset: 0, 0

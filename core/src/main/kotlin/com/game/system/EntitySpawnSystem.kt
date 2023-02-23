@@ -8,7 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Scaling
+import com.game.MyGame.Companion.ATTACK
 import com.game.MyGame.Companion.CREATED
+import com.game.MyGame.Companion.LIFE
+import com.game.MyGame.Companion.SPEED
 import com.game.component.*
 import com.game.component.PhysicComponent.Companion.physicsComponentFromIMage
 import com.game.MyGame.Companion.UNIT_SCALE
@@ -30,21 +33,52 @@ import ktx.tiled.x
 import ktx.tiled.y
 import kotlin.math.roundToInt
 
+/**
+ * Sisttema que se encarga del spawneo de entidades
+ *
+ * @property physicsWorld Mundo de fisicas
+ * @property atlas Atlas de texturas
+ * @property spawnComponent Conjunto de entidades que contiene SpawnComponente
+ * @property playerComponents Conjunto de entidades que contiene PlayerComponent
+ */
 @AllOf([SpawnComponent::class])
 class EntitySpawnSystem(
     private val physicsWorld: World,
     private val atlas: TextureAtlas,
     private val spawnComponent: ComponentMapper<SpawnComponent>,
     private val playerComponents: ComponentMapper<PlayerComponent>,
-    private val inventoryCmps: ComponentMapper<InventoryComponent>,
 ) : EventListener, IteratingSystem() {
 
+    /**
+     * Alamacen de las configuraciones de las entidades
+     */
     private val cachedConfigurations = mutableMapOf<String, SpawnConfiguration>()
+
+    /**
+     * Almacen del tamaño de las entidades
+     */
     private val cachedSizes = mutableMapOf<String, Vector2>()
+
+    /**
+     * Nombre de la entidad
+     */
     private var tipo: String = ""
+
+    /**
+     * Numero del mapa a cargar
+     */
     private var num: Int = 0
+
+    /**
+     * Localizacion del portal
+     */
     private var locationPortal: Vector2 = vec2(0f, 0f)
-    private var created: Boolean = false
+
+    /**
+     *  Segun la entidad se crea una configuracion distinta
+     *
+     *  @param type Nombre de la entidad
+     */
     private fun spawnConfiguration(type: String): SpawnConfiguration =
         cachedConfigurations.getOrPut(type) {
             when (type) {
@@ -56,7 +90,7 @@ class EntitySpawnSystem(
                     attackExtraRange = 0.6f,
                     lifeScaling = 5f,
                     speedScaling = 3f,
-                    attackScaling = 3.75f,
+                    attackScaling = 40.75f,
 
                     )
 
@@ -119,11 +153,28 @@ class EntitySpawnSystem(
 
                     )
 
+                "Demon" -> SpawnConfiguration(
+                    "Demon",
+                    physicScaling = vec2(0.2f, 0.3f),
+                    physicOffset = vec2(0f * UNIT_SCALE, -25f * UNIT_SCALE),
+                    bodyType = BodyDef.BodyType.DynamicBody,
+                    aiTreePAth = "ai/Demon.tree",
+                    lifeScaling = 10f,
+                    attackExtraRange = 4f,
+                    speedScaling = 1f,
+                    attackScaling = 20.5f,
+                )
+
 
                 else -> gdxError("$type no tiene configuration")
             }
         }
 
+    /**
+     * Se ejecuta cuando un evento es lanzado
+     *
+     * @param event Evento lanzado
+     */
     override fun handle(event: Event?): Boolean {
         when (event) {
             is MapChangeEvent -> {
@@ -143,7 +194,7 @@ class EntitySpawnSystem(
                             add<PlayerComponent>() {
                                 this.actualLife = event.playerComponent.actualLife
                                 this.actualStrenght = event.playerComponent.actualStrenght
-                             //   log.debug { "$actualLife Fuerza=$actualStrenght" }
+                                //   log.debug { "$actualLife Fuerza=$actualStrenght" }
                             }
                         }
                     }
@@ -176,6 +227,11 @@ class EntitySpawnSystem(
         return true
     }
 
+    /**
+     * Por cada entidad se les añade los componentes necesarios para que funciones en los sitemas que lo requieran
+     *
+     * @param entity Entidad a ejecutar
+     */
     override fun onTickEntity(entity: Entity) {
         with(spawnComponent[entity]) {
             val configuration = spawnConfiguration(type)
@@ -184,7 +240,7 @@ class EntitySpawnSystem(
             val relativeSize = size(configuration.atlasKey)
 
 
-            val spawnedEntity= world.entity {
+            val spawnedEntity = world.entity {
                 val imageComponent = add<ImageComponent> {
                     image = FlipImage().apply {
                         setPosition(location.x, location.y)
@@ -235,6 +291,8 @@ class EntitySpawnSystem(
 
                     add<MoveComponent> {
                         speed = DEFAULT_SPEED * configuration.speedScaling
+
+
                     }
 
                 }
@@ -245,7 +303,8 @@ class EntitySpawnSystem(
                         damage = (DEFAULT_ATTACK_DAMAGE * configuration.attackScaling).roundToInt()
                         extraRange = configuration.attackExtraRange
                         if (entity in playerComponents) {
-                            damage=playerComponents[entity].actualStrenght.roundToInt()
+                            damage = playerComponents[entity].actualStrenght.roundToInt()
+
                         }
                     }
                 }
@@ -254,10 +313,11 @@ class EntitySpawnSystem(
                         maxLife = DEFAULT_LIFE * configuration.lifeScaling
                         exp = configuration.dropExp
                         if (entity in playerComponents) {
-                            life=playerComponents[entity].actualLife
+                            life = playerComponents[entity].actualLife
                         }
                     }
                 }
+
                 if (type == "Player") {
 
                     add<PlayerComponent> {
@@ -265,10 +325,9 @@ class EntitySpawnSystem(
                             log.debug { "$actualLife Fuerza=$actualStrenght" }
 
                             actualLife = playerComponents[entity].actualLife
-                            actualStrenght=playerComponents[entity].actualStrenght
+                            actualStrenght = playerComponents[entity].actualStrenght
                         }
                     }
-                    add<InventoryComponent>()
                     add<LevelComponent>()
                     add<ShieldComponents>()
                     add<StateComponent> {
@@ -276,9 +335,9 @@ class EntitySpawnSystem(
                     }
 
                 }
-                if (type == "MushRoom" || type == "Flying Eye" || type == "Goblin" || type == "Skeleton")
-                    add<EnemyComponent>(){
-                        name=type
+                if (type == "MushRoom" || type == "Flying Eye" || type == "Goblin" || type == "Skeleton" || type == "Demon")
+                    add<EnemyComponent>() {
+                        name = type
                     }
                 add<ShieldComponents>()
 
@@ -287,25 +346,31 @@ class EntitySpawnSystem(
                     add<AiComponent> {
                         treePath = configuration.aiTreePAth;
                     }
-                    physicComponent.body.circle(4f) {
-                        isSensor = true
-                        userData = AI_SENSOR
+                    if (type == "Demon") {
+                        physicComponent.body.circle(10f) {
+                            isSensor = true
+                            userData = AI_SENSOR
+                        }
+                    } else {
+
+                        physicComponent.body.circle(4f) {
+                            isSensor = true
+                            userData = AI_SENSOR
+                        }
                     }
                 }
             }
-            if (spawnedEntity in playerComponents) {
-                with(inventoryCmps[spawnedEntity]) {
-                    itemsToAdd += ItemType.SWORD
-                    itemsToAdd += ItemType.ARMOR
-                    itemsToAdd += ItemType.HELMET
-                    itemsToAdd += ItemType.BOOTS
-                }
-            }
+
 
         }
         world.remove(entity)
     }
 
+    /**
+     *  Tamaño de cada entidad segun la resolucion del juego
+     *
+     *   @param atlasKey Nombre de la entidad en el atlas
+     */
     private fun size(atlasKey: String): Vector2 {
         return cachedSizes.getOrPut(atlasKey) {
             val regions = atlas.findRegions("$atlasKey/${AnimationState.RUN.atlasKey}")

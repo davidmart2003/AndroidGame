@@ -12,17 +12,32 @@ import ktx.log.debug
 import ktx.log.logger
 import ktx.math.vec2
 
+/**
+ * Sistema que se encarga del despawn de las entidades
+ *
+ * @property gameStage Escenario que renderiza el juego
+ * @property playerComponents Conjunto de entidades que contiene PlayerComponent
+ */
 @AllOf([DespawnComponent::class, PlayerComponent::class])
 @NoneOf([SpawnComponent::class])
 class DespawnSystem(
     @Qualifier("gameStage") private val gameStage: Stage,
     private val playerComponents: ComponentMapper<PlayerComponent>
 ) : IteratingSystem() {
-    private var locationX: Float = 0f;
+    /**
+     * Mapa actual
+     */
     private var currentMap: TiledMap? = null
+
+    /**
+     * Número del mapa a escoger
+     */
     private var numMap: Int=1
+
+    /**
+     * Por cada entidad despawnea y cambia el mapa
+     */
     override fun onTickEntity(entity: Entity) {
-        val playerComponent = playerComponents[entity]
         world.removeAll()
         numMap++
         currentMap = TmxMapLoader().load("map/map$numMap.tmx")

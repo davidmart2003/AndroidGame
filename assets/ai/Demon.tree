@@ -1,0 +1,26 @@
+#actions
+import idle:"com.game.ai.IdleTask"
+import wander:"com.game.ai.WanderTask"
+import attack:"com.game.ai.AttackTask"
+import follow:"com.game.ai.FollowTask"
+
+#conditions
+import canAttack?:"com.game.ai.CanAttack"
+import isEnemyNearby?:"com.game.ai.IsEnemyNearby"
+
+subtree name:"attack"
+  sequence
+    (isEnemyNearby?) (canAttack?) attack
+    wait seconds:"uniform, 1.25, 2.1"
+
+subtree name:"follow"
+  sequence
+    follow
+    wait seconds:"uniform, 1, 1.5"
+
+root
+  selector
+    $attack
+    $follow
+    (random success:0.25) idle duration:"uniform,1.0,2.0"
+    wander
