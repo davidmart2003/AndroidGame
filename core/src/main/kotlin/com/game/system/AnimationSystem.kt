@@ -52,7 +52,8 @@ class AnimationSystem(
         }
 
         animationComponent.animation.playMode = animationComponent.mode
-        imageComponents[entity].image.drawable = animationComponent.animation.getKeyFrame(animationComponent.stateTime)
+        imageComponents[entity].image.drawable =
+            animationComponent.animation.getKeyFrame(animationComponent.stateTime)
     }
 
     /**
@@ -69,12 +70,20 @@ class AnimationSystem(
             if (regions.isEmpty) {
                 gdxError("No hay regiones para esa imagen, $anyKeyPath")
             }
-            if (anyKeyPath == "char_blue_1/attack") {
-                Animation(DEFAULT_FRAME_ATTACK_DURATION, regions.map { TextureRegionDrawable(it) })
-
+            if (anyKeyPath == "Demon/attack") {
+                Animation(
+                    1/20f,
+                    regions.map { TextureRegionDrawable(it) })
             } else {
-                Animation(DEFAULT_FRAME_DURATION, regions.map { TextureRegionDrawable(it) })
+                if (anyKeyPath == "char_blue_1/attack") {
+                    Animation(
+                        DEFAULT_FRAME_ATTACK_DURATION,
+                        regions.map { TextureRegionDrawable(it) })
 
+                } else {
+                    Animation(DEFAULT_FRAME_DURATION, regions.map { TextureRegionDrawable(it) })
+
+                }
             }
         }
 

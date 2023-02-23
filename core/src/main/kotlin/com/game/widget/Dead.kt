@@ -1,9 +1,7 @@
 package com.game.widget
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
-import com.badlogic.gdx.scenes.scene2d.ui.Table
-import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
+import com.badlogic.gdx.Preferences
+import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.game.event.MenuScreenEvent
 import com.game.event.fire
 import com.game.ui.view.Buttons
@@ -15,23 +13,26 @@ import ktx.actors.plusAssign
 import ktx.log.logger
 import ktx.scene2d.*
 
-class Dead(private val skin: Skin) : WidgetGroup(), KGroup {
+class Dead(
+    private val recordPref : Preferences,
+    private val skin: Skin,
+) : WidgetGroup(), KGroup {
     private val background: Image = Image(skin[Drawables.FRAME_BGD])
     private val table: Table
+    private var lblTime: Label
 
     init {
         this += background
 
         table = table {
 
-            label(text = "You are dead", style = Labels.TITLE.skinKey) {
+            this@Dead.lblTime= label(text = "You are dead \n ", style = Labels.TITLE.skinKey) {
                 it.row()
 
             }
 
             textButton(text = "Menu", style = Buttons.DEFAULT.skinKey) {
                 onClick {
-                    log.debug { "PULSADO" }
                     stage.fire(MenuScreenEvent())
                 }
 
@@ -47,6 +48,9 @@ class Dead(private val skin: Skin) : WidgetGroup(), KGroup {
 
     override fun getPrefHeight() = background.drawable.minHeight
 
+    fun time(time: Int) {
+        this@Dead.lblTime.setText("You are dead \n Your time was $time seconds\n Your best time "+this@Dead.recordPref.getInteger("time")+" seconds")
+    }
     companion object {
         private val log = logger<Dead>()
     }
@@ -55,6 +59,7 @@ class Dead(private val skin: Skin) : WidgetGroup(), KGroup {
 
 @Scene2dDsl
 fun <S> KWidget<S>.deadUp(
+    recordPref: Preferences,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: Dead.(S) -> Unit = {}
-): Dead = actor(Dead(skin), init)
+): Dead = actor(Dead(recordPref,skin), init)

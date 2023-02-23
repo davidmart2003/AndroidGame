@@ -1,6 +1,7 @@
 package com.game.system
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.BitmapFont
@@ -23,6 +24,7 @@ import ktx.math.vec2
 @NoneOf([DeadComponent::class])
 class LifeSystem(
     @Qualifier("gameStage") private val stage: Stage,
+    private val settingsPref : Preferences,
     private val lifeComponents: ComponentMapper<LifeComponent>,
     private val deadComponent: ComponentMapper<DeadComponent>,
     private val playerComponent: ComponentMapper<PlayerComponent>,
@@ -59,7 +61,10 @@ class LifeSystem(
                         animationComponent.nextAnimation(AnimationState.TAKEHIT)
                         animationComponent.mode = Animation.PlayMode.NORMAL
                     }
-                    Gdx.input.vibrate(100)
+                    if(settingsPref.getBoolean("vibrate")) {
+                        Gdx.input.vibrate(100)
+                    }
+
 
                 }
                 val physicComponent = physicComponents[entity]

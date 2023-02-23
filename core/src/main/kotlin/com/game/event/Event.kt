@@ -144,3 +144,5 @@ class DeadEvent(): Event()
  * Evento que se lanza cuando el jugador vence al final boss , es decir gana
  */
 class WinEvent():Event()
+
+class TimeEvent(val entity: Entity) : Event()

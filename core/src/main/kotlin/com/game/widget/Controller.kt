@@ -36,61 +36,82 @@ class Controller(
     init {
         this += left.apply {
             setPosition(0f, 100f)
-            setSize(100f,100f)
+            setSize(100f, 100f)
         }
         this += up.apply {
             setPosition(100f, 200f)
-            setSize(100f,100f)
+            setSize(100f, 100f)
 
         }
         this += down.apply {
             setPosition(100f, 0f)
-            setSize(100f,100f)
+            setSize(100f, 100f)
 
         }
         this += right.apply {
             setPosition(200f, 100f)
-            setSize(100f,100f)
+            setSize(100f, 100f)
 
         }
         this += attack.apply {
-            setSize(100f,100f)
-            setPosition(800f, 100f)
+            setSize(100f, 100f)
+            setPosition(1000f, 100f)
 
         }
         this += shield.apply {
-            setSize(100f,100f)
-            setPosition(1000f, 100f)
+            setSize(100f, 100f)
+            setPosition(1200f, 100f)
 
         }
 
         left.onTouchDown { stage.fire(ButtonPressedEvent(0f, -1f)) }
         left.onClick {
-            stage.fire(ButtonPressedEvent(0f, 0f))
-            stage.fire(ButtonShieldPressed(false))}
+            if (stage != null) {
+                stage.fire(ButtonPressedEvent(0f, 0f))
+                stage.fire(ButtonShieldPressed(false))
+            }
+        }
 
         right.onTouchDown { stage.fire(ButtonPressedEvent(0f, 1f)) }
         right.onClick {
-            stage.fire(ButtonPressedEvent(0f, 0f))
-            stage.fire(ButtonShieldPressed(false))}
+            if (stage != null) {
+                stage.fire(ButtonPressedEvent(0f, 0f))
+                stage.fire(ButtonShieldPressed(false))
+            }
+        }
 
         up.onTouchDown { stage.fire(ButtonPressedEvent(1f, 0f)) }
         up.onClick {
-            stage.fire(ButtonPressedEvent(0f, 0f))
-            stage.fire(ButtonShieldPressed(false))}
+            if (stage != null) {
+                stage.fire(ButtonPressedEvent(0f, 0f))
+                stage.fire(ButtonShieldPressed(false))
+            }
+        }
 
         down.onTouchDown { stage.fire(ButtonPressedEvent(-1f, 0f)) }
         down.onClick {
-            stage.fire(ButtonPressedEvent(0f, 0f))
-            stage.fire(ButtonShieldPressed(false))}
+            if (stage != null) {
+                stage.fire(ButtonPressedEvent(0f, 0f))
+                stage.fire(ButtonShieldPressed(false))
+            }
+        }
 
         attack.onTouchDown { stage.fire(ButtonAttackPressed(true)) }
-        attack.onClick { stage.fire(
-            ButtonAttackPressed(false))
-            stage.fire(ButtonShieldPressed(false))}
+        attack.onClick {
+            if (stage != null) {
+                stage.fire(
+                    ButtonAttackPressed(false)
+                )
+                stage.fire(ButtonShieldPressed(false))
+            }
+        }
 
         //shield.onTouchDown { stage.fire(ButtonShieldPressed(true)) }
-        shield.onClick { stage.fire(ButtonShieldPressed(true)) }
+        shield.onClick {
+            if (stage != null) {
+                stage.fire(ButtonShieldPressed(true))
+            }
+        }
 
     }
 

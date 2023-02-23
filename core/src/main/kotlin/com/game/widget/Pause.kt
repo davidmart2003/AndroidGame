@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
 import com.game.event.MenuScreenEvent
 import com.game.event.ResumeEvent
+import com.game.event.SettingsGameEvent
 import com.game.event.fire
 import com.game.ui.view.Buttons
 import com.game.ui.view.Drawables
@@ -34,7 +35,7 @@ class Pause(
             }
 
             textButton(text = "Settings", style = Buttons.DEFAULT.skinKey) {
-             //   onClick { stage.fire(ShowSettingsEvent()) }
+                onClick { stage.fire(SettingsGameEvent()) }
 
                 it.padBottom(10f)
                 it.row()

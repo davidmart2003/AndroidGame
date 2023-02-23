@@ -26,10 +26,6 @@ class DeadSystem(
     private val playerComponents: ComponentMapper<PlayerComponent>,
     private val enemyComponents: ComponentMapper<EnemyComponent>
 ) : IteratingSystem() {
-    /**
-     * Tiempo de espera
-     */
-    var cont: Float = 0f
 
     /**
      * Por cada entidad que este muerta la elimina del mundo de entidades
@@ -43,20 +39,13 @@ class DeadSystem(
 
         deadComponent.reviveTime -= deltaTime
         if (entity in playerComponents) {
-
-            cont += deltaTime
-            if (cont > 3) {
                 stage.fire(DeadEvent())
-            }
         }
 
         if (entity in enemyComponents) {
 
             if (enemyComponents[entity].name == "Demon") {
-                cont += deltaTime
-                if (cont > 3) {
                     stage.fire(WinEvent())
-                }
             } else {
 
                 world.remove(entity)

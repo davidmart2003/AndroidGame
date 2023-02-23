@@ -682,14 +682,14 @@ Goblin/attack
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
-  index: 3
+  index: 5
 Goblin/attack
   rotate: false
   xy: 288, 960
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
-  index: 5
+  index: 3
 Goblin/attack
   rotate: false
   xy: 576, 960
@@ -878,14 +878,14 @@ Mushroom/attack
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
-  index: 3
+  index: 5
 Mushroom/attack
   rotate: false
   xy: 3744, 1120
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
-  index: 5
+  index: 3
 Mushroom/attack
   rotate: false
   xy: 0, 1280

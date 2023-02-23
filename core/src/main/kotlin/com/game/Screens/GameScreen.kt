@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.Touchable
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.game.MyGame
 import com.game.component.AiComponent
@@ -31,7 +32,8 @@ import ktx.math.vec2
 import ktx.scene2d.actors
 
 class GameScreen(val game: MyGame) : KtxScreen, EventListener {
-
+    private val settingPref = game.settingPref
+    private val recordPref = game.recordPref
     private val textureAtlas: TextureAtlas = game.textureAtlas
     private val gameStage: Stage = game.gameStage
     private val uiStage: Stage = Stage(ExtendViewport(1280f, 720f))
@@ -40,6 +42,7 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
         autoClearForces = false
 
     }
+    private var settingsView : SettingsView
     private  var inventory:InventoryView
     private var gameView: GameView
     private val world = world {
@@ -48,6 +51,7 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
             add("uiStage", uiStage)
             add(textureAtlas)
             add(physicsWorld)
+            add(settingPref)
         }
 
         components {
@@ -67,6 +71,7 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
             add<AnimationSystem>()
             add<DeadSystem>()
             add<StateSystem>()
+            add<TimeSystem>()
             add<AiSystem>()
             add<PhysicSystem>()
             add<CameraSystem>()
@@ -90,17 +95,20 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
             }
         }
         uiStage.actors {
-            gameView = gameView(GameModel(world, gameStage))
+            gameView = gameView(GameModel(world, gameStage), recordPref =recordPref )
             inventory =inventoryView(GameModel(world, gameStage)) {
                 this.isVisible = false
             }
-
+            settingsView = settingsView(settingPref){
+                this.isVisible=false
+            }
         }
+            uiStage.isDebugAll=true
     }
 
     override fun show() {
         super.show()
-        currentMap = TmxMapLoader().load("map/map4.tmx")
+        currentMap = TmxMapLoader().load("map/map1.tmx")
         gameStage.fire(MapChangeEvent(currentMap!!))
         uiStage.addListener(this)
         gameStage.addListener(this)
@@ -123,8 +131,8 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
     /**
      * Se ejecuta cuando entra en estado de pausa la ventana, y pausa el juego
      */
-    override fun pause() = pauseWorld(true) // TODO Do popup on exit the app
-
+    override fun pause() = pauseWorld(true)
+    override fun resume() =pauseWorld(false)
 
     override fun render(delta: Float) {
         val dt = delta.coerceAtMost(0.25f)
@@ -147,9 +155,9 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
         when (event) {
 
             is PauseEvent -> {
-                gameView.pause()
                 pause()
-               // Gdx.input.inputProcessor = uiStage
+                gameView.pause()
+
             }
 
             is ResumeEvent -> {
@@ -178,12 +186,23 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
             }
 
             is DeadEvent ->{
+                gameView.controller.touchable= Touchable.disabled
                 pause()
                 gameView.death()
             }
             is WinEvent ->{
+                gameView.controller.touchable= Touchable.disabled
                 pause()
                 gameView.win()
+            }
+
+
+            is SettingsGameEvent -> {
+                settingsView.isVisible=true
+            }
+
+            is HideSettingsGameEvent -> {
+                settingsView.isVisible=false
             }
 
         }

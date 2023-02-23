@@ -1,5 +1,6 @@
 package com.game.ui.view
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.game.event.HideSettingsGameEvent
@@ -16,35 +17,18 @@ class SettingsView(
     skin: Skin,
 ) : KTable, Table(skin) {
 
-    /**
-     * Tabla que contiene los componente
-     */
+
     val table: Table
 
-    /**
-     * Etiqueta que muesta el nivel de volumen de la musica
-     */
     lateinit var labelMusic: Label
 
-    /**
-     * Deslizador para cambiar el valor del volumen de la musica
-     */
     var sliderMusic: Slider
-
-    /**
-     *Etiqueta que muesta el nivel de volumen de los efectos de sonido
-     */
     lateinit var labelEffects: Label
 
-    /**
-     * Deslizador para cambiar el valor del volumen de los efectos de sonido
-     */
     var sliderEffects: Slider
 
-    /**
-     * Casilla para activar la vibracion
-     */
     var cbVibrate: CheckBox
+
     var cbAcc: CheckBox
 
 
@@ -68,7 +52,6 @@ class SettingsView(
                         value = if (settingPref.contains("music")) settingPref.getInteger("music").toFloat() else 100f
 
                         onChange {
-
                             this@SettingsView.labelMusic.setText(value.toInt().toString())
                         }
                         it.width(500f)
@@ -92,7 +75,8 @@ class SettingsView(
                     }
 
                     this@SettingsView.sliderEffects = slider(0f, 100f, 1f, false, Sliders.DEFAULT.skinKey) {
-                        value = if (settingPref.contains("sound")) settingPref.getInteger("sound").toFloat() else 100f
+                        value =
+                            if (settingPref.contains("effects")) settingPref.getInteger("effects").toFloat() else 100f
 
                         onChange {
                             this@SettingsView.labelEffects.setText(value.toInt().toString())
@@ -101,10 +85,14 @@ class SettingsView(
                     }
 
                     this@SettingsView.labelEffects =
-                        label(text = settingPref.getInteger("sound").toString(), style = Labels.LEVEL.skinKey) {
+                        label(text = settingPref.getInteger("effects").toString(), style = Labels.LEVEL.skinKey) {
                             setText(
-                                if (settingPref.contains("music")) settingPref.getInteger("music")
-                                    .toString() else 100.toString()
+                                if (settingPref.contains("effects")) {
+                                    settingPref.getInteger("effects")
+                                        .toString()
+                                } else {
+                                    100.toString()
+                                }
                             )
                         }
 
@@ -114,43 +102,47 @@ class SettingsView(
                 table {
                     this@SettingsView.cbVibrate = checkBox(text = "", style = CheckBoxs.DEFAULT.skinKey) {
                         isChecked = settingPref.getBoolean("vibrate")
+                        this.onClick {
+                            if(settingPref.getBoolean("vibrate")) {
+                                Gdx.input.vibrate(100)
+                            }
+                        }
                         setText("Vibrate")
+                        it.padLeft(50f)
                     }
 
                     this@SettingsView.cbAcc = checkBox(text = "", style = CheckBoxs.DEFAULT.skinKey) {
                         isChecked = settingPref.getBoolean("accelerometer")
-                        setText("Accelerometer")
+                        this.onClick {  if(settingPref.getBoolean("vibrate")) {
+                            Gdx.input.vibrate(100)
+                        } }
 
+                        setText("Accelerometer")
+                        it.padLeft(30f)
+                        it.padRight((50f))
                     }
 
                     it.padBottom(10f).left().row()
                 }
-
-
-
-
-
                 it.padBottom(10f).left().row()
             }
 
             textButton(text = "Back", style = Buttons.DEFAULT.skinKey) {
 
+
                 onClick {
-                    onClick {
-                        this@SettingsView.labelMusic.setText(settingPref.getInteger("music"))
-                        this@SettingsView.sliderMusic.value = settingPref.getInteger("music").toFloat()
-                        this@SettingsView.labelMusic.setText(settingPref.getInteger("music"))
-                        this@SettingsView.sliderEffects.value = settingPref.getInteger("sound").toFloat()
-                        this@SettingsView.labelEffects.setText(settingPref.getInteger("sound"))
-                        this@SettingsView.cbVibrate.isChecked = settingPref.getBoolean("vibrate")
-                        this@SettingsView.cbAcc.isChecked = settingPref.getBoolean("accelerometer")
-                        stage.fire(HideSettingsGameEvent())
-                    }
+                    settingPref.putInteger("music", this@SettingsView.sliderMusic.value.toInt())
+                    settingPref.putInteger("effects", this@SettingsView.sliderEffects.value.toInt())
+                    settingPref.putBoolean("vibrate", this@SettingsView.cbVibrate.isChecked)
+                    settingPref.putBoolean("accelerometer", this@SettingsView.cbAcc.isChecked)
+
+                    settingPref.flush()
+                    stage.fire(HideSettingsGameEvent())
                 }
+
 
                 it.padRight(3f)
             }
-
         }
     }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="129" height="44" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="70">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="129" height="44" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="82">
  <properties>
   <property name="music" value="audio/music/theme.wav"/>
  </properties>
@@ -216,12 +216,18 @@
 </data>
  </layer>
  <objectgroup id="4" name="Entities">
-  <object id="1" name="Player" gid="1" x="1463.61" y="403.387" width="56" height="56">
-   <properties>
-    <property name="music" value="audio/music/theme.wav"/>
-   </properties>
-  </object>
-  <object id="64" name="Flying Eye" gid="1967" x="1445" y="423" width="150" height="150"/>
+  <object id="64" name="Player" gid="1967" x="101" y="233" width="150" height="150"/>
+  <object id="70" name="Flying Eye" gid="1968" x="679" y="217" width="150" height="150"/>
+  <object id="71" name="Flying Eye" gid="1968" x="299" y="279" width="150" height="150"/>
+  <object id="72" name="Flying Eye" gid="1968" x="1373" y="519" width="150" height="150"/>
+  <object id="73" name="Flying Eye" gid="1968" x="1311" y="659" width="150" height="150"/>
+  <object id="74" name="Goblin" gid="1969" x="521" y="593" width="150" height="150"/>
+  <object id="75" name="Goblin" gid="1969" x="81" y="553" width="150" height="150"/>
+  <object id="76" name="Goblin" gid="1969" x="577" y="361" width="150" height="150"/>
+  <object id="77" name="Goblin" gid="1969" x="1165" y="679" width="150" height="150"/>
+  <object id="78" name="Goblin" gid="1969" x="733" y="195" width="150" height="150"/>
+  <object id="79" name="Flying Eye" gid="1968" x="859" y="289" width="150" height="150"/>
+  <object id="80" name="Flying Eye" gid="1968" x="369" y="181" width="150" height="150"/>
  </objectgroup>
  <layer id="7" name="foreground_1" width="129" height="44">
   <data encoding="csv">

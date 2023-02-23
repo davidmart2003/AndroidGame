@@ -1,5 +1,6 @@
 package com.game.ui.view
 
+import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction
@@ -24,16 +25,20 @@ import ktx.scene2d.*
 
 class GameView(
     model: GameModel,
+    recordPref : Preferences,
     skin: Skin
 ) : Table(skin), KTable {
-
+    private val recordPref = recordPref
     private val enemyInfo: CharacterInfo
     private val playerInfo: CharacterInfo
-
-    private val controller: Controller
+    private val time : Label
+     val controller: Controller
     private val popupLabel: Label
     private var pause: Image
     private var inventory: Image
+    private var table1 : Table
+    private var table2 : Table
+    private var timeGame: Int = 0
     private lateinit var Pause: Pause
     private lateinit var Dead: Dead
     private lateinit var Win: Win
@@ -42,7 +47,7 @@ class GameView(
         // UI
         setFillParent(true)
 
-        table {
+       table1= table {
 
             this@GameView.playerInfo = characterInfo(Drawables.PLAYER, skin) {
                 it.expand().top().left()
@@ -53,7 +58,13 @@ class GameView(
                 it.expand().top().left()
             }
 
+            this@GameView.time = label(text = this@GameView.timeGame.toString(), style = Labels.LEVEL.skinKey ){
+                this.setFontScale(2f)
+                it.expand().top().right()
+                it.padTop(20f)
+                it.padRight(10f)
 
+            }
             this@GameView.inventory = image(skin[Drawables.FRAME_BGD]) {
                 onClick { stage.fire(InventoryEvent()) }
                 it.top().left()
@@ -74,7 +85,7 @@ class GameView(
             it.expand().fill().row()
         }
 
-        table {
+        table2= table {
 
             this@GameView.popupLabel = label(text = "", style = Labels.FRAME.skinKey) {
                 it.row()
@@ -103,6 +114,11 @@ class GameView(
         model.onPropertyChange(GameModel::lootText) { lootInfo ->
             popup(lootInfo)
         }
+        model.onPropertyChange(GameModel::time){time ->
+            updateLabeltime(time)
+            this@GameView.timeGame=time
+
+        }
         model.onPropertyChange(GameModel::enemyType) { type ->
             when (type) {
                 "FlyingEye" -> showEnemyInfo(Drawables.FLYINGEYE, model.enemyLife)
@@ -114,17 +130,20 @@ class GameView(
 
     fun death() {
         this.clear()
-        Dead = deadUp(skin) {
+        Dead = deadUp(this@GameView.recordPref,skin) {
+            this.time(time=this@GameView.timeGame)
             it.expand().center()
         }
         this += Dead
     }
     fun win() {
         this.clear()
-        Win = winUp(skin) {
+        Win = winUp(this@GameView.recordPref,skin) {
+        this.time(time=this@GameView.timeGame)
 
         }
         this += Win
+
     }
     fun pause() {
         this.clear()
@@ -138,10 +157,11 @@ class GameView(
 
     fun resume() {
         this.clear()
-        this += playerInfo
-        this += pause
-        this += enemyInfo
-        this += controller
+        this += table1
+        this +=table2
+        this +=  controller(Drawables.DOWN, skin) {
+            it.expand().left().bottom()
+        }
     }
 
     fun playerLife(percentage: Float) = playerInfo.life(percentage)
@@ -155,6 +175,10 @@ class GameView(
                 val delay = sequence.actions.last() as DelayAction
                 delay.time = 0f
             }
+    }
+
+    fun updateLabeltime(time : Int){
+        this.time.setText(time)
     }
 
     fun showEnemyInfo(charDrawable: Drawables?, lifePercentage: Float) {
@@ -190,6 +214,7 @@ class GameView(
 @Scene2dDsl
 fun <S> KWidget<S>.gameView(
     model: GameModel,
+    recordPref: Preferences,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: GameView.(S) -> Unit = {}
-): GameView = actor(GameView(model, skin), init)
+): GameView = actor(GameView(model,recordPref, skin), init)

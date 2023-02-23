@@ -90,7 +90,7 @@ class EntitySpawnSystem(
                     attackExtraRange = 0.6f,
                     lifeScaling = 5f,
                     speedScaling = 3f,
-                    attackScaling = 40.75f,
+                    attackScaling = 3.75f,
 
                     )
 
@@ -103,7 +103,7 @@ class EntitySpawnSystem(
                     lifeScaling = 1.33f,
                     speedScaling = 1f,
                     attackScaling = 1f,
-                    dropExp = 2
+                    dropExp = 3
                 )
 
                 "Goblin" -> SpawnConfiguration(
@@ -115,7 +115,7 @@ class EntitySpawnSystem(
                     lifeScaling = 3f,
                     speedScaling = 1.4f,
                     attackScaling = 2.25f,
-                    dropExp = 23
+                    dropExp = 5
 
                 )
 
@@ -128,7 +128,7 @@ class EntitySpawnSystem(
                     lifeScaling = 5f,
                     speedScaling = 1f,
                     attackScaling = 3.75f,
-                    dropExp = 257
+                    dropExp = 7
 
                 )
 
@@ -141,7 +141,7 @@ class EntitySpawnSystem(
                     lifeScaling = 6.25f,
                     speedScaling = 0.6f,
                     attackScaling = 10.5f,
-                    dropExp = 5
+                    dropExp = 11
 
                 )
 
@@ -194,6 +194,7 @@ class EntitySpawnSystem(
                             add<PlayerComponent>() {
                                 this.actualLife = event.playerComponent.actualLife
                                 this.actualStrenght = event.playerComponent.actualStrenght
+                                this.actualTime = event.playerComponent.actualTime
                                 //   log.debug { "$actualLife Fuerza=$actualStrenght" }
                             }
                         }
@@ -328,6 +329,7 @@ class EntitySpawnSystem(
                             actualStrenght = playerComponents[entity].actualStrenght
                         }
                     }
+                    add<TimeComponent>()
                     add<LevelComponent>()
                     add<ShieldComponents>()
                     add<StateComponent> {

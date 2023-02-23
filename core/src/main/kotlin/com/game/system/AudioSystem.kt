@@ -1,6 +1,7 @@
 package com.game.system
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.scenes.scene2d.Event
@@ -13,8 +14,12 @@ import ktx.tiled.propertyOrNull
 
 /**
  * Sistema que se encarga del audio del juego
+ *
+ * @property settingsPref Almacen del volumen del audio y efectos
  */
-class AudioSystem : EventListener, IntervalSystem() {
+class AudioSystem(
+    private val settingsPref: Preferences
+) : EventListener, IntervalSystem() {
     /**
      * Almacen de los sonidos cargados
      */
@@ -43,7 +48,13 @@ class AudioSystem : EventListener, IntervalSystem() {
             return
         }
 
-        soundRequests.values.forEach { it.play(1f) }
+        soundRequests.values.forEach {
+            if(settingsPref.contains("effects")){
+                it.play(settingsPref.getInteger("effects").toFloat()/100)
+            }else {
+                it.play(1f)
+            }
+        }
         soundRequests.clear()
     }
 
@@ -60,28 +71,55 @@ class AudioSystem : EventListener, IntervalSystem() {
                     music = musicCache.getOrPut(path) {
                         Gdx.audio.newMusic(Gdx.files.internal("$path")).apply {
                             isLooping = true
-                            //volume=1f
+                            if (settingsPref.contains("music")){
+                                volume = settingsPref.getInteger("music").toFloat()/100
+                            }else {
+                                volume =1f
+                            }
                         }
                     }
-                    musicCache.forEach{it.value.stop()}
+                    musicCache.forEach { it.value.stop() }
                     music?.play()
                 }
             }
 
-            is DeathSound ->{
-                when (event.name){
-                    "Flying Eye" ->{queueSound("audio/deathFlyingEye.wav")}
-                    "Goblin" ->{queueSound("audio/deathGoblin.wav")}
-                    "MushRoom" ->{queueSound("audio/deathMushRoom.wav")}
-                    "Skeleton" ->{queueSound("audio/deathSkeleton.wav")}
-                    "Player"->{queueSound("audio/death.mp3")}
-                    "Demon"->{queueSound("audio/deathSkeleton.wav")}
+            is DeathSound -> {
+                when (event.name) {
+                    "Flying Eye" -> {
+                        queueSound("audio/deathFlyingEye.wav")
+                    }
+
+                    "Goblin" -> {
+                        queueSound("audio/deathGoblin.wav")
+                    }
+
+                    "MushRoom" -> {
+                        queueSound("audio/deathMushRoom.wav")
+                    }
+
+                    "Skeleton" -> {
+                        queueSound("audio/deathSkeleton.wav")
+                    }
+
+                    "Player" -> {
+                        queueSound("audio/death.mp3")
+                    }
+
+                    "Demon" -> {
+                        queueSound("audio/deathSkeleton.wav")
+                    }
                 }
 
             }
 
-            is HitEvent ->{
+            is HitEvent -> {
                 queueSound("audio/hit.wav")
+            }
+
+            is HideSettingsGameEvent -> {
+                musicCache.forEach { it ->
+                    it.value.volume = settingsPref.getInteger("music").toFloat()/100
+                }
             }
 
             else -> return false

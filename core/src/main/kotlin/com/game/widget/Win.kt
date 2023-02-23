@@ -1,6 +1,8 @@
 package com.game.widget
 
+import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.scenes.scene2d.ui.Image
+import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
@@ -14,16 +16,21 @@ import ktx.actors.onClick
 import ktx.actors.plusAssign
 import ktx.scene2d.*
 
-class Win(private val skin: Skin) : WidgetGroup(), KGroup {
+class Win(
+    private val recordPref: Preferences,
+    private val skin: Skin
+) : WidgetGroup(), KGroup {
     private val background: Image = Image(skin[Drawables.FRAME_BGD])
     private val table: Table
+    private var lblTime: Label
 
     init {
         this += background
 
         table = table {
 
-            label(text = "You Win", style = Labels.TITLE.skinKey) {
+
+            this@Win.lblTime = label(text = "You Win \n", style = Labels.FRAME.skinKey) {
                 it.row()
             }
 
@@ -38,6 +45,15 @@ class Win(private val skin: Skin) : WidgetGroup(), KGroup {
         this += table
     }
 
+    fun time(time: Int) {
+        if (this@Win.recordPref.getInteger("time") > time || this@Win.recordPref.getInteger("time")==0) {
+            this@Win.lblTime.setText("New Record!!! Your new time is " + time + "seconds")
+            this@Win.recordPref.putInteger("time", time)
+        } else {
+            this@Win.lblTime.setText("You win was $time seconds")
+        }
+    }
+
     override fun getPrefWidth() = background.drawable.minWidth
 
     override fun getPrefHeight() = background.drawable.minHeight
@@ -46,6 +62,7 @@ class Win(private val skin: Skin) : WidgetGroup(), KGroup {
 
 @Scene2dDsl
 fun <S> KWidget<S>.winUp(
+    recordPref: Preferences,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: Win.(S) -> Unit = {}
-): Win = actor(Win(skin), init)
+): Win = actor(Win(recordPref, skin), init)

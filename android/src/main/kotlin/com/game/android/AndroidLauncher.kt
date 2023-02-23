@@ -12,7 +12,7 @@ class AndroidLauncher : AndroidApplication() {
         super.onCreate(savedInstanceState)
         initialize(MyGame(), AndroidApplicationConfiguration().apply {
             // Configure your application here.
-            useAccelerometer=true
+            useAccelerometer = true
         })
     }
 }
