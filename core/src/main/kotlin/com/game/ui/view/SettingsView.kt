@@ -104,7 +104,7 @@ class SettingsView(
                         isChecked = settingPref.getBoolean("vibrate")
                         this.onClick {
                             if(settingPref.getBoolean("vibrate")) {
-                                Gdx.input.vibrate(100)
+                                Gdx.input.vibrate(200)
                             }
                         }
                         setText("Vibrate")
