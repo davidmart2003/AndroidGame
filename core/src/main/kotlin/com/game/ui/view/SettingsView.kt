@@ -56,7 +56,6 @@ class SettingsView(
                 label(text = "SETTINGS", style = Labels.TITLE.skinKey) {
                     it.padTop(7f).padLeft(7f).center().row()
                 }
-                //Music volume
                 table {
                     label(text = "Music", style = Labels.LEVEL.skinKey) {
                         it.padTop(10f).row()
@@ -82,7 +81,6 @@ class SettingsView(
 
                     it.padBottom(10f).row()
                 }
-                //Sound volume
                 table {
                     label(text = "Sound", style = Labels.LEVEL.skinKey) {
                         it.row()

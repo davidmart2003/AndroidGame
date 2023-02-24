@@ -24,30 +24,32 @@ import ktx.scene2d.*
 class Pause(
     private val skin: Skin,
 ) : WidgetGroup(), KGroup {
-    private val background: Image =Image(skin[Drawables.FRAME_BGD])
+    private val background: Image = Image(skin[Drawables.FRAME_BGD])
     private val table: Table
 
     init {
         this += background
 
         table = table {
-            textButton(text ="Resume", style = Buttons.DEFAULT.skinKey) {
+            textButton(text = "Resume", style = Buttons.DEFAULT.skinKey) {
 
                 onClick { stage.fire(ResumeEvent()) }
-
+                it.size(200f, 150f)
                 it.padBottom(10f)
                 it.row()
             }
 
             textButton(text = "Settings", style = Buttons.DEFAULT.skinKey) {
                 onClick { stage.fire(SettingsGameEvent()) }
+                it.size(200f, 150f)
 
                 it.padBottom(10f)
                 it.row()
             }
 
-            textButton(text ="Menu", style = Buttons.DEFAULT.skinKey) {
+            textButton(text = "Menu", style = Buttons.DEFAULT.skinKey) {
                 onClick { stage.fire(MenuScreenEvent()) }
+                it.size(200f, 150f)
 
                 it.padBottom(10f)
                 it.row()

@@ -21,10 +21,10 @@ class LevelSystem(
     private val lifeComponents: ComponentMapper<LifeComponent>,
     private val attackComponents: ComponentMapper<AttackComponent>,
     private val levelComponents: ComponentMapper<LevelComponent>,
-    private val playerComponents : ComponentMapper<PlayerComponent>,
-    private val moveComponents : ComponentMapper<MoveComponent>
+    private val playerComponents: ComponentMapper<PlayerComponent>,
+    private val moveComponents: ComponentMapper<MoveComponent>
 
-    ) : IteratingSystem() {
+) : IteratingSystem() {
 
     /**
      *  Por cada entidad sube de nivel segun la expereincia que este tenga
@@ -37,11 +37,14 @@ class LevelSystem(
         val playerComponents = playerComponents[entity]
         val moveComponents = moveComponents[entity]
         if (levelComponent.baseExp < lifeComponent.exp) {
+            lifeComponent.exp = 0
             levelComponent.baseExp = levelComponent.baseExp * 1.5f
+            playerComponents.actualBasexp = levelComponent.baseExp
             levelComponent.level++
-           // stage.fire(SpeedEven    t())
+            playerComponents.actualLevel = levelComponent.level.toFloat()
+            // stage.fire(SpeedEven    t())
             attackComponent.damage = attackComponent.damage + DEFAULT_ATTACK_DAMAGE.toInt() + 2;
-            playerComponents.actualStrenght=attackComponent.damage.toFloat()
+            playerComponents.actualStrenght = attackComponent.damage.toFloat()
             lifeComponent.maxLife = lifeComponent.maxLife + 5
             stage.fire(LevelUpEvent(levelComponent.level))
             stage.fire(AttackEvent(attackComponent.damage.toFloat()))

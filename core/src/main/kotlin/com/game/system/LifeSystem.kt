@@ -22,7 +22,7 @@ import ktx.math.vec2
 @NoneOf([DeadComponent::class])
 class LifeSystem(
     @Qualifier("gameStage") private val stage: Stage,
-    private val settingsPref : Preferences,
+    private val settingsPref: Preferences,
     private val lifeComponents: ComponentMapper<LifeComponent>,
     private val deadComponent: ComponentMapper<DeadComponent>,
     private val playerComponent: ComponentMapper<PlayerComponent>,
@@ -34,9 +34,9 @@ class LifeSystem(
 ) : EventListener, IteratingSystem() {
     private val dmgFont = BitmapFont(Gdx.files.internal("damage.fnt")).apply { data.setScale(2f) }
     private val floatingTextStyle = LabelStyle(dmgFont, Color.RED)
+    private val floatingTextStylePlayer = LabelStyle(dmgFont, Color.BLACK)
     private var position: Vector2 = vec2(0f, 0f)
     private var isDone: Boolean = false
-    private var cont: Float = 0f
 
     override fun onTickEntity(entity: Entity) {
         val lifeComponent = lifeComponents[entity]
@@ -45,7 +45,7 @@ class LifeSystem(
             (lifeComponent.life + lifeComponent.regeneration * deltaTime).coerceAtMost(lifeComponent.maxLife)
         if (entity in playerComponent) {
 
-        //    log.debug { "VIDA ACTUAL ${lifeComponent.life} vida maxima ${lifeComponent.maxLife} " }
+            //    log.debug { "VIDA ACTUAL ${lifeComponent.life} vida maxima ${lifeComponent.maxLife} " }
             stage.fire(ActualLifeEvent(lifeComponent.life))
         }
 
@@ -59,7 +59,7 @@ class LifeSystem(
                         animationComponent.nextAnimation(AnimationState.TAKEHIT)
                         animationComponent.mode = Animation.PlayMode.NORMAL
                     }
-                    if(settingsPref.getBoolean("vibrate")) {
+                    if (settingsPref.getBoolean("vibrate")) {
                         Gdx.input.vibrate(100)
                     }
 
@@ -69,14 +69,23 @@ class LifeSystem(
                 position = physicComponent.body.position
                 lifeComponent.life -= lifeComponent.takeDamage
                 if (entity in playerComponent) {
-                    log.debug { "DFSADADAD DFUSNUOKSFNFNSSFIOU "+playerComponent[entity].actualLife }
+                    log.debug { "DFSADADAD DFUSNUOKSFNFNSSFIOU " + playerComponent[entity].actualLife }
                     playerComponent[entity].actualLife = lifeComponent.life
+                    floatingText(
+                        lifeComponent.takeDamage.toInt().toString(),
+                        physicComponent.body.position,
+                        physicComponent.size,
+                        true
+                    )
+                } else {
+
+                    floatingText(
+                        lifeComponent.takeDamage.toInt().toString(),
+                        physicComponent.body.position,
+                        physicComponent.size,
+                        false
+                    )
                 }
-                floatingText(
-                    lifeComponent.takeDamage.toInt().toString(),
-                    physicComponent.body.position,
-                    physicComponent.size
-                )
                 lifeComponent.takeDamage = 0f
 
             } else {
@@ -108,7 +117,7 @@ class LifeSystem(
             configureEntity(entity) {
                 deadComponent.add(it) {
 
-                        reviveTime = 7f
+                    reviveTime = 7f
 
                 }
             }
@@ -118,12 +127,17 @@ class LifeSystem(
 
     }
 
-    private fun floatingText(text: String, position: Vector2, size: Vector2) {
+    private fun floatingText(text: String, position: Vector2, size: Vector2, player: Boolean) {
         world.entity {
             add<FloatingTextComponent> {
                 txtLocation.set(position.x, position.y - size.y * 0.5f)
                 lifeSpan = 1.5f
-                label = Label(text, floatingTextStyle)
+                if (player) {
+
+                    label = Label(text, floatingTextStylePlayer)
+                } else {
+                    label = Label(text, floatingTextStyle)
+                }
             }
         }
     }

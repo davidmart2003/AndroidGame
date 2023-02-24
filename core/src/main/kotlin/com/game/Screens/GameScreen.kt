@@ -82,7 +82,7 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
             add<AudioSystem>()
             add<ShieldSystem>()
             add<RenderSystem>()
-            add<DebugSystem>()
+           // add<DebugSystem>()
         }
     }
 
@@ -103,7 +103,6 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
                 this.isVisible=false
             }
         }
-            uiStage.isDebugAll=true
     }
 
     override fun show() {

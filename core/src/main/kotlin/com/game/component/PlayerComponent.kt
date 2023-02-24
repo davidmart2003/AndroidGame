@@ -12,6 +12,8 @@ class PlayerComponent(
     var actualStrenght:Float = DEFAULT_ATTACK_DAMAGE*3.75f,
     var actualTime:Float = 0f,
     var actualLevel:Float = 0f,
+    var actualBasexp : Float =0f,
+    var actualexp : Float =0f
 ) {
 
 

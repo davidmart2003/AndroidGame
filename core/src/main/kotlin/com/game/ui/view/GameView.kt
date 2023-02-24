@@ -32,7 +32,7 @@ import ktx.scene2d.*
  */
 class GameView(
     model: GameModel,
-    recordPref : Preferences,
+    recordPref: Preferences,
     skin: Skin
 ) : Table(skin), KTable {
     /**
@@ -53,12 +53,12 @@ class GameView(
     /**
      * Componente de etiqueta de texto
      */
-    private val time : Label
+    private val time: Label
 
     /**
      * Componente para controlar el movimiento y las habilidades del jugador
      */
-     val controller: Controller
+    val controller: Controller
     private val popupLabel: Label
 
     /**
@@ -74,8 +74,8 @@ class GameView(
     /**
      * Tabla
      */
-    private var table1 : Table
-    private var table2 : Table
+    private var table1: Table
+    private var table2: Table
 
     /**
      * Tiempo de juego total
@@ -101,7 +101,7 @@ class GameView(
         // UI
         setFillParent(true)
 
-       table1= table {
+        table1 = table {
 
             this@GameView.playerInfo = characterInfo(Drawables.PLAYER, skin) {
                 it.expand().top().left()
@@ -112,15 +112,18 @@ class GameView(
                 it.expand().top().left()
             }
 
-            this@GameView.time = label(text = this@GameView.timeGame.toString(), style = Labels.LEVEL.skinKey ){
-                this.setFontScale(2f)
-                it.expand().top().right()
-                it.padTop(20f)
-                it.padRight(10f)
+            this@GameView.time =
+                label(text = this@GameView.timeGame.toString(), style = Labels.LEVEL.skinKey) {
+                    this.setFontScale(2f)
+                    it.expand().top().right()
+                    it.padTop(20f)
+                    it.padRight(10f)
 
-            }
+                }
             this@GameView.inventory = image(skin[Drawables.FRAME_BGD]) {
                 onClick { stage.fire(InventoryEvent()) }
+                it.size(100f, 100f)
+
                 it.top().left()
                 it.padTop(5f)
                 it.padRight(50f)
@@ -128,12 +131,12 @@ class GameView(
             }
 
             this@GameView.pause = image(skin[Drawables.PAUSE]) {
+                it.size(100f, 100f)
+
                 onClick {
-
-
                     stage.fire(PauseEvent())
                 }
-                it.padRight(10f)
+                it.padRight(30f)
                 it.padTop(10f)
                 it.right().top().row()
             }
@@ -141,7 +144,7 @@ class GameView(
             it.expand().fill().row()
         }
 
-        table2= table {
+        table2 = table {
 
             this@GameView.popupLabel = label(text = "", style = Labels.FRAME.skinKey) {
                 it.row()
@@ -170,18 +173,18 @@ class GameView(
         model.onPropertyChange(GameModel::lootText) { lootInfo ->
             popup(lootInfo)
         }
-        model.onPropertyChange(GameModel::time){time ->
+        model.onPropertyChange(GameModel::time) { time ->
             updateLabeltime(time)
-            this@GameView.timeGame=time
+            this@GameView.timeGame = time
 
         }
         model.onPropertyChange(GameModel::enemyType) { type ->
             when (type) {
                 "FlyingEye" -> showEnemyInfo(Drawables.FLYINGEYE, model.enemyLife)
-                "Skeleton" ->showEnemyInfo(Drawables.SKELETON, model.enemyLife)
-                "Demon"->showEnemyInfo(Drawables.DEMON, model.enemyLife)
-                "Mushroom" ->showEnemyInfo(Drawables.MUSHROOM, model.enemyLife)
-                "Goblin"->showEnemyInfo(Drawables.GOBLIN, model.enemyLife)
+                "Skeleton" -> showEnemyInfo(Drawables.SKELETON, model.enemyLife)
+                "Demon" -> showEnemyInfo(Drawables.DEMON, model.enemyLife)
+                "Mushroom" -> showEnemyInfo(Drawables.MUSHROOM, model.enemyLife)
+                "Goblin" -> showEnemyInfo(Drawables.GOBLIN, model.enemyLife)
                 else -> showEnemyInfo(null, 1f)
             }
 
@@ -193,8 +196,8 @@ class GameView(
      */
     fun death() {
         this.clear()
-        Dead = deadUp(this@GameView.recordPref,skin) {
-            this.time(time=this@GameView.timeGame)
+        Dead = deadUp(this@GameView.recordPref, skin) {
+            this.time(time = this@GameView.timeGame)
             it.expand().center()
         }
         this += Dead
@@ -205,8 +208,8 @@ class GameView(
      */
     fun win() {
         this.clear()
-        Win = winUp(this@GameView.recordPref,skin) {
-        this.time(time=this@GameView.timeGame)
+        Win = winUp(this@GameView.recordPref, skin) {
+            this.time(time = this@GameView.timeGame)
 
         }
         this += Win
@@ -232,8 +235,8 @@ class GameView(
     fun resume() {
         this.clear()
         this += table1
-        this +=table2
-        this +=  controller(Drawables.DOWN, skin) {
+        this += table2
+        this += controller(Drawables.DOWN, skin) {
             it.expand().left().bottom()
         }
     }
@@ -270,7 +273,7 @@ class GameView(
      *
      * @param time Tiempo  de juego
      */
-    fun updateLabeltime(time : Int){
+    fun updateLabeltime(time: Int) {
         this.time.setText(time)
     }
 
@@ -327,4 +330,4 @@ fun <S> KWidget<S>.gameView(
     recordPref: Preferences,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: GameView.(S) -> Unit = {}
-): GameView = actor(GameView(model,recordPref, skin), init)
+): GameView = actor(GameView(model, recordPref, skin), init)

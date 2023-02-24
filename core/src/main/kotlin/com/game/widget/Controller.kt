@@ -41,32 +41,32 @@ class Controller(
 
     init {
         this += left.apply {
-            setPosition(0f, 100f)
-            setSize(100f, 100f)
+            setPosition(0f, 150f)
+            setSize(150f, 150f)
         }
         this += up.apply {
-            setPosition(100f, 200f)
-            setSize(100f, 100f)
+            setPosition(150f, 300f)
+            setSize(150f, 150f)
 
         }
         this += down.apply {
-            setPosition(100f, 0f)
-            setSize(100f, 100f)
+            setPosition(150f, 0f)
+            setSize(150f, 150f)
 
         }
         this += right.apply {
-            setPosition(200f, 100f)
-            setSize(100f, 100f)
+            setPosition(300f, 150f)
+            setSize(150f, 150f)
 
         }
         this += attack.apply {
-            setSize(100f, 100f)
-            setPosition(1000f, 100f)
+            setSize(150f, 150f)
+            setPosition(1000f, 150f)
 
         }
         this += shield.apply {
-            setSize(100f, 100f)
-            setPosition(1200f, 100f)
+            setSize(150f, 150f)
+            setPosition(1400f, 150f)
 
         }
 

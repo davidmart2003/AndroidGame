@@ -87,7 +87,6 @@ class MenuScreen(val game: MyGame) : KtxScreen, EventListener {
             }
         }
         uiStage.addListener(this)
-        uiStage.isDebugAll = true
     }
 
     /**

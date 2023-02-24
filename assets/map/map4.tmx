@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="4">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="32" height="18" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="8">
  <properties>
   <property name="music" value="audio/music/theme4.wav"/>
  </properties>
@@ -25,7 +25,9 @@
    <image width="64" height="64" source="../Game/Portal/run_00.png"/>
   </tile>
  </tileset>
- <tileset firstgid="1967" source="entities.tsx"/>
+ <tileset firstgid="1967" source="entitiess.tsx"/>
+ <tileset firstgid="1968" source="entitiess.tsx"/>
+ <tileset firstgid="1969" source="entitiess.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="32" height="18">
   <data encoding="base64" compression="zlib">
    eJyrYmVgqBogXD2AdoNwEg4xeuDqUftH7R+1f9T+UftH7R9E9g90/UtvDADuDPow
@@ -37,12 +39,8 @@
   </data>
  </layer>
  <objectgroup id="4" name="Entities">
-  <object id="2" name="Demon" gid="1967" x="218" y="204.667" width="288" height="160">
-   <properties>
-    <property name="music" value=""/>
-   </properties>
-  </object>
-  <object id="3" name="Player" gid="1968" x="133.333" y="179.333" width="56" height="56"/>
+  <object id="5" name="Demon" gid="1967" x="231.138" y="191.603" width="288" height="160"/>
+  <object id="7" name="Player" gid="1969" x="114.706" y="168.548" width="56" height="56"/>
  </objectgroup>
  <layer id="3" name="foreground_1" width="32" height="18">
   <data encoding="base64" compression="zlib">

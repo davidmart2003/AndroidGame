@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="129" height="44" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="82">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="129" height="44" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="96">
  <properties>
   <property name="music" value="audio/music/theme.wav"/>
  </properties>
@@ -216,8 +216,21 @@
 </data>
  </layer>
  <objectgroup id="4" name="Entities">
-  <object id="64" name="Player" gid="1967" x="1347.67" y="463.667" width="150" height="150"/>
+  <object id="64" name="Player" gid="1967" x="102.67" y="229.167" width="150" height="150"/>
   <object id="77" name="Goblin" gid="1969" x="1370.33" y="505.667" width="150" height="150"/>
+  <object id="82" name="Goblin" gid="1969" x="695" y="191" width="150" height="150"/>
+  <object id="83" name="Goblin" gid="1969" x="501" y="591" width="150" height="150"/>
+  <object id="84" name="Goblin" gid="1969" x="91" y="541" width="150" height="150"/>
+  <object id="85" name="Flying Eye" gid="1968" x="1307" y="553" width="150" height="150"/>
+  <object id="86" name="Flying Eye" gid="1968" x="1185" y="653" width="150" height="150"/>
+  <object id="87" name="Flying Eye" gid="1968" x="643" y="235" width="150" height="150"/>
+  <object id="88" name="Flying Eye" gid="1968" x="753" y="193" width="150" height="150"/>
+  <object id="89" name="Flying Eye" gid="1968" x="295" y="275" width="150" height="150"/>
+  <object id="90" name="Flying Eye" gid="1968" x="423" y="395" width="150" height="150"/>
+  <object id="91" name="Flying Eye" gid="1968" x="491" y="461" width="150" height="150"/>
+  <object id="92" name="Flying Eye" gid="1968" x="517" y="661" width="150" height="150"/>
+  <object id="94" name="MushRoom" gid="1970" x="33" y="673" width="150" height="150"/>
+  <object id="95" name="MushRoom" gid="1970" x="115" y="695" width="150" height="150"/>
  </objectgroup>
  <layer id="7" name="foreground_1" width="129" height="44">
   <data encoding="csv">

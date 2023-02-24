@@ -104,7 +104,6 @@ class WanderTask(
             if (startPos.isZero) {
                 startPos.set(entity.location)
             }
-            entity.fireEvent(EntityAggroEvent(null))
 
             targetpos.set(startPos)
             targetpos.x += MathUtils.random(-1f, 1f)
@@ -131,7 +130,6 @@ class AttackTask : Action() {
             entity.doAndStartAttack()
             return Status.RUNNING
         }
-        entity.fireEvent(EntityAggroEvent(entity.entity))
 
         if (entity.isAnimationDone) {
             entity.animation(AnimationState.IDLE)

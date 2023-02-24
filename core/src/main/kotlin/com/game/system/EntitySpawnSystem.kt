@@ -196,7 +196,10 @@ class EntitySpawnSystem(
                                 this.actualStrenght = event.playerComponent.actualStrenght
                                 this.actualTime = event.playerComponent.actualTime
                                 this.actualLevel=event.playerComponent.actualLevel
-                                log.debug { "AL cambiar el mapa=======$actualLife Fuerza=$actualStrenght" }
+                                this.actualBasexp=event.playerComponent.actualBasexp
+                                this.actualexp=event.playerComponent.actualexp
+                                log.debug { "AL cambiar el mapa=======$actualBasexp EXPPPPPPPBASE" }
+                                log.debug { "AL cambiar el mapa=======$actualLevel LEVEEEEEEEEEEEEL" }
                             }
                         }
                     }
@@ -314,9 +317,9 @@ class EntitySpawnSystem(
                     add<LifeComponent> {
                         maxLife = DEFAULT_LIFE * configuration.lifeScaling
                         exp = configuration.dropExp
+                        life = maxLife
                         if (entity in playerComponents) {
-                            log.debug { "AL CREAER VIDAAAAAAAAAAAAAAAAA" + playerComponents[entity].actualLife }
-
+                            exp = playerComponents[entity].actualexp.toInt()
                             life = playerComponents[entity].actualLife
                         }
                     }
@@ -330,12 +333,20 @@ class EntitySpawnSystem(
                             actualLife = playerComponents[entity].actualLife
                             actualStrenght = playerComponents[entity].actualStrenght
                             actualTime = playerComponents[entity].actualTime
+                            log.debug { "AL cambiar el mapa=======$actualBasexp EXPPPPPPPBANTESSSSSSS" }
+                            log.debug { "AL cambiar el mapa=======$actualLevel LEVEEEEEEEEEEEEL" }
+
+                            actualBasexp = playerComponents[entity].actualBasexp
+                            actualexp = playerComponents[entity].actualexp
+                            log.debug { "AL cambiar el mapa=======$actualBasexp EXPPPPPPPDEspuesssssssss" }
+                            log.debug { "AL cambiar el mapa=======$actualLevel LEVEEEEEEEEEEEEL" }
+
                         }
                     }
                     add<TimeComponent>()
-                    add<LevelComponent>() {
+                    add<LevelComponent> {
                         if (entity in playerComponents) {
-
+                            baseExp = playerComponents[entity].actualBasexp
                             level = playerComponents[entity].actualLevel.roundToInt()
                         }
                     }
