@@ -15,24 +15,44 @@ import com.github.quillraven.fleks.world
 import ktx.log.logger
 import ktx.math.vec2
 
+/**
+ * Las diferentes acciones que puede hacer la IA
+ */
 abstract class Action(
 
 ) : LeafTask<AiEntity>() {
+    /**
+     * IA entidad
+     */
     val entity: AiEntity
         get() = `object`
 
-
+    /**
+     * Copia la accion que esta haciendo la IA
+     */
     override fun copyTo(task: Task<AiEntity>?) = task
 
 
 }
 
+/**
+ * Accion de estar quieto de la IA
+ *
+ * @property duration Duración de la accion
+ */
 class IdleTask(
     @JvmField
     @TaskAttribute(required = true)
     var duration: FloatDistribution? = null
 ) : Action() {
+    /**
+     * Duracion actual
+     */
     private var currentDuration = 0f
+
+    /**
+     * Cuando la entidad esta quieta, empieza la ejecucion y empieza la accion IDLE
+     */
     override fun execute(): Status {
         if (status != Status.RUNNING) {
             entity.animation(AnimationState.IDLE)
@@ -48,17 +68,36 @@ class IdleTask(
         return Status.SUCCEEDED
     }
 
+    /**
+     * Funcion que copia la acción
+     *
+     * @param task La accion a copiar
+     */
     override fun copyTo(task: Task<AiEntity>?): Task<AiEntity>? {
         (task as IdleTask).duration = duration
         return task
     }
 }
 
+/**
+ * Accion de la IA a moverse aleatoriamente
+ */
 class WanderTask(
 
 ) : Action() {
+    /**
+     * Posicion inicial
+     */
     private val startPos = vec2()
+
+    /**
+     *  Posicion deseada a moverse
+     */
     private val targetpos = vec2()
+
+    /**
+     * La entidad empieza a moverse a la posicion deseada,finaliza cuando llega en un radio a su posicion deseada
+     */
     override fun execute(): Status {
         if (status != Status.RUNNING) {
             entity.animation((AnimationState.RUN))
@@ -82,6 +121,9 @@ class WanderTask(
     }
 }
 
+/**
+ * Accion de IA a atacar , cuando no esta atacando , empieza el ataque, cuanod finaliza el ataque finaliza la ejecuxión
+ */
 class AttackTask : Action() {
     override fun execute(): Status {
         if (status != Status.RUNNING) {
@@ -102,9 +144,23 @@ class AttackTask : Action() {
     }
 }
 
+/**
+ * Accion de la Ia para seguir al jugador principal
+ */
 class FollowTask : Action() {
+    /**
+     * POsicion inicial
+     */
     private val startPos = vec2()
+
+    /**
+     * Posicion deseada
+     */
     private val targetpos = vec2()
+
+    /**
+     * Cuando no lo esta siguiendo, empieza a seguirlo, finaliza cuando llega a la posicion deseada
+     */
     override fun execute(): Status {
         if (status != Status.RUNNING) {
             entity.animation(AnimationState.RUN)

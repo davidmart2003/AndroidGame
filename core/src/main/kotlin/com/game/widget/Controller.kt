@@ -20,11 +20,17 @@ import ktx.actors.plusAssign
 import ktx.log.logger
 import ktx.scene2d.*
 
+/**
+ * Componente para controla al jugador principal
+ */
 class Controller(
     charDrawable: Drawables?,
     private val skin: Skin,
 
     ) : WidgetGroup(), KGroup {
+    /**
+     * Botones para conseguir el movimiento y  las habilades del personaje
+     */
     private val up: Button = button(Buttons.UP.skinKey)
     private val down: Button = button(Buttons.DOWN.skinKey)
     private val right: Button = button(Buttons.RIGHT.skinKey)
@@ -121,6 +127,9 @@ class Controller(
 }
 
 @Scene2dDsl
+        /**
+         * Extension del constructor para poder añadirla como actor al escenario
+         */
 fun <S> KWidget<S>.controller(
     charDrawable: Drawables?,
     skin: Skin = Scene2DSkin.defaultSkin,

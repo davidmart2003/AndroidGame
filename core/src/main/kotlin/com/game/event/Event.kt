@@ -89,7 +89,7 @@ class LevelUpEvent(val level:Int):Event()
  * Evento que se lanza cada vez que la vida maxima del jugador cambia
  * @property life Vida maxima del jugador
  */
-class MaxLifeEvent(val life: Float):Event()
+class ActualLifeEvent(val life: Float):Event()
 
 /**
  * Evento que se lanza cunado se cierra el inventario
@@ -114,6 +114,7 @@ class AttackEvent(val attack: Float):Event()
  * Evento que se lanza para abrir el menu de créditos
  */
 class CreditsGameEvent():Event()
+class HideCreditsEvent():Event()
 
 /**
  * Evento que se lanza para abrir el menu de pausa

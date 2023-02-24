@@ -13,10 +13,7 @@ import com.game.component.ImageComponent
 import com.game.component.LifeComponent
 import com.game.component.PhysicComponent
 import com.game.component.PlayerComponent
-import com.game.event.HideSettingsGameEvent
-import com.game.event.MenuScreenEvent
-import com.game.event.NewGameEvent
-import com.game.event.SettingsGameEvent
+import com.game.event.*
 import com.game.model.GameModel
 import com.game.system.*
 import com.game.ui.view.*
@@ -29,34 +26,33 @@ import ktx.math.vec2
 import ktx.scene2d.*
 import javax.sound.sampled.AudioSystem
 
-class MenuScreen(val game: MyGame) : KtxScreen,EventListener {
+/**
+ *  Pantalla del menu principal
+ */
+class MenuScreen(val game: MyGame) : KtxScreen, EventListener {
 
     private val settingPref = game.settingPref
     /**
-     * Escenario que representa la UI del juego, se inicia con la uiStage del jueg0
+     * Escenario donde se renderiza la interfaz de usuario
      */
     private val uiStage = game.uiStage
-
     /**
-     * Escenario que representa el juego, se inicia con la gameStage del juego
+     * Escenario donde se renderiza el juegio
      */
     private val gameStage = game.gameStage
-
     /**
-     * Vista que contiene el menu
+     * Vista que contiene el Menu Principal
      */
     private var menuView: MenuView
-
-
     /**
-     * Vista que contiene los ajustes
+     * Vista que contiene las Opciones
      */
-     private var settingsView: SettingsView
+    private var settingsView: SettingsView
 
     /**
      * Vista que contiene los creditos
      */
-    // private var creditsView: CreditsView
+    private var creditsView: CreditsView
 
     /**
      * Vista que contiene el tutorial
@@ -65,51 +61,15 @@ class MenuScreen(val game: MyGame) : KtxScreen,EventListener {
 
 
     /**
-     * Datos que se guardan sobre los ajustes
+     * Mundo de entidades
      */
-    // private val settingsPrefs: Preferences = game.settingsPrefs
+    private val eWorld = world {}
 
-    /**
-     * Atlas de texturas que contiene imagenes
-     */
-    private val textureAtlas = game.textureAtlas
-
-    /**
-     * Mapa actual que se muestra de fondo
-     */
-    // private var currentMap: TiledMap? = null
-
-    /**
-     * Mundo de físicas del fondo
-     */
-    private val physicWorld = createWorld(gravity = vec2()).apply {
-        autoClearForces = false
-    }
-
-    /**
-     * Mundo de entidades que representa el fondo del menu principal
-     */
-    private val eWorld = world {
-//        injectables {
-//            add("uiStage", uiStage)
-//            add("gameStage", gameStage)
-//            add(textureAtlas)
-//            add(physicWorld)
-//          //add(settingsPrefs)
-//        }
-//
-//
-//
-//        systems {
-//
-//        //    add<AudioSystem()>
-//        }
-    }
 
     init {
         loadSkin()
-        Gdx.input.inputProcessor=uiStage
-        // Añade al escenario del juego y interfaz los diferentes sistemas que actuan como oyentes de diferentes eventos
+        Gdx.input.inputProcessor = uiStage
+
         eWorld.systems.forEach { system ->
             if (system is EventListener) {
                 gameStage.addListener(system)
@@ -119,37 +79,50 @@ class MenuScreen(val game: MyGame) : KtxScreen,EventListener {
 
         uiStage.actors {
             menuView = menuView(GameModel(eWorld, uiStage))
-            settingsView = settingsView(settingPref){
-                isVisible=false
+            settingsView = settingsView(settingPref) {
+                isVisible = false
+            }
+            creditsView = creditsView() {
+                isVisible = false
             }
         }
-        //Añade al escenario del juego y UI esta msima clase
         uiStage.addListener(this)
-        uiStage.isDebugAll=true
+        uiStage.isDebugAll = true
     }
 
-
+    /**
+     * Se ejecuta cuando la ventana cambia de tamaño
+     */
     override fun resize(width: Int, height: Int) {
         gameStage.viewport.update(width, height, true)
         uiStage.viewport.update(width, height, true)
     }
 
-
-
+    /**
+     * Se ejecutada cada frame para actualizar la ventana
+     */
     override fun render(delta: Float) {
         eWorld.update(delta)
         uiStage.act()
         uiStage.draw()
     }
 
+    /**
+     * Se ejecuta cuando al cerrar la ventana
+     */
     override fun dispose() {
         super.dispose()
         eWorld.dispose()
     }
 
+    /**
+     * Se ejecuta cuando un evento es lanzado
+     *
+     * @param event Evento lanzado
+     */
     override fun handle(event: Event?): Boolean {
-        when (event){
-            is NewGameEvent ->{
+        when (event) {
+            is NewGameEvent -> {
                 gameStage.clear()
                 uiStage.clear()
 
@@ -161,15 +134,23 @@ class MenuScreen(val game: MyGame) : KtxScreen,EventListener {
                 this.dispose()
             }
 
-            is SettingsGameEvent ->{
-                menuView.touchable=Touchable.disabled
-                settingsView.isVisible=true
+            is SettingsGameEvent -> {
+                menuView.touchable = Touchable.disabled
+                settingsView.isVisible = true
             }
 
-            is HideSettingsGameEvent ->{
-                menuView.touchable=Touchable.enabled
+            is HideSettingsGameEvent -> {
+                menuView.touchable = Touchable.enabled
 
-                settingsView.isVisible=false
+                settingsView.isVisible = false
+            }
+
+            is CreditsGameEvent -> {
+                creditsView.isVisible = true
+            }
+
+            is HideCreditsEvent -> {
+                creditsView.isVisible = false
             }
         }
         return true

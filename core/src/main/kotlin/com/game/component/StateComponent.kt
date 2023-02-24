@@ -11,7 +11,10 @@ import com.github.quillraven.fleks.Qualifier
 import com.github.quillraven.fleks.World
 
 /**
+ * Compoennte de las entidades que requieran eun sistema de estados
  *
+ * @property nextState Siguientre a estado a ejecutar
+ * @property stateMachine Maquina que maneja los disitntos estados que pueda contener la entidad, en este caso la IA
  */
 data class StateComponent(
     var nextState: EntityState = DefaultState.IDLE,

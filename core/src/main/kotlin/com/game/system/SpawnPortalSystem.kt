@@ -20,17 +20,19 @@ import ktx.log.logger
 import ktx.math.vec2
 
 @AllOf([PlayerComponent::class])
-
+/**
+ * Sistema que se encarga spanear el portal cuadno no haya enemigos
+ *
+ * @property stage Escenario donde se renderiza el juego
+ */
 class SpawnPortalSystem(
     @Qualifier("gameStage") private val stage: Stage,
-    private val physicComponents: ComponentMapper<PhysicComponent>,
-    private val imgComponents: ComponentMapper<ImageComponent>,
 ) : IteratingSystem() {
+    /**
+     * Entidades que contienen EnemyComponents
+     */
     val enemies = world.family(allOf = arrayOf(EnemyComponent::class))
 
-    private val dmgFont = BitmapFont(Gdx.files.internal("damage.fnt")).apply { data.setScale(2f) }
-    private val floatingTextStyle = Label.LabelStyle(dmgFont, Color.RED)
-    private var createdMap: Boolean = true
     override fun onTickEntity(entity: Entity) {
         if (enemies.numEntities < 1 && !CREATED) {
             stage.fire(SpawnPortalEvent())

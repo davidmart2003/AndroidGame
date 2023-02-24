@@ -16,6 +16,11 @@ import ktx.actors.onClick
 import ktx.actors.plusAssign
 import ktx.scene2d.*
 
+/**
+ * Componente que pausa el juego y muestra un menu de opciones
+ *
+ * @property skin Skin de los componentes
+ */
 class Pause(
     private val skin: Skin,
 ) : WidgetGroup(), KGroup {
@@ -60,6 +65,9 @@ class Pause(
 }
 
 @Scene2dDsl
+        /**
+         * Extension del constructor para poder añadirla como actor al escenario
+         */
 fun <S> KWidget<S>.pauseUp(
     skin: Skin = Scene2DSkin.defaultSkin,
     init: Pause.(S) -> Unit = {}

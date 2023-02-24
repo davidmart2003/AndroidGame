@@ -16,6 +16,12 @@ import ktx.actors.onClick
 import ktx.actors.plusAssign
 import ktx.scene2d.*
 
+/**
+ * Componente que salta al ganar la partida
+ *
+ * @property recordPref Almacen de los records del juego
+ * @property skin Skin de los componentes
+ */
 class Win(
     private val recordPref: Preferences,
     private val skin: Skin
@@ -45,6 +51,9 @@ class Win(
         this += table
     }
 
+    /**
+     * Actualiza el record si los batido , si no actualiza la etiqueta con tu tiempo de juego
+     */
     fun time(time: Int) {
         if (this@Win.recordPref.getInteger("time") > time || this@Win.recordPref.getInteger("time")==0) {
             this@Win.lblTime.setText("New Record!!! Your new time is " + time + "seconds")
@@ -61,6 +70,9 @@ class Win(
 
 
 @Scene2dDsl
+        /**
+         * Extension del constructor para poder añadirla como actor al escenario
+         */
 fun <S> KWidget<S>.winUp(
     recordPref: Preferences,
     skin: Skin = Scene2DSkin.defaultSkin,

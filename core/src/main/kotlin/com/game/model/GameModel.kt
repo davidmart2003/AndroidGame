@@ -16,31 +16,85 @@ import ktx.log.logger
 import kotlin.math.roundToInt
 
 
+/**
+ * MOdelo del jeugo que notifica y actualiza los cambios
+ *
+ * @param world Mundo de entidades
+ * @param stage Escenario donde se renderiza
+ */
 class GameModel(
     world: World,
     stage: Stage
 ) : PropertyChangeSource(), EventListener {
 
+    /**
+     * Conjunto de entidades que contiene PlayerComponent
+     */
     private val playerComponents: ComponentMapper<PlayerComponent> = world.mapper()
-    private val timeComponents: ComponentMapper<TimeComponent> = world.mapper()
+    /**
+     * Conjunto de entidades que contiene LifeComponent
+     */
     private val lifeComponents: ComponentMapper<LifeComponent> = world.mapper()
+    /**
+     * Conjunto de entidades que contiene AnimationComponent
+     */
     private val animationComponents: ComponentMapper<AnimationComponent> = world.mapper()
+
+    /**
+     * Nivel del jugador que notifica si hay un cambio
+     */
     var level by propertyNotify(1)
+    /**
+     * Vida del jugador en las estadisticas que notifica si hay un cambio
+     */
     var life by propertyNotify(1)
+    /**
+     * Velocidad del jugador en las estadisticas que notifica si hay un cambio
+     */
     var speed by propertyNotify(1)
+    /**
+     * Ataque del jugador en las estadisticas que notifica si hay un cambio
+     */
     var attack by propertyNotify(1)
-    var time by propertyNotify(1);
+    /**
+     * Tiempo de juego en las estadisticas que notifica si hay un cambio
+     */
+    var time by propertyNotify(1)
+
+    /**
+     * Vida del jugador que notifica si hay un cambio
+     */
     var playerLife by propertyNotify(1f)
 
+    /**
+     * Ultimo enemigo entidad que notifica si hay un cambio
+     */
     private var lastEnemy = Entity(-1)
+
+    /**
+     * Vida de los enemigos
+     */
     var enemyLife = 1f
+
+    /**
+     * Tipo de enemigo que nmotifica si cambia
+     */
     var enemyType by propertyNotify("")
+
+    /**
+     *
+     */
     var lootText by propertyNotify("")
 
     init {
         stage.addListener(this)
     }
 
+    /**
+     * Actualiza la informacion de los enemigos
+     *
+     * @param enemy Entidad del enemigo
+     */
     private fun updateEnemy(enemy: Entity?) {
         if (enemy == null) {
             enemyType = enemy.toString()
@@ -62,6 +116,11 @@ class GameModel(
         }
     }
 
+    /**
+     * Se ejecuta cada que un evento es lanzado
+     *
+     * @param event Evento lanzado
+     */
     override fun handle(event: Event?): Boolean {
         when (event) {
             is EntityDamageEvent -> {
@@ -87,7 +146,7 @@ class GameModel(
                 level = event.level
             }
 
-            is MaxLifeEvent ->{
+            is ActualLifeEvent ->{
                 life = event.life.roundToInt()
             }
             is SpeedEvent ->{

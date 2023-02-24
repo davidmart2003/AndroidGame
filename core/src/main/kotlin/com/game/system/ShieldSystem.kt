@@ -54,6 +54,11 @@ class ShieldSystem(
         }
     }
 
+    /**
+     * Se ejecuta cuando un evento es lanzado
+     *
+     * @param event Evento lanzado
+     */
     override fun handle(event: Event?): Boolean {
         when (event) {
             is ButtonShieldPressed -> {

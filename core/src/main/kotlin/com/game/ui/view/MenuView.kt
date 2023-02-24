@@ -3,6 +3,7 @@ package com.game.ui.view
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.ui.*
+import com.game.event.CreditsGameEvent
 import com.game.event.NewGameEvent
 import com.game.event.SettingsGameEvent
 import com.game.event.fire
@@ -12,16 +13,22 @@ import ktx.actors.plusAssign
 import ktx.log.logger
 import ktx.scene2d.*
 
+/**
+ * Vista que muestra el menu del juego
+ *
+ * @property skin Skin de los componentes
+ */
 class MenuView(
     model: GameModel,
     skin: Skin
 ) : Table(skin), KTable {
-
+    /**
+     * Componente boton que contiene texto
+     */
     private val btnNewGame: TextButton
     private val btnOptions: TextButton
     private val btnCredits: TextButton
     private val btnExit: TextButton
-    private val fondo: Image = Image(skin[Drawables.FONDO])
 
     init {
         setFillParent(true)
@@ -62,7 +69,7 @@ class MenuView(
                     label.y -= 2
 
                     onClick {
-                        // stage.fire(ShowCreditsEvent())
+                         stage.fire(CreditsGameEvent())
                     }
                     it.padLeft(100f)
                     it.padBottom(10f)
@@ -90,6 +97,9 @@ class MenuView(
 }
 
 @Scene2dDsl
+        /**
+         * Extension del constructor para poder añadirla como actor al escenario
+         */
 fun <S> KWidget<S>.menuView(
     model: GameModel,
     skin: Skin = Scene2DSkin.defaultSkin,

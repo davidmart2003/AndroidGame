@@ -138,7 +138,7 @@ class EntitySpawnSystem(
                     physicOffset = vec2(0f * UNIT_SCALE, -6f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
                     aiTreePAth = "ai/Skeleton.tree",
-                    lifeScaling = 6.25f,
+                    lifeScaling = 9.75f,
                     speedScaling = 0.6f,
                     attackScaling = 10.5f,
                     dropExp = 11
@@ -159,10 +159,10 @@ class EntitySpawnSystem(
                     physicOffset = vec2(0f * UNIT_SCALE, -25f * UNIT_SCALE),
                     bodyType = BodyDef.BodyType.DynamicBody,
                     aiTreePAth = "ai/Demon.tree",
-                    lifeScaling = 10f,
+                    lifeScaling = 100f,
                     attackExtraRange = 4f,
                     speedScaling = 1f,
-                    attackScaling = 20.5f,
+                    attackScaling = 15.5f,
                 )
 
 
@@ -195,7 +195,8 @@ class EntitySpawnSystem(
                                 this.actualLife = event.playerComponent.actualLife
                                 this.actualStrenght = event.playerComponent.actualStrenght
                                 this.actualTime = event.playerComponent.actualTime
-                                //   log.debug { "$actualLife Fuerza=$actualStrenght" }
+                                this.actualLevel=event.playerComponent.actualLevel
+                                log.debug { "AL cambiar el mapa=======$actualLife Fuerza=$actualStrenght" }
                             }
                         }
                     }
@@ -314,6 +315,8 @@ class EntitySpawnSystem(
                         maxLife = DEFAULT_LIFE * configuration.lifeScaling
                         exp = configuration.dropExp
                         if (entity in playerComponents) {
+                            log.debug { "AL CREAER VIDAAAAAAAAAAAAAAAAA" + playerComponents[entity].actualLife }
+
                             life = playerComponents[entity].actualLife
                         }
                     }
@@ -323,14 +326,19 @@ class EntitySpawnSystem(
 
                     add<PlayerComponent> {
                         if (entity in playerComponents) {
-                            log.debug { "$actualLife Fuerza=$actualStrenght" }
-
+                            actualLevel = playerComponents[entity].actualLevel
                             actualLife = playerComponents[entity].actualLife
                             actualStrenght = playerComponents[entity].actualStrenght
+                            actualTime = playerComponents[entity].actualTime
                         }
                     }
                     add<TimeComponent>()
-                    add<LevelComponent>()
+                    add<LevelComponent>() {
+                        if (entity in playerComponents) {
+
+                            level = playerComponents[entity].actualLevel.roundToInt()
+                        }
+                    }
                     add<ShieldComponents>()
                     add<StateComponent> {
                         stateMachine.globalState = DefaultGlobalState.CHECK_ALIVE

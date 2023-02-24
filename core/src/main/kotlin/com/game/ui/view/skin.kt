@@ -5,18 +5,28 @@ import com.badlogic.gdx.graphics.Color.BLACK
 import com.badlogic.gdx.graphics.Color.WHITE
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable
 import ktx.assets.disposeSafely
 import ktx.scene2d.Scene2DSkin
 import ktx.style.*
 
+/**
+ * Enumerado que guarda imagenes del atlas
+ *
+ * @property atlasKey Nombre de las imagenes en el atlas
+ */
 enum class Drawables(
     val atlasKey: String
 )  {
     BACKGROUNDINFO("backgroundInfo"),
     PLAYER("idle"),
     FLYINGEYE("flyingeye"),
+    GOBLIN("goblin"),
+    MUSHROOM("mushroom"),
+    SKELETON("skeleton"),
+    DEMON("demon"),
     LIFEBAR("lifebar"),
     FRAME_BGD("frame_bgd"),
     FRAME_FGD("background"),
@@ -28,35 +38,50 @@ enum class Drawables(
     DOWN("down"),
     RIGHT("right"),
     LEFT("left"),
-    FONDO("fondo"),
     ATTACK("attack"),
     SHIELD("shield"),
     BUTTON("defaultbutton"),
 }
 
+/**
+ * Enumerado de las distintas skins de los Sliders
+ */
 enum class  Sliders{
     DEFAULT;
 
+    /**
+     * Nombre de la skin
+     */
     val skinKey = this.name.lowercase()
 }
 
+/**
+ * Enunmerado de las distintas skin de los Checkbox
+ */
 enum class  CheckBoxs{
     DEFAULT;
 
     val skinKey = this.name.lowercase()
 }
-enum class Labels {
+/**
+ * Enunmerado de las distintas skin de los Label
+ */enum class Labels {
     FRAME,TITLE,LEVEL;
 
     val skinKey = this.name.lowercase()
 }
-
+/**
+ * Enunmerado de las distintas skin de los Buttons
+ */
 enum class Buttons {
     UP,DOWN,LEFT,RIGHT,DEFAULT,ATTACK,SHIELD;
 
     val skinKey= this.name.lowercase()
 }
 
+/**
+ * Enunmerado de las distintas skin de las Fonts
+ */
 enum class Fonts(
     val atlasRegionKey: String,
     val scaling: Float,
@@ -65,12 +90,26 @@ enum class Fonts(
     TITLE("text", 2f);
 
     val skinKey = "Font_${this.name.lowercase()}"
+
+    /**
+     * Ruta de la fuente en el atlas
+     */
     val fontPath = "${this.atlasRegionKey}.fnt"
 }
 
+/**
+ *Transforma el enumerado de Drawables en en clase Drawables
+ */
 operator fun Skin.get(drawable: Drawables): Drawable = this.getDrawable(drawable.atlasKey)
+
+/**
+ * Transforma el enumerado de Fonts en la clase BitMapfont
+ */
 operator fun Skin.get(font: Fonts): BitmapFont = this.getFont(font.skinKey)
 
+/**
+ * Carga las skins de todos los componentes
+ */
 fun loadSkin() {
     Scene2DSkin.defaultSkin = skin(TextureAtlas("ui/ui.atlas")) { skin ->
         Fonts.values().forEach { fnt ->
@@ -87,6 +126,7 @@ fun loadSkin() {
             knob=skin[Drawables.BUTTON]
             background= skin[Drawables.SLIDER]
         }
+
         checkBox(CheckBoxs.DEFAULT.skinKey){
             font = skin[Fonts.DEFAULT]
             fontColor=com.badlogic.gdx.graphics.Color(WHITE)
@@ -156,6 +196,9 @@ fun loadSkin() {
     }
 }
 
+/**
+ * Quita todas las skin cargadas para eliminar recursos
+ */
 fun disposeSkin() {
     Scene2DSkin.defaultSkin.disposeSafely()
 }

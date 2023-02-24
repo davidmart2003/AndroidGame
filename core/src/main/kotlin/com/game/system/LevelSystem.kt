@@ -44,7 +44,6 @@ class LevelSystem(
             playerComponents.actualStrenght=attackComponent.damage.toFloat()
             lifeComponent.maxLife = lifeComponent.maxLife + 5
             stage.fire(LevelUpEvent(levelComponent.level))
-            stage.fire(MaxLifeEvent(lifeComponent.maxLife))
             stage.fire(AttackEvent(attackComponent.damage.toFloat()))
             stage.fire(SpeedEvent(moveComponents.speed))
             stage.fire(EntityDamageEvent(entity))

@@ -13,6 +13,12 @@ import ktx.actors.plusAssign
 import ktx.log.logger
 import ktx.scene2d.*
 
+/**
+ * Componente que aparece cuando muere el personaje
+ *
+ * @property recordPref Almacen de los records del juego
+ * @property skin Skin de los componentes
+ */
 class Dead(
     private val recordPref : Preferences,
     private val skin: Skin,
@@ -47,7 +53,9 @@ class Dead(
     override fun getPrefWidth() = background.drawable.minWidth
 
     override fun getPrefHeight() = background.drawable.minHeight
-
+    /**
+     * Actualiza la etiqueta de tiempo y te muestra tu record de mejor tiempo
+     */
     fun time(time: Int) {
         this@Dead.lblTime.setText("You are dead \n Your time was $time seconds\n Your best time "+this@Dead.recordPref.getInteger("time")+" seconds")
     }
@@ -58,6 +66,9 @@ class Dead(
 
 
 @Scene2dDsl
+        /**
+         * Extension del constructor para poder añadirla como actor al escenario
+         */
 fun <S> KWidget<S>.deadUp(
     recordPref: Preferences,
     skin: Skin = Scene2DSkin.defaultSkin,

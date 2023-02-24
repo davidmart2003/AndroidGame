@@ -11,11 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle
-import com.game.MyGame
 import com.game.component.*
 import com.game.event.*
 import com.github.quillraven.fleks.*
-import ktx.actors.stage
 import ktx.assets.disposeSafely
 import ktx.log.logger
 import ktx.math.vec2
@@ -48,7 +46,7 @@ class LifeSystem(
         if (entity in playerComponent) {
 
         //    log.debug { "VIDA ACTUAL ${lifeComponent.life} vida maxima ${lifeComponent.maxLife} " }
-            stage.fire(MaxLifeEvent(lifeComponent.maxLife))
+            stage.fire(ActualLifeEvent(lifeComponent.life))
         }
 
         if (!shieldComponents[entity].holdingShield) {
@@ -71,7 +69,7 @@ class LifeSystem(
                 position = physicComponent.body.position
                 lifeComponent.life -= lifeComponent.takeDamage
                 if (entity in playerComponent) {
-
+                    log.debug { "DFSADADAD DFUSNUOKSFNFNSSFIOU "+playerComponent[entity].actualLife }
                     playerComponent[entity].actualLife = lifeComponent.life
                 }
                 floatingText(

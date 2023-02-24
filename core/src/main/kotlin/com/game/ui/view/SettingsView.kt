@@ -12,23 +12,37 @@ import ktx.actors.onTouchDown
 import ktx.log.logger
 import ktx.scene2d.*
 
+/**
+ * Vista de opciones del juego
+ * @property Almacen de las opciones del juego
+ * @property skin Skin de los componentes
+ */
 class SettingsView(
     settingPref: Preferences,
     skin: Skin,
 ) : KTable, Table(skin) {
 
-
+    /**
+     * Tabla
+     */
     val table: Table
 
+    /**
+     * Etiqueta de texto
+     */
     lateinit var labelMusic: Label
-
-    var sliderMusic: Slider
     lateinit var labelEffects: Label
 
+    /**
+     * Componente deslizador
+     */
+    var sliderMusic: Slider
     var sliderEffects: Slider
 
+    /**
+     * Componente checkbox
+     */
     var cbVibrate: CheckBox
-
     var cbAcc: CheckBox
 
 
@@ -153,6 +167,9 @@ class SettingsView(
 
 
 @Scene2dDsl
+        /**
+         * Extension del constructor para poder añadirla como actor al escenario
+         */
 fun <S> KWidget<S>.settingsView(
     settingPref: Preferences,
     skin: Skin = Scene2DSkin.defaultSkin,

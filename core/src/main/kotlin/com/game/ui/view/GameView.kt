@@ -23,24 +23,78 @@ import ktx.log.logger
 import ktx.scene2d.*
 
 
+/**
+ * Vista del juego (gameplay)
+ *
+ * @property model Modelo del juego que actualiza y notifica cualquier cambio
+ * @property recordPref Almacen de los records del juego
+ * @property skin Skin de los componentes
+ */
 class GameView(
     model: GameModel,
     recordPref : Preferences,
     skin: Skin
 ) : Table(skin), KTable {
+    /**
+     * Almacen de los records del juegos
+     */
     private val recordPref = recordPref
+
+    /**
+     * Componente de informacion del jugador
+     */
     private val enemyInfo: CharacterInfo
+
+    /**
+     *  Componente de informacion del enemigo
+     */
     private val playerInfo: CharacterInfo
+
+    /**
+     * Componente de etiqueta de texto
+     */
     private val time : Label
+
+    /**
+     * Componente para controlar el movimiento y las habilidades del jugador
+     */
      val controller: Controller
     private val popupLabel: Label
+
+    /**
+     * Componente de imagen para pausar el juego
+     */
     private var pause: Image
+
+    /**
+     * Componente imagen para ver las estadísticas del jugador
+     */
     private var inventory: Image
+
+    /**
+     * Tabla
+     */
     private var table1 : Table
     private var table2 : Table
+
+    /**
+     * Tiempo de juego total
+     */
     private var timeGame: Int = 0
+
+    /**
+     * Componente de pausa que se abre al pausar el juego
+     */
     private lateinit var Pause: Pause
+
+    /**
+     * Componente de muerte, se abre cuando se muere en el juego
+     */
     private lateinit var Dead: Dead
+
+    /**
+     * Componente de Win, se abre cuando se gana el juego
+     */
     private lateinit var Win: Win
 
     init {
@@ -79,6 +133,8 @@ class GameView(
 
                     stage.fire(PauseEvent())
                 }
+                it.padRight(10f)
+                it.padTop(10f)
                 it.right().top().row()
             }
 
@@ -122,12 +178,19 @@ class GameView(
         model.onPropertyChange(GameModel::enemyType) { type ->
             when (type) {
                 "FlyingEye" -> showEnemyInfo(Drawables.FLYINGEYE, model.enemyLife)
+                "Skeleton" ->showEnemyInfo(Drawables.SKELETON, model.enemyLife)
+                "Demon"->showEnemyInfo(Drawables.DEMON, model.enemyLife)
+                "Mushroom" ->showEnemyInfo(Drawables.MUSHROOM, model.enemyLife)
+                "Goblin"->showEnemyInfo(Drawables.GOBLIN, model.enemyLife)
                 else -> showEnemyInfo(null, 1f)
             }
 
         }
     }
 
+    /**
+     * Funcion que al morir se despiega el menu
+     */
     fun death() {
         this.clear()
         Dead = deadUp(this@GameView.recordPref,skin) {
@@ -136,6 +199,10 @@ class GameView(
         }
         this += Dead
     }
+
+    /**
+     * Funcion que al ganar se desplega el menuWin
+     */
     fun win() {
         this.clear()
         Win = winUp(this@GameView.recordPref,skin) {
@@ -145,6 +212,10 @@ class GameView(
         this += Win
 
     }
+
+    /**
+     * Funcion que pausa y despliega el menu de pausa
+     */
     fun pause() {
         this.clear()
         Pause = pauseUp(skin) {
@@ -155,6 +226,9 @@ class GameView(
     }
 
 
+    /**
+     * Funcion que vuelve el juego y despliega de nuevo el gameplay
+     */
     fun resume() {
         this.clear()
         this += table1
@@ -164,9 +238,23 @@ class GameView(
         }
     }
 
+    /**
+     * Funcion que actualiza la vida del personaje principal
+     *
+     * @param percentage Porcentaje de vida del jugador
+     */
     fun playerLife(percentage: Float) = playerInfo.life(percentage)
 
+    /**
+     * Funcion que actualiza el nivel del perosnaje
+     *
+     * @param level Nivel del jugador
+     */
     fun levelUp(level: Int) = playerInfo.level(level)
+
+    /**
+     * Resetea el delay de desvanecimiento para volver a usarlo
+     */
     private fun Actor.resetFadeOutDelay() {
         this.actions
             .filterIsInstance<SequenceAction>()
@@ -177,10 +265,21 @@ class GameView(
             }
     }
 
+    /**
+     * Actualiza la etiqueta de texto de tiempo
+     *
+     * @param time Tiempo  de juego
+     */
     fun updateLabeltime(time : Int){
         this.time.setText(time)
     }
 
+    /**
+     * Muestra la informacion de los enemigos
+     *
+     * @param charDrawable Modelo de enemigo a mostrar
+     * @param lifePercentage Porcentaje de vida
+     */
     fun showEnemyInfo(charDrawable: Drawables?, lifePercentage: Float) {
         enemyInfo.character(charDrawable)
         enemyInfo.life(lifePercentage, 0f)
@@ -192,9 +291,17 @@ class GameView(
         }
     }
 
+    /**
+     * Funcion que actualiza la vida de los enemigos
+     */
     fun enemyLife(percentage: Float) = enemyInfo.also { it.resetFadeOutDelay() }.life(percentage)
 
 
+    /**
+     * Funcion que se muestra un mensaje por pantalla y se desvance al cabo de un tiempo
+     *
+     * @param infoText Mensaje a mostrar por pantalla
+     */
     fun popup(infoText: String) {
         popupLabel.txt = infoText
         if (popupLabel.parent.alpha == 0f) {
@@ -212,6 +319,9 @@ class GameView(
 
 
 @Scene2dDsl
+        /**
+         * Extension del constructor para poder añadirla como actor al escenario
+         */
 fun <S> KWidget<S>.gameView(
     model: GameModel,
     recordPref: Preferences,
