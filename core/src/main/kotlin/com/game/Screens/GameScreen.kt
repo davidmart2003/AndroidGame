@@ -144,7 +144,7 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
             }
         }
         uiStage.actors {
-            gameView = gameView(GameModel(world, gameStage), recordPref = recordPref)
+            gameView = gameView(GameModel(world, gameStage), recordPref = recordPref, bundle = bundle)
             inventory = inventoryView(GameModel(world, gameStage), bundle ) {
                 this.isVisible = false
             }

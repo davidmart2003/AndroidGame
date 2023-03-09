@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
+import com.badlogic.gdx.utils.I18NBundle
 import com.game.event.InventoryEvent
 import com.game.event.PauseEvent
 import com.game.event.fire
@@ -32,6 +33,7 @@ import ktx.scene2d.*
  */
 class GameView(
     model: GameModel,
+    bundle:I18NBundle,
     recordPref: Preferences,
     skin: Skin
 ) : Table(skin), KTable {
@@ -39,7 +41,7 @@ class GameView(
      * Almacen de los records del juegos
      */
     private val recordPref = recordPref
-
+    private val bundle=bundle
     /**
      * Componente de informacion del jugador
      */
@@ -196,7 +198,7 @@ class GameView(
      */
     fun death() {
         this.clear()
-        Dead = deadUp(this@GameView.recordPref, skin) {
+        Dead = deadUp(this@GameView.recordPref,this@GameView.bundle, skin) {
             this.time(time = this@GameView.timeGame)
             it.expand().center()
         }
@@ -208,7 +210,7 @@ class GameView(
      */
     fun win() {
         this.clear()
-        Win = winUp(this@GameView.recordPref, skin) {
+        Win = winUp(this@GameView.recordPref,this@GameView.bundle, skin) {
             this.time(time = this@GameView.timeGame)
 
         }
@@ -221,7 +223,7 @@ class GameView(
      */
     fun pause() {
         this.clear()
-        Pause = pauseUp(skin) {
+        Pause = pauseUp(bundle,skin) {
             it.expand().center()
 
         }
@@ -327,7 +329,8 @@ class GameView(
          */
 fun <S> KWidget<S>.gameView(
     model: GameModel,
+    bundle:I18NBundle,
     recordPref: Preferences,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: GameView.(S) -> Unit = {}
-): GameView = actor(GameView(model, recordPref, skin), init)
+): GameView = actor(GameView(model,bundle, recordPref, skin), init)
