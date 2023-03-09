@@ -112,6 +112,10 @@ class AudioSystem(
 
             }
 
+            is AccelerometerEvent ->{
+                queueSound("audio/audio-luigi.ogg")
+            }
+
             is HitEvent -> {
                 queueSound("audio/hit.wav")
             }

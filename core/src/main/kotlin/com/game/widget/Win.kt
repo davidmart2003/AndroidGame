@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
+import com.badlogic.gdx.utils.I18NBundle
 import com.game.event.MenuScreenEvent
 import com.game.event.fire
 import com.game.ui.view.Buttons
@@ -24,6 +25,7 @@ import ktx.scene2d.*
  */
 class Win(
     private val recordPref: Preferences,
+    private val bundle : I18NBundle,
     private val skin: Skin
 ) : WidgetGroup(), KGroup {
     private val background: Image = Image(skin[Drawables.FRAME_BGD])
@@ -56,10 +58,11 @@ class Win(
      */
     fun time(time: Int) {
         if (this@Win.recordPref.getInteger("time") > time || this@Win.recordPref.getInteger("time")==0) {
-            this@Win.lblTime.setText("New Record!!! Your new time is " + time + "seconds")
+            this@Win.lblTime.setText(bundle["NewRecord"]+" "+ time)
             this@Win.recordPref.putInteger("time", time)
+            this@Win.recordPref.flush()
         } else {
-            this@Win.lblTime.setText("You win was $time seconds")
+            this@Win.lblTime.setText(bundle["Win"]+ " "+time)
         }
     }
 
@@ -75,6 +78,7 @@ class Win(
          */
 fun <S> KWidget<S>.winUp(
     recordPref: Preferences,
+    bundle : I18NBundle,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: Win.(S) -> Unit = {}
-): Win = actor(Win(recordPref, skin), init)
+): Win = actor(Win(recordPref,bundle, skin), init)

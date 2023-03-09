@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="5">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="9">
  <properties>
   <property name="music" value="audio/music/theme2.wav"/>
  </properties>
@@ -16,10 +16,10 @@
   </data>
  </layer>
  <objectgroup id="4" name="Entities">
-  <object id="1" name="Player" gid="1961" x="68.6667" y="52" width="56" height="56"/>
-  <object id="2" name="MushRoom" gid="1964" x="334.333" y="254.333" width="150" height="150"/>
-  <object id="3" name="MushRoom" gid="1964" x="229.667" y="255" width="150" height="150"/>
-  <object id="4" name="MushRoom" gid="1964" x="72.3333" y="264.333" width="150" height="150"/>
+  <object id="5" name="Player" gid="1968" x="70.9943" y="46.1326" width="56" height="56"/>
+  <object id="6" name="MushRoom" gid="1970" x="82.8028" y="275.439" width="150" height="150"/>
+  <object id="7" name="MushRoom" gid="1970" x="232.274" y="250.935" width="150" height="150"/>
+  <object id="8" name="MushRoom" gid="1970" x="337.64" y="246.035" width="150" height="150"/>
  </objectgroup>
  <layer id="3" name="foreground_1" width="30" height="20">
   <data encoding="base64" compression="zlib">

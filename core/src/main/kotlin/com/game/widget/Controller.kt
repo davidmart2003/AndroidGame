@@ -66,7 +66,7 @@ class Controller(
         }
         this += shield.apply {
             setSize(150f, 150f)
-            setPosition(1400f, 150f)
+            setPosition(1200f, 150f)
 
         }
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="45" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="6">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="45" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="10">
  <properties>
   <property name="music" value="audio/music/theme3.wav"/>
  </properties>
  <tileset firstgid="1" source="tileset.tsx"/>
- <tileset firstgid="1961" source="entities.tsx"/>
+ <tileset firstgid="1961" source="entitiess.tsx"/>
+ <tileset firstgid="2141" source="entities.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="45" height="20">
   <data encoding="base64" compression="zlib">
    eJxrZWVgaCUDEwJzWSjTjw+Q495RN4+6edTNA+9mXPZTy8/EuHkogVE30weMupk+AOZmUNk0VAC9yraBLp9H3UwbMBTdjA+Munn4uhkAJY2pXA==

@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
+import com.badlogic.gdx.utils.I18NBundle
 import com.game.event.MenuScreenEvent
 import com.game.event.ResumeEvent
 import com.game.event.SettingsGameEvent
@@ -22,6 +23,7 @@ import ktx.scene2d.*
  * @property skin Skin de los componentes
  */
 class Pause(
+    bundle:I18NBundle,
     private val skin: Skin,
 ) : WidgetGroup(), KGroup {
     private val background: Image = Image(skin[Drawables.FRAME_BGD])
@@ -31,7 +33,7 @@ class Pause(
         this += background
 
         table = table {
-            textButton(text = "Resume", style = Buttons.DEFAULT.skinKey) {
+            textButton(text = bundle["Resume"], style = Buttons.DEFAULT.skinKey) {
 
                 onClick { stage.fire(ResumeEvent()) }
                 it.size(200f, 150f)
@@ -39,7 +41,7 @@ class Pause(
                 it.row()
             }
 
-            textButton(text = "Settings", style = Buttons.DEFAULT.skinKey) {
+            textButton(text = bundle["Settings"], style = Buttons.DEFAULT.skinKey) {
                 onClick { stage.fire(SettingsGameEvent()) }
                 it.size(200f, 150f)
 
@@ -47,7 +49,7 @@ class Pause(
                 it.row()
             }
 
-            textButton(text = "Menu", style = Buttons.DEFAULT.skinKey) {
+            textButton(text = bundle["Menu"], style = Buttons.DEFAULT.skinKey) {
                 onClick { stage.fire(MenuScreenEvent()) }
                 it.size(200f, 150f)
 
@@ -71,6 +73,7 @@ class Pause(
          * Extension del constructor para poder añadirla como actor al escenario
          */
 fun <S> KWidget<S>.pauseUp(
+    bundle:I18NBundle,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: Pause.(S) -> Unit = {}
-): Pause = actor(Pause(skin), init)
+): Pause = actor(Pause(bundle,skin), init)

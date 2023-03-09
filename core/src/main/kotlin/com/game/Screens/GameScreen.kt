@@ -31,20 +31,69 @@ import ktx.log.logger
 import ktx.math.vec2
 import ktx.scene2d.actors
 
+/**
+ * Pantalla del juego
+ * @property game Juego
+ */
 class GameScreen(val game: MyGame) : KtxScreen, EventListener {
+    /**
+     * Almacén de las opciones gurardadas
+     */
     private val settingPref = game.settingPref
+
+    /**
+     * Almacén de los récords guardados
+     */
     private val recordPref = game.recordPref
+
+    /**
+     * Almacén de las texturas
+     */
     private val textureAtlas: TextureAtlas = game.textureAtlas
+
+    /**
+     * Escenario donde se renderiza el juego
+     */
     private val gameStage: Stage = game.gameStage
+
+    /**
+     * Escenario donde se renderiza la interfaz de usuario
+     */
     private val uiStage: Stage = Stage(ExtendViewport(1280f, 720f))
+
+    /**
+     * Mapa actual que se está ejecutando
+     */
     private var currentMap: TiledMap? = null
+
+    /**
+     * Mundo de físicas
+     */
     private val physicsWorld = createWorld(gravity = vec2()).apply {
         autoClearForces = false
 
     }
-    private var settingsView : SettingsView
-    private  var inventory:InventoryView
+
+    /**
+     * Vista de opciones
+     */
+    private var settingsView: SettingsView
+
+    /**
+     * Vista del inventario
+     */
+    private var inventory: InventoryView
+
+    /**
+     * Vista del juego
+     */
     private var gameView: GameView
+
+    private var bundle =game.bundle
+
+    /**
+     * Mundo de entidades
+     */
     private val world = world {
         injectables {
             add("gameStage", gameStage)
@@ -82,7 +131,7 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
             add<AudioSystem>()
             add<ShieldSystem>()
             add<RenderSystem>()
-           // add<DebugSystem>()
+            // add<DebugSystem>()
         }
     }
 
@@ -95,12 +144,12 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
             }
         }
         uiStage.actors {
-            gameView = gameView(GameModel(world, gameStage), recordPref =recordPref )
-            inventory =inventoryView(GameModel(world, gameStage)) {
+            gameView = gameView(GameModel(world, gameStage), recordPref = recordPref)
+            inventory = inventoryView(GameModel(world, gameStage), bundle ) {
                 this.isVisible = false
             }
-            settingsView = settingsView(settingPref){
-                this.isVisible=false
+            settingsView = settingsView(settingPref,bundle) {
+                this.isVisible = false
             }
         }
     }
@@ -131,25 +180,38 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
      * Se ejecuta cuando entra en estado de pausa la ventana, y pausa el juego
      */
     override fun pause() = pauseWorld(true)
-    override fun resume() =pauseWorld(false)
+    override fun resume() = pauseWorld(false)
 
+    /**
+     * Se ejecuta cada frame y actualiza el mundo
+     */
     override fun render(delta: Float) {
         val dt = delta.coerceAtMost(0.25f)
         GdxAI.getTimepiece().update(dt)
         world.update(delta.coerceAtMost(0.25f))
     }
 
+    /**
+     * Se ejecuta cunado cambia el tamaño de la pantalla, actualiza la vista de la pantalla
+     */
     override fun resize(width: Int, height: Int) {
         gameStage.viewport.update(width, height, true)
         uiStage.viewport.update(width, height, true)
     }
 
+    /**
+     * Al cerrar la ventana se cierra el mundo, el mapa y el mundo de físicas para ahorrar recursos
+     */
     override fun dispose() {
         world.dispose()
         currentMap?.disposeSafely()
         physicsWorld.disposeSafely()
     }
 
+    /**
+     * Se ejecuta cuando un evento es lanzado
+     * @param event Evento lanzado
+     */
     override fun handle(event: Event?): Boolean {
         when (event) {
 
@@ -164,7 +226,7 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
                 resume()
             }
 
-            is MenuScreenEvent ->{
+            is MenuScreenEvent -> {
                 gameStage.clear()
                 uiStage.clear()
 
@@ -176,32 +238,33 @@ class GameScreen(val game: MyGame) : KtxScreen, EventListener {
                 this.dispose()
             }
 
-            is InventoryEvent ->{
-                inventory.isVisible=true
+            is InventoryEvent -> {
+                inventory.isVisible = true
             }
 
-            is HideInventoryEvent ->{
-                inventory.isVisible=false
+            is HideInventoryEvent -> {
+                inventory.isVisible = false
             }
 
-            is DeadEvent ->{
-                gameView.controller.touchable= Touchable.disabled
+            is DeadEvent -> {
+                gameView.controller.touchable = Touchable.disabled
                 pause()
                 gameView.death()
             }
-            is WinEvent ->{
-                gameView.controller.touchable= Touchable.disabled
+
+            is WinEvent -> {
+                gameView.controller.touchable = Touchable.disabled
                 pause()
                 gameView.win()
             }
 
 
             is SettingsGameEvent -> {
-                settingsView.isVisible=true
+                settingsView.isVisible = true
             }
 
             is HideSettingsGameEvent -> {
-                settingsView.isVisible=false
+                settingsView.isVisible = false
             }
 
         }

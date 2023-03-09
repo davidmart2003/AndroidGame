@@ -57,7 +57,7 @@ class MenuScreen(val game: MyGame) : KtxScreen, EventListener {
     /**
      * Vista que contiene el tutorial
      */
-    //  private var tutorialView: TutorialView
+     private var tutorialView: TutorialView
 
 
     /**
@@ -65,6 +65,7 @@ class MenuScreen(val game: MyGame) : KtxScreen, EventListener {
      */
     private val eWorld = world {}
 
+    private var bundle = game.bundle
 
     init {
         loadSkin()
@@ -78,12 +79,15 @@ class MenuScreen(val game: MyGame) : KtxScreen, EventListener {
         }
 
         uiStage.actors {
-            menuView = menuView(GameModel(eWorld, uiStage))
-            settingsView = settingsView(settingPref) {
+            menuView = menuView(GameModel(eWorld, uiStage),bundle)
+            settingsView = settingsView(settingPref,bundle) {
                 isVisible = false
             }
-            creditsView = creditsView() {
+            creditsView = creditsView(bundle) {
                 isVisible = false
+            }
+            tutorialView=tutorialView(bundle){
+                isVisible=false
             }
         }
         uiStage.addListener(this)
@@ -150,6 +154,16 @@ class MenuScreen(val game: MyGame) : KtxScreen, EventListener {
 
             is HideCreditsEvent -> {
                 creditsView.isVisible = false
+            }
+
+            is TutorialGameEvent -> {
+                menuView.touchable = Touchable.disabled
+                tutorialView.isVisible = true
+            }
+
+            is HideTutorialEvent -> {
+                menuView.touchable = Touchable.enabled
+                tutorialView.isVisible = false
             }
         }
         return true

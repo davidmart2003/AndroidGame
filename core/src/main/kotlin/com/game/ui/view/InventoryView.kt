@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
 import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.I18NBundle
 import com.game.MyGame.Companion.ATTACK
 import com.game.MyGame.Companion.LIFE
 import com.game.MyGame.Companion.SPEED
@@ -25,6 +26,7 @@ import ktx.scene2d.*
  */
 class InventoryView(
     model: GameModel,
+    bundle: I18NBundle,
     skin: Skin
 ) : KTable, Table(skin) {
     /**
@@ -49,24 +51,24 @@ class InventoryView(
             background = skin[Drawables.FRAME_BGD]
 
 
-            this@InventoryView.lvl = label(text = "Your Level: 1", style = Labels.FRAME.skinKey, skin) {
+            this@InventoryView.lvl = label(text = bundle["InventoryLevel"] +"1", style = Labels.FRAME.skinKey, skin) {
                 this.setAlignment(Align.center)
 
             }
-            this@InventoryView.life = label(text = "Your Max Life: $LIFE", style = Labels.FRAME.skinKey, skin) {
+            this@InventoryView.life = label(text = bundle["InventoryLife"]+ LIFE, style = Labels.FRAME.skinKey, skin) {
                 this.setAlignment(Align.center)
                 it.row()
             }
-            this@InventoryView.attack = label(text = "Your total damage: $ATTACK", style = Labels.FRAME.skinKey, skin) {
+            this@InventoryView.attack = label(text = bundle["InventoryDamage"] + ATTACK, style = Labels.FRAME.skinKey, skin) {
                 this.setAlignment(Align.center)
 
             }
-            this@InventoryView.speed = label(text = "Your actual speed : $SPEED", style = Labels.FRAME.skinKey, skin) {
+            this@InventoryView.speed = label(text = bundle["InventorySpeed"] +SPEED, style = Labels.FRAME.skinKey, skin) {
                 this.setAlignment(Align.center)
                 it.row()
             }
 
-            this@InventoryView.back = textButton(text = "Back", style = Buttons.DEFAULT.skinKey) {
+            this@InventoryView.back = textButton(text = bundle["Atras"], style = Buttons.DEFAULT.skinKey) {
                 onClick { stage.fire(HideInventoryEvent()) }
                 it.right()
 
@@ -79,16 +81,16 @@ class InventoryView(
         // data binding
 
         model.onPropertyChange(GameModel::level) { level ->
-            this@InventoryView.lvl.setText("Your level: $level")
+            this@InventoryView.lvl.setText(bundle["InventoryLevel"] + level)
         }
         model.onPropertyChange(GameModel::life) { life ->
-            this@InventoryView.life.setText("Actual Life: $life hp")
+            this@InventoryView.life.setText(bundle["InventoryLife"] + life )
         }
         model.onPropertyChange(GameModel::speed) { speed ->
-            this@InventoryView.speed.setText("Actual speed: $speed")
+            this@InventoryView.speed.setText(bundle["InventorySpeed"] + speed)
         }
         model.onPropertyChange(GameModel::attack) { attack ->
-            this@InventoryView.attack.setText("Actual damage $attack")
+            this@InventoryView.attack.setText(bundle["InventoryDamage"] + attack)
         }
 
     }
@@ -100,6 +102,7 @@ class InventoryView(
          */
 fun <S> KWidget<S>.inventoryView(
     model: GameModel,
+    bundle: I18NBundle,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: InventoryView.(S) -> Unit = {}
-): InventoryView = actor(InventoryView(model, skin), init)
+): InventoryView = actor(InventoryView(model, bundle,skin), init)

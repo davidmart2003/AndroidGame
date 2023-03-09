@@ -195,9 +195,9 @@ class EntitySpawnSystem(
                                 this.actualLife = event.playerComponent.actualLife
                                 this.actualStrenght = event.playerComponent.actualStrenght
                                 this.actualTime = event.playerComponent.actualTime
-                                this.actualLevel=event.playerComponent.actualLevel
-                                this.actualBasexp=event.playerComponent.actualBasexp
-                                this.actualexp=event.playerComponent.actualexp
+                                this.actualLevel = event.playerComponent.actualLevel
+                                this.actualBasexp = event.playerComponent.actualBasexp
+                                this.actualexp = event.playerComponent.actualexp
                                 log.debug { "AL cambiar el mapa=======$actualBasexp EXPPPPPPPBASE" }
                                 log.debug { "AL cambiar el mapa=======$actualLevel LEVEEEEEEEEEEEEL" }
                             }
@@ -245,7 +245,7 @@ class EntitySpawnSystem(
             val relativeSize = size(configuration.atlasKey)
 
 
-            val spawnedEntity = world.entity {
+            world.entity {
                 val imageComponent = add<ImageComponent> {
                     image = FlipImage().apply {
                         setPosition(location.x, location.y)

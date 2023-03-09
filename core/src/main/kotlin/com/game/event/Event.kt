@@ -147,3 +147,8 @@ class DeadEvent(): Event()
 class WinEvent():Event()
 
 class TimeEvent(val entity: Entity) : Event()
+
+class TutorialGameEvent():Event()
+class AccelerometerEvent():Event()
+
+class HideTutorialEvent():Event()

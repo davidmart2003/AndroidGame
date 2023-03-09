@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.I18NBundle
 import com.game.MyGame
 import com.game.event.HideCreditsEvent
 import com.game.event.HideInventoryEvent
@@ -18,13 +19,14 @@ import ktx.scene2d.*
  * @property skin Skin de los componentes
  */
 class CreditsView(
+    bundle:I18NBundle,
     skin: Skin
+
 ) : Table(skin), KTable {
 
     init {
         // UI
         setFillParent(true)
-        val titlePadding = 15f
 
         table {
             background = skin[Drawables.FRAME_BGD]
@@ -37,16 +39,16 @@ class CreditsView(
             }
             table {
 
-                label(text = "-Monsters Creatures Fantasy, disponible en itch.io", style = Labels.LEVEL.skinKey, skin) {
+                label(text = "-Monsters Creatures Fantasy,"+ bundle["CreditosTexto"] +"itch.io", style = Labels.LEVEL.skinKey, skin) {
                     this.setAlignment(Align.center)
                     it.padTop(10f).row()
                 }
-                label(text = "-Cryo's Mini GUI, disponible en itch.io", style = Labels.LEVEL.skinKey, skin) {
+                label(text = "-Cryo's Mini GUI,"+ bundle["CreditosTexto"] +" itch.io", style = Labels.LEVEL.skinKey, skin) {
                     this.setAlignment(Align.center)
                     it.padTop(10f).row()
                 }
                 label(
-                    text = "-Generic Character Asset v 0.2, disponible en itch.io",
+                    text = "-Generic Character Asset v 0.2, "+ bundle["CreditosTexto"] +" itch.io",
                     style = Labels.LEVEL.skinKey,
                     skin
                 ) {
@@ -63,32 +65,32 @@ class CreditsView(
             }
             table {
 
-                label(text = "-Town Theme RPG, disponible en opengameart.com", style = Labels.LEVEL.skinKey, skin) {
+                label(text = "-Town Theme RPG,"+ bundle["CreditosTexto"] +" opengameart.com", style = Labels.LEVEL.skinKey, skin) {
                     this.setAlignment(Align.center)
                     it.padTop(10f).row()
                 }
-                label(text = "-Battle Theme II , disponible en opengameart.com", style = Labels.LEVEL.skinKey, skin) {
+                label(text = "-Battle Theme II , "+ bundle["CreditosTexto"] +" opengameart.com", style = Labels.LEVEL.skinKey, skin) {
                     this.setAlignment(Align.center)
                     it.padTop(10f).row()
                 }
-                label(text = "-Goblin Death, disponible en opengameart.com", style = Labels.LEVEL.skinKey, skin) {
+                label(text = "-Goblin Death, "+ bundle["CreditosTexto"] +" opengameart.com", style = Labels.LEVEL.skinKey, skin) {
                     this.setAlignment(Align.center)
                     it.padTop(10f).row()
                 }
                 label(
-                    text = "-15 monster grunt/pain/death sounds, disponible en opengameart.com",
+                    text = "-15 monster grunt/pain/death sounds, "+ bundle["CreditosTexto"] +" opengameart.com",
                     style = Labels.LEVEL.skinKey,
                     skin
                 ) {
                     this.setAlignment(Align.center)
                     it.padTop(10f).row()
                 }
-                label(text = "-Mutant Death, disponible en opengameart.com", style = Labels.LEVEL.skinKey, skin) {
+                label(text = "-Mutant Death, "+ bundle["CreditosTexto"] +" opengameart.com", style = Labels.LEVEL.skinKey, skin) {
                     this.setAlignment(Align.center)
                     it.padTop(10f).row()
                 }
                 label(
-                    text = "Wind, hit, time morph, disponible en opengameart.com",
+                    text = "Wind, hit, time morph, "+ bundle["CreditosTexto"] +" opengameart.com",
                     style = Labels.LEVEL.skinKey,
                     skin
                 ) {
@@ -98,7 +100,7 @@ class CreditsView(
                 it.expand().fill().row()
             }
 
-            label(text = "Special Thanks", style = Labels.LEVEL.skinKey, skin) {
+            label(text =  bundle["Agradecimientos"] , style = Labels.LEVEL.skinKey, skin) {
                 this.setFontScale(1.5f)
                 this.setAlignment(Align.center)
                 it.padTop(20f).row()
@@ -128,7 +130,7 @@ class CreditsView(
                 it.expand().fill().row()
             }
 
-            textButton(text = "Back", style = Buttons.DEFAULT.skinKey) {
+            textButton(text = bundle["Atras"], style = Buttons.DEFAULT.skinKey) {
                 onClick { stage.fire(HideCreditsEvent()) }
 
 
@@ -144,6 +146,7 @@ class CreditsView(
          * Extension del constructor para poder añadirla como actor al escenario
          */
 fun <S> KWidget<S>.creditsView(
+    bundle:I18NBundle,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: CreditsView.(S) -> Unit = {}
-): CreditsView = actor(CreditsView(skin), init)
+): CreditsView = actor(CreditsView(bundle,skin), init)

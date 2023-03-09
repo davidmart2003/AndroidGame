@@ -21,10 +21,21 @@ import ktx.math.component2
 val Fixture.entity: Entity
     get() = this.body.userData as Entity
 
+/**
+ * Sistema que se encangar de las físicas de colision del juego
+ *
+ * @property myWorld Mundo de físicas
+ * @property imageComponents Conjunto de entidades que contienen imageComponent
+ * @property physicsComponents Conjunto de entidades que contienen physicsComponents
+ * @property aiComponents Conjunto de entidades que contienen aiComponents
+ * @property playerCmps Conjunto de entidades que contienen playerCmps
+ * @property despawnCmps Conjunto de entidades que contienen despawnCmps
+ *
+ */
+
 @AllOf([PhysicComponent::class, ImageComponent::class])
 @NoneOf([SpawnComponent::class])
 class PhysicSystem(
-    @Qualifier("gameStage") private val stage: Stage,
     private val myWorld: World,
     private val imageComponents: ComponentMapper<ImageComponent>,
     private val physicsComponents: ComponentMapper<PhysicComponent>,
@@ -34,13 +45,14 @@ class PhysicSystem(
 
 
     ) : ContactListener, IteratingSystem(interval = Fixed(1 / 60f)) {
-    private var numMap: Int = 1
-    private var currentMap: TiledMap? = null
 
     init {
         myWorld.setContactListener(this)
     }
 
+    /**
+     * Cada vez que se actualiza si está activado el limpiador de fuerzas automáticas lo desactiva
+     */
     override fun onUpdate() {
         if (myWorld.autoClearForces) {
             myWorld.autoClearForces = false
@@ -49,11 +61,17 @@ class PhysicSystem(
         myWorld.clearForces()
     }
 
+    /**
+     * Se ejecuta cada frame y actualiza el mundo físicas
+     */
     override fun onTick() {
         super.onTick()
         myWorld.step(deltaTime, 6, 2)
     }
 
+    /**
+     * Por cada entidad que se ejecuta guarda la posición anterior y aplica un impulso
+     */
     override fun onTickEntity(entity: Entity) {
         val physicComponent = physicsComponents[entity]
         physicComponent.prevPos.set(physicComponent.body.position)
@@ -83,6 +101,9 @@ class PhysicSystem(
         }
     }
 
+    /**
+     * Detecta la colisión del jugador con el radio de visión de los enemigos, también detecta la colisión con el portal
+     */
     override fun beginContact(contact: Contact) {
         val entityA = contact.fixtureA.entity
         val entityB = contact.fixtureB.entity
@@ -127,7 +148,9 @@ class PhysicSystem(
         }
     }
 
-
+    /**
+     * Acaba la colisión con el portal y detecta que el jugador estee fuera del radio de visión de los enemigos
+     */
     override fun endContact(contact: Contact) {
         val entityA = contact.fixtureA.entity
         val entityB = contact.fixtureB.entity
@@ -164,9 +187,19 @@ class PhysicSystem(
         }
     }
 
+    /**
+     * Función que detecta un cuerpo estático, devuelve true
+     */
     private fun Fixture.isStaticBody() = this.body.type == BodyDef.BodyType.StaticBody
+
+    /**
+     * Función que detecta un cuerpo dinámico, devuelve true
+     */
     private fun Fixture.isDynamicBody() = this.body.type == BodyDef.BodyType.DynamicBody
 
+    /**
+     * Si un cuerpo dinámico colisiona con un cuerpo estático, establece el contacto
+     */
     override fun preSolve(contact: Contact, oldManifold: Manifold) {
         contact.isEnabled =
             (contact.fixtureA.isStaticBody() && contact.fixtureB.isDynamicBody()) ||

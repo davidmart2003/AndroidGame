@@ -1,5 +1,7 @@
 package com.game.system
 
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.scenes.scene2d.Event
 import com.badlogic.gdx.scenes.scene2d.EventListener
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -9,6 +11,7 @@ import com.game.component.ImageComponent
 import com.game.component.MoveComponent
 import com.game.component.PhysicComponent
 import com.game.component.PlayerComponent
+import com.game.event.AccelerometerEvent
 import com.game.event.ButtonPressedEvent
 import com.game.event.SpeedEvent
 import com.game.event.fire
@@ -29,7 +32,8 @@ import ktx.math.component2
  */
 @AllOf([MoveComponent::class, PhysicComponent::class])
 class MoveSystem(
-    @Qualifier("gameStage") private val stage : Stage,
+    private val settingsPref: Preferences,
+    @Qualifier("gameStage") private val stage: Stage,
     private val moveComponents: ComponentMapper<MoveComponent>,
     private val physicsComponents: ComponentMapper<PhysicComponent>,
     private val imageComponents: ComponentMapper<ImageComponent>,
@@ -54,13 +58,21 @@ class MoveSystem(
      * @param entity Entidad a ejecutar
      */
     override fun onTickEntity(entity: Entity) {
+
         val moveComponent = moveComponents[entity]
         val physicComponent = physicsComponents[entity]
         val masa = physicComponent.body.mass
         val (velX, velY) = physicComponent.body.linearVelocity
+        if (settingsPref.getBoolean("accelerometer")) {
 
+            if (Gdx.input.accelerometerZ > 25) {
+
+                stage.fire(AccelerometerEvent())
+
+            }
+        }
         if (entity in playerComponents) {
-          //  log.debug { "ACTUALIZANDO" }
+            //  log.debug { "ACTUALIZANDO" }
 
             moveComponent.sin = playerSin
             moveComponent.cos = playerCos
@@ -97,14 +109,15 @@ class MoveSystem(
         when (event) {
             is ButtonPressedEvent -> {
 
-                playerCos=event.cos
-                playerSin=event.sin
+                playerCos = event.cos
+                playerSin = event.sin
             }
 
             else -> return false
         }
         return true
     }
+
     companion object {
         private val log = logger<MoveSystem>()
     }

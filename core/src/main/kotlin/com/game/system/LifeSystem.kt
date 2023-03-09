@@ -20,6 +20,19 @@ import ktx.math.vec2
 
 @AllOf([LifeComponent::class])
 @NoneOf([DeadComponent::class])
+/**
+ * Sistema que se encarga la vida, recibir daño y matar a las entidades
+ *
+ * @property stage Escenario donde se renderiza el juego
+ * @property settingsPref Almacen de las opciones guardadas
+ * @property lifeComponents Conjunto de entidades que contienen LifeComponent
+ * @property deadComponents Conjunto de entidades que contienen DeadComponent
+ * @property playerComponent Conjunto de entidades que contienen PlayerComponent
+ * @property enemyComponent Conjunto de entidades que contienen EnemyComponent
+ * @property physicComponents Conjunto de entidades que contienen PhysicComponent
+ * @property animationComponents Conjunto de entidades que contienen AnimationComponent
+ * @property shieldComponents Conjunto de entidades que contienen ShieldComponent
+ */
 class LifeSystem(
     @Qualifier("gameStage") private val stage: Stage,
     private val settingsPref: Preferences,
@@ -31,13 +44,18 @@ class LifeSystem(
     private val animationComponents: ComponentMapper<AnimationComponent>,
     private val shieldComponents: ComponentMapper<ShieldComponents>
 
-) : EventListener, IteratingSystem() {
+) :  IteratingSystem() {
     private val dmgFont = BitmapFont(Gdx.files.internal("damage.fnt")).apply { data.setScale(2f) }
     private val floatingTextStyle = LabelStyle(dmgFont, Color.RED)
     private val floatingTextStylePlayer = LabelStyle(dmgFont, Color.BLACK)
     private var position: Vector2 = vec2(0f, 0f)
     private var isDone: Boolean = false
 
+    /**
+     * Cada que vez que se ejecuta po cada entidad , mira si la entidad esta defendiendose y esta recibiendo daño,
+     * entonces le resta la vida segun la cantidad de daño que lke hayan hecho
+     * Si la vida es menor que 0 la entidad muere
+     */
     override fun onTickEntity(entity: Entity) {
         val lifeComponent = lifeComponents[entity]
         val playerEntities = world.family(allOf = arrayOf(PlayerComponent::class))
@@ -127,6 +145,9 @@ class LifeSystem(
 
     }
 
+    /**
+     * Texto flotante que aparece y se desvanace segun el daño causado
+     */
     private fun floatingText(text: String, position: Vector2, size: Vector2, player: Boolean) {
         world.entity {
             add<FloatingTextComponent> {
@@ -142,6 +163,9 @@ class LifeSystem(
         }
     }
 
+    /**
+     * Cerrar el tipo de fuente para ahorrar recursos
+     */
     override fun onDispose() {
         dmgFont.disposeSafely()
     }
@@ -150,10 +174,6 @@ class LifeSystem(
         private val log = logger<LifeSystem>()
     }
 
-    override fun handle(event: Event?): Boolean {
-        when (event) {
 
-        }
-        return true
-    }
+
 }

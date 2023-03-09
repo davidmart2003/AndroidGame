@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.game.Screens.MenuScreen
 import com.game.ui.view.disposeSkin
@@ -22,9 +23,11 @@ class MyGame : KtxGame<KtxScreen>() {
     lateinit var textureAtlas: TextureAtlas
     lateinit var settingPref: Preferences
     lateinit var recordPref :Preferences
+    lateinit var bundle : I18NBundle
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
         textureAtlas = TextureAtlas(Gdx.files.internal("graphics/gameObjects.atlas"))
+        bundle = I18NBundle.createBundle(Gdx.files.internal("lan/mybundle"))
         settingPref = Gdx.app.getPreferences("setting")
         recordPref = Gdx.app.getPreferences("record")
         addScreen(MenuScreen(this))

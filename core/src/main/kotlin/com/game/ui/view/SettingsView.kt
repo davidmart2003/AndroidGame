@@ -3,6 +3,7 @@ package com.game.ui.view
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Preferences
 import com.badlogic.gdx.scenes.scene2d.ui.*
+import com.badlogic.gdx.utils.I18NBundle
 import com.game.event.HideSettingsGameEvent
 import com.game.event.fire
 import ktx.actors.onChange
@@ -19,6 +20,7 @@ import ktx.scene2d.*
  */
 class SettingsView(
     settingPref: Preferences,
+    bundle:I18NBundle,
     skin: Skin,
 ) : KTable, Table(skin) {
 
@@ -53,11 +55,11 @@ class SettingsView(
             background = skin[Drawables.FRAME_BGD]
 
             table {
-                label(text = "SETTINGS", style = Labels.TITLE.skinKey) {
+                label(text = bundle["Settings"], style = Labels.TITLE.skinKey) {
                     it.padTop(7f).padLeft(7f).center().row()
                 }
                 table {
-                    label(text = "Music", style = Labels.LEVEL.skinKey) {
+                    label(text = bundle["SettingsMusic"], style = Labels.LEVEL.skinKey) {
                         it.padTop(10f).row()
                     }
 
@@ -82,7 +84,7 @@ class SettingsView(
                     it.padBottom(10f).row()
                 }
                 table {
-                    label(text = "Sound", style = Labels.LEVEL.skinKey) {
+                    label(text = bundle["SettingsSound"], style = Labels.LEVEL.skinKey) {
                         it.row()
                     }
 
@@ -139,7 +141,7 @@ class SettingsView(
                 it.padBottom(10f).left().row()
             }
 
-            textButton(text = "Back", style = Buttons.DEFAULT.skinKey) {
+            textButton(text = bundle["Atras"], style = Buttons.DEFAULT.skinKey) {
 
 
                 onClick {
@@ -170,6 +172,7 @@ class SettingsView(
          */
 fun <S> KWidget<S>.settingsView(
     settingPref: Preferences,
+    bundle:I18NBundle,
     skin: Skin = Scene2DSkin.defaultSkin,
     init: SettingsView.(S) -> Unit = {}
-): SettingsView = actor(SettingsView(settingPref, skin), init)
+): SettingsView = actor(SettingsView(settingPref, bundle,skin), init)
